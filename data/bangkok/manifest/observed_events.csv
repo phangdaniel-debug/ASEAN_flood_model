@@ -1,0 +1,2 @@
+event_id,hazard,event_date,est_rp_low,est_rp_high,extent_path,source
+THA2011,fluvial,2011-10-01,50,100,data/bangkok/flood_obs/THA2011/DFO_3850_From_20110805_to_20120109.tif,"Dartmouth Flood Observatory / Cloud-to-Street Global Flood Database (DFO 3850, MODIS 250m, Tellman et al. 2021 Nature). Worst Thai flood in ~50 yr (basin-scale RP50-100); GLoFAS calls it ~RP6 (ERA5 precip under-estimate, cf. KL MYS2021)"

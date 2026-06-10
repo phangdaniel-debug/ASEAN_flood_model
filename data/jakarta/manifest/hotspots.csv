@@ -1,0 +1,27 @@
+name,lon,lat,kind,confidence,source
+Kampung Melayu,106.86362,-6.21936,positive,high,Ciliwung overflow; chronic 2007/2013/2020 flooding (BPBD DKI; news)
+Bukit Duri,106.85843,-6.22109,positive,high,Ciliwung bank; recurrent inundation 2007/2013/2020 (news; academic)
+Kampung Pulo,106.86337,-6.21838,positive,high,Ciliwung meander; iconic chronic flood site (BPBD DKI)
+Cawang,106.87123,-6.24591,positive,high,Ciliwung corridor; 2007/2013/2020 flooding (news)
+Rawajati,106.85499,-6.25802,positive,high,Ciliwung bank South Jakarta; recurrent (news)
+Bidara Cina,106.86647,-6.23302,positive,high,Ciliwung corridor; recurrent (news)
+Cipinang Melayu,106.90377,-6.24834,positive,high,East Jakarta; among worst-hit Jan-2020 (news)
+Kemang,106.81533,-6.26111,positive,high,Krukut river; affluent-South pocket flooded Jan-2020 (widely reported)
+Kelapa Gading,106.90248,-6.15994,positive,high,North-East low pluvial basin; chronic ponding 2013/2020 (news)
+Grogol,106.78961,-6.16204,positive,high,West Jakarta; Sekretaris/Grogol canal flooding 2020 (news)
+Cengkareng,106.74472,-6.15290,positive,high,West Jakarta; Angke/Cengkareng drain flooding 2020 (news)
+Penjaringan,106.76743,-6.11727,positive,high,North Jakarta polder below MSL; rob + 2007/2020 coastal flooding (BAPPENAS; news)
+Pluit,106.78736,-6.11503,positive,high,"North Jakarta below sea level; chronic rob, pump-dependent (news)"
+Muara Baru,106.79982,-6.11042,positive,high,North Jakarta fastest-subsiding; rob flooding (Abidin et al.; news)
+Kalibaru,106.92325,-6.10404,positive,high,North-East coast; rob + tidal flooding (news)
+Cilincing,106.94445,-6.12901,positive,high,North-East coastal kelurahan; rob (news)
+Menteng,106.83222,-6.19503,positive,high,Reclassified J2: documented flooded 2013 (Cikini/Menteng on Ciliwung; Thamrin/Bundaran-HI corridor) + 2007 — central Jakarta inundates in RP50-100 events
+Gambir,106.83065,-6.17666,positive,high,Reclassified J2: documented flooded 2013 (Merdeka Palace/Monas area surrounded by floodwater) — central Jakarta
+Cilandak,106.79693,-6.28980,dry,high,Elevated South Jakarta; not on the 2007/2013/2020 flood lists (terrain-high control)
+Jagakarsa,106.82224,-6.33010,dry,high,Elevated far-South Jakarta; higher ground toward Depok (control)
+Lebak Bulus,106.77969,-6.30167,dry,high,Elevated South Jakarta (control)
+Pasar Minggu,106.84486,-6.28333,dry,high,South Jakarta upland away from Ciliwung bank (elevated off-river point; control)
+Cipete,106.79732,-6.27836,dry,high,Elevated South Jakarta residential (control)
+Ragunan,106.82048,-6.29767,dry,high,"Elevated South Jakarta (zoo area, higher ground off the Ciliwung); not a documented event-flood area (J2 control)"
+Pondok Labu,106.79786,-6.30877,dry,high,Elevated far-South Jakarta near Cilandak; no major event flooding (J2 control)
+Pondok Pinang,106.77895,-6.27364,dry,high,Elevated South Jakarta (Kebayoran Lama upland); not on documented flood lists (J2 control)

@@ -1,0 +1,27 @@
+# Regenerable — never committed (per HANDOFF §5)
+outputs/
+cache/
+logs/
+*.log
+
+# Input raster data — large binary files sourced from public repositories:
+#   DEMs: Copernicus GLO-30 (https://spacedata.copernicus.eu/)
+#   Flood obs: DFO Dartmouth, GFM / Sentinel-1 products
+# These are not versioned here; see README for download instructions.
+data/**/*.tif
+data/**/*.tiff
+data/**/*.zip
+
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+venv/
+
+# Claude Code session-local (machine-specific tool permissions)
+.claude/settings.local.json
+
+# OS
+.DS_Store
+Thumbs.db

@@ -1,0 +1,6 @@
+hazard,metric,threshold,direction,citation
+pluvial,hotspot_hit_rate,0.70,>=,"documented-hotspot hit-rate floor (Singapore/KL/Bangkok methodology precedent; Peirce/Hanssen-Kuipers TSS)"
+pluvial,hotspot_crr,0.70,>=,"dry-control correct-reject-rate floor (specificity; Singapore/KL/Bangkok methodology)"
+coastal,CSI,0.30,>=,"JKT2020 Sentinel-1 EOS-ARIA extent-CSI — ELEVATED support gate (Jakarta is the first city with a trustworthy SAR reference); WARN band Bates & De Roo 2000 / Bernhofen et al. 2018"
+coastal,FAR,0.70,<=,"JKT2020 extent false-alarm-rate ceiling (prior bathtub run = 0.87, over-prediction; Pappenberger et al. 2007)"
+coastal,POD,0.60,>=,"JKT2020 extent probability-of-detection floor (Wing et al. 2017)"

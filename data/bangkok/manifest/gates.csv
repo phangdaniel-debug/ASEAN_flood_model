@@ -1,0 +1,10 @@
+hazard,metric,threshold,direction,citation
+fluvial,CSI,0.40,>=,"Bates & De Roo 2000; Bernhofen et al. 2018 (acceptable band for coarse-resolution inundation models)"
+fluvial,POD,0.60,>=,"Pappenberger et al. 2007; Wing et al. 2017"
+fluvial,FAR,0.40,<=,"Pappenberger et al. 2007"
+coastal,CSI,0.40,>=,"Bates & De Roo 2000 (Bangkok is a delta — coastal is meaningful; THA2011 extent-CSI is a supporting diagnostic)"
+pluvial,idf_ci_coverage,0.90,within,"modelled RP-depth within published IDF 90% confidence band (TMD/RID)"
+point_depth,RMSE_m,0.50,<=,"Wing et al. 2017/2021 (depth RMSE benchmark)"
+point_depth,bias_abs_m,0.20,<=,"validation_workflow.md screening-model threshold"
+pluvial,hotspot_hit_rate,0.70,>=,"documented-hotspot hit-rate floor (Singapore/KL methodology precedent; Peirce/Hanssen-Kuipers TSS)"
+pluvial,hotspot_crr,0.70,>=,"dry-control correct-reject-rate floor (specificity; Singapore/KL methodology)"

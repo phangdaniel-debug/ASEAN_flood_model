@@ -1,0 +1,2 @@
+event_id,hazard,event_date,est_rp_low,est_rp_high,extent_path,source
+MYS2021,fluvial,2021-12-18,50,100,data/kl/flood_obs/MYS2021/gfm_kl_composite_dec2021.tif,"Copernicus GFM ensemble + UNOSAT (CC-BY); JPS danger-level exceedances imply basin-scale RP50-100"

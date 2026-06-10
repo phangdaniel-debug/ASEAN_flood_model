@@ -1,0 +1,3 @@
+hazard,duration_h,anchor_rp,anchor_value,unit,source,citation
+pluvial,6,2,90.0,mm,JPS Malaysia MSMA/HP1,"MSMA 2nd ed. (DID Malaysia 2012); Hydrological Procedure No.1 (DID); matches cities.py KL pluvial IDF calibration"
+pluvial,6,100,165.0,mm,JPS Malaysia MSMA/HP1,"MSMA 2nd ed. (DID Malaysia 2012); upper IDF anchor used in KL pluvial Gumbel calibration"

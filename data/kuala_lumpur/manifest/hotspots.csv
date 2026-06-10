@@ -1,0 +1,37 @@
+name,lon,lat,kind,confidence,source
+Jalan Sultan Azlan Shah,101.68871,3.17586,positive,high,DBKL flood-hotspot list (Scoop 2024)
+Lebuhraya Sultan Iskandar (Mahameru),101.68053,3.1516,positive,high,DBKL flood-hotspot list (Scoop 2024)
+"Jalan Tun Sambanthan, Brickfields",101.68881,3.13398,positive,high,DBKL flood-hotspot list (Scoop 2024)
+Segambut Dalam,101.6495,3.17125,positive,low,DBKL flood-hotspot list (Toba River)
+Pantai Dalam,101.67004,3.0956,positive,high,DBKL flood-hotspot list (Scoop 2024)
+Bukit Jalil,101.68029,3.05335,positive,high,DBKL flood-hotspot list (Scoop 2024; LRT station underpass)
+Jalan Rahmat (PWTC / Sg Gombak),101.69354,3.16992,positive,high,DBKL hotspot; +600 mm after ~2h rain (Brudirect/Star)
+Bulatan Datuk Onn,101.69295,3.15144,positive,high,DBKL flood-hotspot list (Scoop 2024)
+Jalan Tun Razak,101.70302,3.17319,positive,high,DID/Star Klang Valley hotspots (2019)
+Jalan Raja Chulan,101.69972,3.14864,positive,high,DID/Star Klang Valley hotspots (2019)
+Masjid Jamek (Gombak-Klang confluence),101.69693,3.15,positive,high,Historic Gombak/Klang confluence flood (SMART tunnel rationale)
+Kampung Baru,101.7066,3.16133,positive,high,Historic KL flood-prone (Klang riverbank)
+Jalan Chow Kit,101.69837,3.16741,positive,high,DID/DBKL flash-flood records
+Old Klang Road,101.6592,3.08261,positive,high,Dec 2021 Klang Valley floods (Malay Mail)
+"Taman Sri Muda, Shah Alam",101.53448,3.03252,positive,high,"Dec 2021 floods, 14 deaths, ~4 m (Wikipedia; ISEAS 2022/26)"
+"Taman Sri Nanding, Hulu Langat",101.80467,3.10096,positive,high,Dec 2021 Hulu Langat (UTHM study)
+Klang town,101.44474,3.04484,positive,high,Dec 2021 worst-hit district (Wikipedia)
+Bukit Tunku (Kenny Hills),101.68067,3.16658,dry,high,Elevated residential control
+Damansara Heights,101.65845,3.1524,dry,high,Elevated residential control
+Bukit Antarabangsa,101.77083,3.18538,dry,high,Hillside control
+Bukit Gasing,101.65936,3.09155,dry,high,Forested ridge control
+Mont Kiara,101.65215,3.17,dry,high,Elevated residential control
+Bukit Persekutuan (Federal Hill),101.67906,3.13859,dry,high,Elevated control
+Bukit Kiara,101.6449,3.14044,dry,high,Forested hill control
+Bandar Puchong Jaya (sys),101.62044,3.05074,dry_diagnostic,medium,"Systematic model-blind hard negative (Plan 9): main-stem HAND 10.1m (>RP100 fluvial stage 6.06m), DEM 20.1m, 4.87km from nearest documented flood; no flood record within 1km"
+Kampung Baru Kuala Ampang (sys),101.74938,3.1659,dry_diagnostic,medium,"Systematic model-blind hard negative (Plan 9): main-stem HAND 9.9m (>RP100 fluvial stage 6.06m), DEM 47.0m, 4.79km from nearest documented flood; no flood record within 1km"
+Bandar Sunway (sys),101.61969,3.07351,dry_diagnostic,medium,"Systematic model-blind hard negative (Plan 9): main-stem HAND 9.2m (>RP100 fluvial stage 6.06m), DEM 21.2m, 4.51km from nearest documented flood; no flood record within 1km"
+Seksyen 19 (sys),101.63111,3.11334,dry_diagnostic,medium,"Systematic model-blind hard negative (Plan 9): main-stem HAND 18.5m (>RP100 fluvial stage 6.06m), DEM 30.5m, 4.25km from nearest documented flood; no flood record within 1km"
+Jinjang (sys),101.66372,3.20761,dry_diagnostic,medium,"Systematic model-blind hard negative (Plan 9): main-stem HAND 14.7m (>RP100 fluvial stage 6.06m), DEM 51.8m, 3.81km from nearest documented flood; no flood record within 1km"
+Taman Kosmo Jaya (sys),101.68555,3.20186,dry_diagnostic,medium,"Systematic model-blind hard negative (Plan 9): main-stem HAND 8.7m (>RP100 fluvial stage 6.06m), DEM 45.8m, 2.9km from nearest documented flood; no flood record within 1km"
+Semarak (sys),101.72918,3.17816,dry_diagnostic,medium,"Systematic model-blind hard negative (Plan 9): main-stem HAND 19.1m (>RP100 fluvial stage 6.06m), DEM 56.1m, 2.87km from nearest documented flood; no flood record within 1km"
+Zon Perindustrian Seksyen 51 (sys),101.6351,3.09056,dry_diagnostic,medium,"Systematic model-blind hard negative (Plan 9): main-stem HAND 11.2m (>RP100 fluvial stage 6.06m), DEM 23.2m, 2.82km from nearest documented flood; no flood record within 1km"
+Jinjang (sys),101.64189,3.2158,dry_diagnostic,medium,"Systematic model-blind hard negative (Plan 9): main-stem HAND 19.9m (>RP100 fluvial stage 6.06m), DEM 56.1m, 2.65km from nearest documented flood; no flood record within 1km"
+Bukit Tandang (sys),101.63989,3.06289,dry_diagnostic,medium,"Systematic model-blind hard negative (Plan 9): main-stem HAND 9.1m (>RP100 fluvial stage 6.06m), DEM 23.9m, 2.62km from nearest documented flood; no flood record within 1km"
+Seputeh (sys),101.70476,3.11966,dry_diagnostic,medium,"Systematic model-blind hard negative (Plan 9): main-stem HAND 18.3m (>RP100 fluvial stage 6.06m), DEM 35.5m, 2.33km from nearest documented flood; no flood record within 1km"
+Taman OUG (sys),101.67795,3.07906,dry_diagnostic,medium,"Systematic model-blind hard negative (Plan 9): main-stem HAND 19.9m (>RP100 fluvial stage 6.06m), DEM 37.1m, 2.03km from nearest documented flood; no flood record within 1km"

@@ -1,0 +1,98 @@
+[
+ {
+  "name": "Bandar Puchong Jaya",
+  "lon": 101.62044,
+  "lat": 3.05074,
+  "hand_m": 10.1,
+  "dem_m": 20.1,
+  "km_to_flood": 4.87
+ },
+ {
+  "name": "Kampung Baru Kuala Ampang",
+  "lon": 101.74938,
+  "lat": 3.1659,
+  "hand_m": 9.9,
+  "dem_m": 47.0,
+  "km_to_flood": 4.79
+ },
+ {
+  "name": "Bandar Sunway",
+  "lon": 101.61969,
+  "lat": 3.07351,
+  "hand_m": 9.2,
+  "dem_m": 21.2,
+  "km_to_flood": 4.51
+ },
+ {
+  "name": "Seksyen 19",
+  "lon": 101.63111,
+  "lat": 3.11334,
+  "hand_m": 18.5,
+  "dem_m": 30.5,
+  "km_to_flood": 4.25
+ },
+ {
+  "name": "Jinjang",
+  "lon": 101.66372,
+  "lat": 3.20761,
+  "hand_m": 14.7,
+  "dem_m": 51.8,
+  "km_to_flood": 3.81
+ },
+ {
+  "name": "Taman Kosmo Jaya",
+  "lon": 101.68555,
+  "lat": 3.20186,
+  "hand_m": 8.7,
+  "dem_m": 45.8,
+  "km_to_flood": 2.9
+ },
+ {
+  "name": "Semarak",
+  "lon": 101.72918,
+  "lat": 3.17816,
+  "hand_m": 19.1,
+  "dem_m": 56.1,
+  "km_to_flood": 2.87
+ },
+ {
+  "name": "Zon Perindustrian Seksyen 51",
+  "lon": 101.6351,
+  "lat": 3.09056,
+  "hand_m": 11.2,
+  "dem_m": 23.2,
+  "km_to_flood": 2.82
+ },
+ {
+  "name": "Jinjang",
+  "lon": 101.64189,
+  "lat": 3.2158,
+  "hand_m": 19.9,
+  "dem_m": 56.1,
+  "km_to_flood": 2.65
+ },
+ {
+  "name": "Bukit Tandang",
+  "lon": 101.63989,
+  "lat": 3.06289,
+  "hand_m": 9.1,
+  "dem_m": 23.9,
+  "km_to_flood": 2.62
+ },
+ {
+  "name": "Seputeh",
+  "lon": 101.70476,
+  "lat": 3.11966,
+  "hand_m": 18.3,
+  "dem_m": 35.5,
+  "km_to_flood": 2.33
+ },
+ {
+  "name": "Taman OUG",
+  "lon": 101.67795,
+  "lat": 3.07906,
+  "hand_m": 19.9,
+  "dem_m": 37.1,
+  "km_to_flood": 2.03
+ }
+]

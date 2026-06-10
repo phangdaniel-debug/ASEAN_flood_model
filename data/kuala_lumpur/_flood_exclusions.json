@@ -1,0 +1,92 @@
+[
+ {
+  "name": "Jalan Pudu",
+  "lon": 101.7037705,
+  "lat": 3.1454253
+ },
+ {
+  "name": "Salak Selatan",
+  "lon": 101.7054061,
+  "lat": 3.0982927
+ },
+ {
+  "name": "Jalan Kuching",
+  "lon": 101.6833557,
+  "lat": 3.1733453
+ },
+ {
+  "name": "Jalan Pantai Baru",
+  "lon": 101.6692185,
+  "lat": 3.1160849
+ },
+ {
+  "name": "Jalan Genting Klang",
+  "lon": 101.7123905,
+  "lat": 3.1978492
+ },
+ {
+  "name": "Jalan Tuanku Abdul Halim",
+  "lon": 101.6766745,
+  "lat": 3.1757732
+ },
+ {
+  "name": "Jalan Gombak",
+  "lon": 101.7098712,
+  "lat": 3.2126577
+ },
+ {
+  "name": "Jalan Manjalara",
+  "lon": 101.6322549,
+  "lat": 3.1938721
+ },
+ {
+  "name": "Jalan Maharajalela",
+  "lon": 101.6977866,
+  "lat": 3.139822
+ },
+ {
+  "name": "Wangsa Maju",
+  "lon": 101.7318615,
+  "lat": 3.2057782
+ },
+ {
+  "name": "Jalan Syed Putra",
+  "lon": 101.695357,
+  "lat": 3.1385256
+ },
+ {
+  "name": "Jalan Peel",
+  "lon": 101.7238476,
+  "lat": 3.1297912
+ },
+ {
+  "name": "Jalan Dutamas",
+  "lon": 101.6648581,
+  "lat": 3.1704102
+ },
+ {
+  "name": "Taman Desa",
+  "lon": 101.6850208,
+  "lat": 3.1030637
+ },
+ {
+  "name": "Kampung Bukit Lanchong",
+  "lon": 101.5650844,
+  "lat": 2.9803595
+ },
+ {
+  "name": "Kampung Sungai Lui",
+  "lon": 101.8858072,
+  "lat": 3.1638139
+ },
+ {
+  "name": "Batu Caves",
+  "lon": 101.681192,
+  "lat": 3.2378206
+ },
+ {
+  "name": "OUG",
+  "lon": 101.6632464,
+  "lat": 3.0600724
+ }
+]

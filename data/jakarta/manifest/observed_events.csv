@@ -1,0 +1,2 @@
+event_id,hazard,event_date,est_rp_low,est_rp_high,extent_path,source
+JKT2020,pluvial,2020-01-01,50,100,data/jakarta/flood_obs/JKT2020/EOS_ARIA-SG_20200102_FPM_Indonesia_Floods_v1.5_SHP/EOS_ARIA-SG_20200102_FPM_Indonesia_Floods_v1.5_TIFF_shp.shp,"Sentinel-Asia EOS-ARIA-SG Sentinel-1 SAR flood proxy (2 Jan 2020). Jakarta New Year flood: record ~377 mm/24h rainfall (BMKG); 60+ deaths; extreme-pluvial-dominated event. RP50-100 locally"
