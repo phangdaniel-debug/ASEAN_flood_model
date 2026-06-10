@@ -262,7 +262,7 @@ assuming the SAR reference is complete, which it is not in dense-urban Asia.
 depth."**
 Disclosed and diagnosed: the RID 2.3 m was a road-grade gauge reading during recession; the GLO-30
 30 m cell aggregates the depression floor and surrounds, giving a higher neighbourhood maximum —
-the 1.3× overshoot is consistent with the same 30 m DEM-averaging that drives §5.3, not an
+the 1.72× overshoot (3.96/2.3) is consistent with the same 30 m DEM-averaging that drives §5.3, not an
 independent failure. We report it as OVER rather than dropping it.
 
 ---
@@ -288,7 +288,7 @@ pipeline (the provenance was audited and corrected). The honest caveat, stated i
 that Jakarta's fluvial layer uses a dense-HAND that over-broadens (the source of its CRR shortfall)
 — so 389 km² is a screening upper bound, consistent with the model's documented behaviour.
 
-**Q6.3 — "The mitigation delta is −133 km² against a coastal extent of ~3,500 km² with a 1.7–25×
+**Q6.3 — "The mitigation delta is −133 km² against a coastal extent of ~3,546 km² with a 1.7–25×
 bias. A 4 % difference inside a 25× bias is noise."**
 The defence is the constant-bias argument: the bathtub bias factor is approximately constant within
 a city across SSP × horizon (same solver, same DEM, same below-threshold terrain), so it

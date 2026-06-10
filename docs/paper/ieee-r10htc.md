@@ -63,7 +63,7 @@ The clearest policy-relevant signal is the **mitigation delta** — the flooded 
 |---|---:|---:|---:|---:|---|
 | Singapore | 67 | 112* | 19 | 184 | Canal-overflow + coastal |
 | Kuala Lumpur (core) | 0 | 126 | 268 | 362 | Pluvial |
-| Bangkok (klong) | 3,500 | 788 | 433 | 3,598 | Coastal |
+| Bangkok (klong) | 3,546 | 788 | 433 | 3,598 | Coastal |
 | Jakarta | 159 | 389 | 169 | 609 | Fluvial + pluvial |
 
 *Singapore's "fluvial" layer is PUB primary canal-overflow under long-duration design rainfall, not natural-river flooding. The Bangkok coastal extent is a bathtub upper bound; the inertial-corrected value is 283 km² (§IV). All Table II values are current-pipeline bathtub RP100 outputs; the coastal extents reproduce the documented benchmarks within ~1 %.
