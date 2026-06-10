@@ -114,15 +114,15 @@ We have shown that an open-source, open-data, per-country-calibrated 30 m multi-
 ## References
 
 <!-- References are ordered by first citation in the text (IEEE convention), matching the .tex/.docx renderings. -->
-[1] Asian Development Bank, "Southeast Asia and the economics of global climate stabilization," 2022.
-[2] D. P. Lenderink et al., "Scaling of extreme rainfall with temperature," 2017.
-[3] D. Chaussard, F. Amelung, H. Abidin, and S.-H. Hong, "Sinking cities in Indonesia: ALOS PALSAR detects rapid subsidence," *Remote Sens. Environ.*, vol. 128, pp. 150–161, 2013.
+[1] Asian Development Bank, "Asia in the Global Transition to Net Zero: Asian Development Outlook 2022 Thematic Report," 2022.
+[2] G. Lenderink, R. Barbero, J. M. Loriaux, and H. J. Fowler, "Super-Clausius–Clapeyron Scaling of Extreme Hourly Convective Precipitation and Its Relation to Large-Scale Atmospheric Conditions," *J. Climate*, vol. 30, pp. 6037–6052, 2017.
+[3] E. Chaussard, F. Amelung, H. Abidin, and S.-H. Hong, "Sinking cities in Indonesia: ALOS PALSAR detects rapid subsidence," *Remote Sens. Environ.*, vol. 128, pp. 150–161, 2013.
 [4] H. Z. Abidin et al., "Land subsidence of Jakarta and its relation with urban development," *Nat. Hazards*, vol. 59, pp. 1753–1771, 2011.
 [5] N. Phien-wej, P. H. Giao, and P. Nutalaya, "Land subsidence in Bangkok, Thailand," *Eng. Geol.*, vol. 82, pp. 187–201, 2006.
 [6] S. Hallegatte, C. Green, R. J. Nicholls, and J. Corfee-Morlot, "Future flood losses in major coastal cities," *Nat. Clim. Change*, vol. 3, pp. 802–806, 2013.
 [7] B. Tellman et al., "Satellite imaging reveals increased proportion of population exposed to floods," *Nature*, vol. 596, pp. 80–86, 2021.
-[8] O. E. J. Wing et al., "A 30 m global flood inundation model for all climates," 2024.
-[9] H. Hofste et al., "Aqueduct Floods methodology," World Resources Institute Tech. Note, 2019.
+[8] O. E. J. Wing et al., "A 30 m global flood inundation model for any climate scenario," *Water Resour. Res.*, vol. 60, e2023WR036460, 2024.
+[9] R. W. Hofste, P. Reig, and L. Schleifer, "Aqueduct 3.0: Updated Decision-Relevant Global Water Risk Indicators," World Resources Institute, 2019.
 [10] P. J. Ward et al., "Aqueduct Floods: global flood risk maps and analysis," 2020.
 [11] E. H. Sutanudjaja et al., "PCR-GLOBWB 2: a 5 arcmin global hydrological and water resources model," *Geosci. Model Dev.*, vol. 11, pp. 2429–2453, 2018.
 [12] J. Muñoz-Sabater et al., "ERA5-Land: a state-of-the-art global reanalysis dataset for land applications," *Earth Syst. Sci. Data*, vol. 13, pp. 4349–4383, 2021.
@@ -134,7 +134,6 @@ We have shown that an open-source, open-data, per-country-calibrated 30 m multi-
 [18] S. Muis et al., "A high-resolution global dataset of extreme sea levels, tides, and storm surges, including future projections," *Front. Mar. Sci.*, vol. 7, 263, 2020.
 [19] P. D. Bates, M. S. Horritt, and T. J. Fewtrell, "A simple inertial formulation of the shallow water equations for efficient two-dimensional flood inundation modelling," *J. Hydrol.*, vol. 387, no. 1–2, pp. 33–45, 2010.
 [20] A. D. Nobre et al., "Height Above the Nearest Drainage — a hydrologically relevant new terrain model," *J. Hydrol.*, vol. 404, pp. 13–29, 2011.
-[21] B. Schwanghart and D. Scherler, "TopoToolbox 2," *Earth Surf. Dynam.*, vol. 2, pp. 1–7, 2014.
-[22] R. Barnes, K. L. Callaghan, and A. D. Wickert, "Computing water flow through complex landscapes — Part 2: Fill–Spill–Merge," *Earth Surf. Dynam.*, vol. 8, pp. 431–445, 2020.
+[21] C. D. Rennó, A. D. Nobre, L. A. Cuartas, J. V. Soares, M. G. Hodnett, J. Tomasella, and M. A. Waterloo, "HAND, a new terrain descriptor using SRTM-DEM: Mapping terra-firme rainforest environments in Amazonia," *Remote Sens. Environ.*, vol. 112, pp. 3469–3481, 2008.
+[22] R. Barnes, K. L. Callaghan, and A. D. Wickert, "Computing water flow through complex landscapes — Part 3: Fill–Spill–Merge," *Earth Surf. Dynam.*, vol. 9, pp. 105–121, 2021.
 [23] O. Planchon and F. Darboux, "A fast, simple and versatile algorithm to fill the depressions of digital elevation models," *Catena*, vol. 46, pp. 159–176, 2002.
-[24] N. Trinh et al., "Flood risk in the Mekong and Chao Phraya deltas," 2017.
