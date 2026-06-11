@@ -1,0 +1,50 @@
+{
+ "wf_1e|SSP5-8.5|-6.1800|106.8300|p50|b2020|y2020": {
+  "location_id": 1351,
+  "location_lat": 1.17,
+  "location_lon": 103.75,
+  "source_note": "IPCC AR6 Zarr tide-gauge workflow; nearest location; p50; baseline=2020",
+  "source_url": "https://storage.googleapis.com/ar6-lsl-simulations-public-standard/tide-gauges/full_sample_workflows/wf_1e/ssp585/total-workflow.zarr",
+  "water_level_m": 0.0
+ },
+ "wf_1e|SSP5-8.5|-6.2088|106.8456|p50|b2020|y2020": {
+  "location_id": 1351,
+  "location_lat": 1.17,
+  "location_lon": 103.75,
+  "source_note": "IPCC AR6 Zarr tide-gauge workflow; nearest location; p50; baseline=2020",
+  "source_url": "https://storage.googleapis.com/ar6-lsl-simulations-public-standard/tide-gauges/full_sample_workflows/wf_1e/ssp585/total-workflow.zarr",
+  "water_level_m": 0.0
+ },
+ "wf_1e|SSP5-8.5|1.2903|103.8519|p50|b2020|y2020": {
+  "location_id": 1746,
+  "location_lat": 1.27,
+  "location_lon": 103.85,
+  "source_note": "IPCC AR6 Zarr tide-gauge workflow; nearest location; p50; baseline=2020",
+  "source_url": "https://storage.googleapis.com/ar6-lsl-simulations-public-standard/tide-gauges/full_sample_workflows/wf_1e/ssp585/total-workflow.zarr",
+  "water_level_m": 0.0
+ },
+ "wf_1e|SSP5-8.5|10.8231|106.6297|p50|b2020|y2020": {
+  "location_id": 1495,
+  "location_lat": 10.33,
+  "location_lon": 107.07,
+  "source_note": "IPCC AR6 Zarr tide-gauge workflow; nearest location; p50; baseline=2020",
+  "source_url": "https://storage.googleapis.com/ar6-lsl-simulations-public-standard/tide-gauges/full_sample_workflows/wf_1e/ssp585/total-workflow.zarr",
+  "water_level_m": 0.0
+ },
+ "wf_1e|SSP5-8.5|13.7563|100.5018|p50|b2020|y2020": {
+  "location_id": 444,
+  "location_lat": 13.55,
+  "location_lon": 100.58,
+  "source_note": "IPCC AR6 Zarr tide-gauge workflow; nearest location; p50; baseline=2020",
+  "source_url": "https://storage.googleapis.com/ar6-lsl-simulations-public-standard/tide-gauges/full_sample_workflows/wf_1e/ssp585/total-workflow.zarr",
+  "water_level_m": 0.0
+ },
+ "wf_1e|SSP5-8.5|14.5995|120.9842|p50|b2020|y2020": {
+  "location_id": 145,
+  "location_lat": 14.58,
+  "location_lon": 120.97,
+  "source_note": "IPCC AR6 Zarr tide-gauge workflow; nearest location; p50; baseline=2020",
+  "source_url": "https://storage.googleapis.com/ar6-lsl-simulations-public-standard/tide-gauges/full_sample_workflows/wf_1e/ssp585/total-workflow.zarr",
+  "water_level_m": 0.0
+ }
+}

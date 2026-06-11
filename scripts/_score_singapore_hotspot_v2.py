@@ -6,9 +6,11 @@
 flood-atlas-era SG operating point (RP50 / 150 m radius / pluvial-only / 2100).
 
 The SG model itself is UNCHANGED between flood-atlas and v2.0; only the scoring
-convention is re-aligned here. Rasters are read in place from flood-atlas; the
-v2.0 `hotspot_scoring` engine does the sampling and bootstrap so the skill numbers
-are produced by the identical code path as the other three cities.
+convention is re-aligned here. The Singapore reference-model RP100 depth rasters
+(coastal/fluvial/pluvial) are vendored in-repo under `outputs/singapore_ssp585_2020/`
+so this scorer runs entirely from the flood-v2.0 tree (self-contained for archival /
+Zenodo). The v2.0 `hotspot_scoring` engine does the sampling and bootstrap so the
+skill numbers are produced by the identical code path as the other three cities.
 
 Combined hit = ANY of the three RP100 depth rasters has a cell >= 0.10 m within the
 hit-radius of the hotspot (equivalent to a per-pixel-max wet-mask, but robust to the
@@ -23,12 +25,14 @@ V2_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(V2_ROOT / "scripts"))
 from hotspot_scoring import load_hotspots, sample_hit, skill_scores, bootstrap_tss_ci  # noqa: E402
 
-ATLAS = Path("D:/GPTs/Projects/flood-atlas")
-REGISTER = ATLAS / "data/singapore/flood_obs/hotspots/sg_pluvial_hotspots.csv"
+# All paths are now in-repo (vendored from the flood-atlas reference-model run),
+# so the scorer is self-contained within flood-v2.0.
+REGISTER = V2_ROOT / "data/singapore/flood_obs/hotspots/sg_pluvial_hotspots.csv"
+SG_OUT = V2_ROOT / "outputs/singapore_ssp585_2020"
 RASTERS = [
-    ATLAS / "outputs/singapore_ssp585_2020/coastal/rp_100/coastal_depth_SSP5-8.5_2020_rp100.tif",
-    ATLAS / "outputs/singapore_ssp585_2020/fluvial/rp_100/fluvial_depth_SSP5-8.5_2020_rp100.tif",
-    ATLAS / "outputs/singapore_ssp585_2020/pluvial/rp_100/pluvial_depth_SSP5-8.5_2020_rp100.tif",
+    SG_OUT / "coastal/rp_100/coastal_depth_SSP5-8.5_2020_rp100.tif",
+    SG_OUT / "fluvial/rp_100/fluvial_depth_SSP5-8.5_2020_rp100.tif",
+    SG_OUT / "pluvial/rp_100/pluvial_depth_SSP5-8.5_2020_rp100.tif",
 ]
 THRESH = 0.10
 
