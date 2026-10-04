@@ -1,0 +1,67 @@
+{
+  "bareearth": "D:\\GPTs\\Projects\\flood-v3.0\\dem\\bangkok\\dem_bareearth_bangkok.tif",
+  "n_holdout": 25346,
+  "overall": {
+    "n": 25346,
+    "bias_m": 0.08360411115198098,
+    "mae_m": 1.249501176727464,
+    "rmse_m": 1.9942254798114203,
+    "p5_m": -1.7166870589309973,
+    "p95_m": 3.1641664347229375
+  },
+  "zones": {
+    "coastal_flat": {
+      "n": 3926,
+      "bias_m": 0.6297495543999201,
+      "mae_m": 1.2398265306100078,
+      "rmse_m": 2.038283197372172,
+      "p5_m": -1.270176466414961,
+      "p95_m": 3.5593009983366386
+    },
+    "other": {
+      "n": 3597,
+      "bias_m": -0.028603266746417215,
+      "mae_m": 1.2728431367105093,
+      "rmse_m": 1.8617265543590995,
+      "p5_m": -2.2182221983579318,
+      "p95_m": 3.0600782853346065
+    },
+    "urban_core": {
+      "n": 4452,
+      "bias_m": 0.35782324044439634,
+      "mae_m": 2.17535301260758,
+      "rmse_m": 3.3314397863704706,
+      "p5_m": -6.47527354429604,
+      "p95_m": 4.339387967346003
+    },
+    "vegetated": {
+      "n": 13371,
+      "bias_m": -0.1378737615202727,
+      "mae_m": 0.93779145099714,
+      "rmse_m": 1.300393475663461,
+      "p5_m": -1.4824480520507262,
+      "p95_m": 2.175649587835231
+    }
+  },
+  "coastal_deltadtm_xcheck": {
+    "n_cells": 4091254,
+    "mae_m": 1.3225932916488266,
+    "bias_m": 0.7935729540987015
+  },
+  "tolerances": {
+    "coastal_mae": 0.6,
+    "bias": 0.5,
+    "inland_mae": 1.5,
+    "urban_min_points": 30
+  },
+  "gate": {
+    "verdict": "FALL BACK (DeltaDTM coastal-flat + candidate inland, seam-smooth ~10 m)",
+    "reasons": [
+      "coastal MAE 1.24 m / bias +0.63 m outside tolerance."
+    ],
+    "coastal_ok": false,
+    "veg_ok": true,
+    "inland_ok": true,
+    "urban_enough": true
+  }
+}

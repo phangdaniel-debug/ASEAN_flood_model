@@ -1,0 +1,76 @@
+{
+  "n_points": 16397,
+  "source_counts": {
+    "ATL08": 16397
+  },
+  "f_fit": {
+    "bias0_m": 1.454396829259224,
+    "n_trueground_calib": 999,
+    "f_raw": 0.1838770391498812,
+    "f_clipped": 0.1838770391498812,
+    "n_veg_calib": 6313,
+    "per_bin": {
+      "(3, 6]": {
+        "n": 430,
+        "mean_resid_minus_bias0_m": 2.086647112080012,
+        "mean_canopy_m": 4.986046511627907
+      },
+      "(6, 10]": {
+        "n": 1282,
+        "mean_resid_minus_bias0_m": 0.8763283091785651,
+        "mean_canopy_m": 8.775351014040561
+      },
+      "(10, 15]": {
+        "n": 2923,
+        "mean_resid_minus_bias0_m": 1.53926353861113,
+        "mean_canopy_m": 13.06637016763599
+      },
+      "(15, 25]": {
+        "n": 1599,
+        "mean_resid_minus_bias0_m": 3.8996738356550353,
+        "mean_canopy_m": 17.9906191369606
+      },
+      "(25, 100]": {
+        "n": 79,
+        "mean_resid_minus_bias0_m": 12.736068460056226,
+        "mean_canopy_m": 29.89873417721519
+      }
+    }
+  },
+  "zones": {
+    "coastal_flat": {
+      "n_total": 21,
+      "n_holdout": 5,
+      "raw_bias_m": 3.2076430218967595,
+      "raw_mae_m": 3.2076430218967595,
+      "raw_rmse_m": 3.5107708959196304
+    },
+    "other": {
+      "n_total": 3939,
+      "n_holdout": 1179,
+      "raw_bias_m": 2.6932375587500905,
+      "raw_mae_m": 3.66630725765215,
+      "raw_rmse_m": 5.763066233002919
+    },
+    "urban_core": {
+      "n_total": 3393,
+      "n_holdout": 1036,
+      "raw_bias_m": 1.828349343227777,
+      "raw_mae_m": 3.2587723062959637,
+      "raw_rmse_m": 4.5113866954465145
+    },
+    "vegetated": {
+      "n_total": 9044,
+      "n_holdout": 2731,
+      "raw_bias_m": 3.6270118553445942,
+      "raw_mae_m": 4.15240958262773,
+      "raw_rmse_m": 6.080287002243974
+    }
+  },
+  "params": {
+    "holdout": 0.3,
+    "seed": 42,
+    "coastal_flat_max_m": 2.0
+  },
+  "note": "f fit on vegetated non-built CALIB points only; zone stats on HOLDOUT. Urban-core check-point count is the honesty metric (spec \u00a71.5)."
+}

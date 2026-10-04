@@ -363,17 +363,49 @@ def severity_area_stats(severity: np.ndarray, transform, crs) -> dict[str, float
     ),
 )
 @click.option(
+    "--coastal-manning-n",
+    "coastal_manning_n",
+    type=float,
+    default=0.06,
+    show_default=True,
+    help="Manning's roughness for the coastal local-inertia solver's inundated "
+         "surface. 0.06 is a low-mid developed-floodplain value (Chow 1959; "
+         "Arcement & Schneider 1989, USGS WSP 2339; lit. 0.05-0.15).",
+)
+@click.option(
     "--pluvial-model",
     "pluvial_model",
-    type=click.Choice(["fillspill", "legacy", "raingrid"]),
+    type=click.Choice(["fillspill", "legacy", "raingrid", "handfill"]),
     default="fillspill",
     show_default=True,
     help="Pluvial solver: 'raingrid' = 2D rain-on-grid local-inertial "
          "(flash-flood ponding from drainage-capacity exceedance; recommended, "
          "use with a bare-earth conditioned --pluvial-dem-raster); "
          "'fillspill' = catchment-routed fill-and-spill cascade (depression "
-         "storage only); 'legacy' = lumped depression-fill (frozen extent).",
+         "storage only); 'handfill' = rain floods low land near drainage "
+         "(HAND < --pluvial-hand-stage), for flat canal-dense cities where "
+         "flash floods occur at low points adjacent to OPEN drains rather than "
+         "in closed depressions (Singapore); 'legacy' = lumped depression-fill.",
 )
+@click.option(
+    "--pluvial-hand-raster", "pluvial_hand_raster_path",
+    type=click.Path(exists=True, path_type=Path), default=None,
+    help="HAND raster for the 'handfill' pluvial model (height above the drainage "
+         "network).  Aligned to the DEM.  Low land near drainage (HAND below the "
+         "stage) floods on the design rain.")
+@click.option(
+    "--pluvial-hand-stage", "pluvial_hand_stage", type=float, default=1.5,
+    show_default=True,
+    help="Rain-driven flood stage above drainage for the 'handfill' pluvial model (m).")
+@click.option(
+    "--pluvial-hand-stage-baseline", "pluvial_hand_stage_baseline", type=float,
+    default=None,
+    help="Calibration-baseline pluvial excess (m) enabling return-period / climate "
+         "scaling of the handfill stage. When set, the EFFECTIVE stage = "
+         "--pluvial-hand-stage x (this row's excess / baseline), clipped to [0.4, 2.5], "
+         "so the handfill pluvial layer responds to RP and scenario forcing instead of "
+         "being fixed. Set to the present-day RP100 excess the stage was calibrated "
+         "against (Singapore 0.0696, Jakarta 0.1300). Omit for legacy fixed-stage.")
 @click.option(
     "--pluvial-dem-raster",
     "pluvial_dem_raster_path",
@@ -446,6 +478,7 @@ def cli(
     coastal_seed_latlon: tuple[str, ...],
     fluvial_bankfull_rp: int,
     coastal_solver: str,
+    coastal_manning_n: float,
     coastal_msl_egm2008: float,
     inertial_t_end: float,
     inertial_dt_max: float,
@@ -453,6 +486,9 @@ def cli(
     clamp_negative_land: bool,
     only_hazard_types: str | None,
     pluvial_model: str,
+    pluvial_hand_raster_path: Path | None,
+    pluvial_hand_stage: float,
+    pluvial_hand_stage_baseline: float | None,
     pluvial_dem_raster_path: Path | None,
     manning_raster_path: Path | None,
     rain_storm_hours: float,
@@ -737,6 +773,21 @@ def cli(
             dem_land, sea_mask, pluvial_river_mask, profile,
         )
 
+    # Load the HAND raster for the 'handfill' pluvial model (RP-independent).
+    pluvial_hand_array = None
+    if pluvial_model == "handfill":
+        if pluvial_hand_raster_path is None:
+            raise click.UsageError("--pluvial-model handfill requires --pluvial-hand-raster")
+        with rasterio.open(pluvial_hand_raster_path) as ph_src:
+            if ph_src.shape != dem.shape or ph_src.transform != profile["transform"]:
+                raise ValueError("--pluvial-hand-raster is not aligned to the DEM")
+            pluvial_hand_array = ph_src.read(1).astype(np.float32)
+            if ph_src.nodata is not None:
+                pluvial_hand_array = np.where(
+                    pluvial_hand_array == ph_src.nodata, np.nan, pluvial_hand_array)
+        click.echo(f"Handfill pluvial: HAND raster {pluvial_hand_raster_path.name}, "
+                   f"rain-driven stage {pluvial_hand_stage:.2f} m above drainage")
+
     # ---- Rain-on-grid precompute (RP-independent inputs) -------------------
     # The rain-on-grid solver needs: a bed where sea cells are FINITE outlets
     # (not NaN walls), an outlet mask (sea + open channels = free-drainage
@@ -904,6 +955,29 @@ def cli(
                     "guard and dispatch guard have diverged"
                 )
                 depth = route_pluvial_rp(pluvial_topo, level_m, runoff_coeff_arr)
+            elif pluvial_model == "handfill":
+                # Rain floods low land near drainage: depth = max(0, stage - HAND).
+                # For flat canal-dense cities where flash floods pool at low points
+                # adjacent to OPEN drains, not in closed depressions. The burned
+                # channel cells themselves are conveyance, not flood, so masked out.
+                assert pluvial_hand_array is not None
+                # Effective stage: fixed (legacy) OR forcing-scaled so the handfill
+                # pluvial layer responds to return period / climate. With a calibration
+                # baseline excess supplied, the stage scales linearly with this row's
+                # rain excess (level_m), preserving the calibration at level_m==baseline
+                # (so the present-day RP100 gate result is unchanged).
+                stage_eff = pluvial_hand_stage
+                if pluvial_hand_stage_baseline:
+                    _ratio = min(max(float(level_m) / float(pluvial_hand_stage_baseline), 0.4), 2.5)
+                    stage_eff = pluvial_hand_stage * _ratio
+                depth = flood_depth_hand(pluvial_hand_array, stage_eff)
+                depth = np.where(
+                    pluvial_river_mask | (pluvial_hand_array < 0.05), 0.0, depth)
+                # The HAND geometry sets the flood-prone EXTENT; the rain-driven
+                # flash-flood DEPTH is bounded separately (depth = stage - HAND
+                # over-deepens next to drains).  Cap to a realistic flash-flood depth.
+                if pluvial_depth_cap is not None:
+                    depth = np.minimum(depth, np.float32(pluvial_depth_cap))
             else:
                 # Depression-filling ponding model (legacy).
                 # Sea pixels are NaN in dem_land so the ocean does not form a
@@ -966,7 +1040,7 @@ def cli(
                 sea_mask=sea_mask,
                 wl_boundary=wl_fn,
                 initial_depth=init_depth,
-                n=0.06,
+                n=coastal_manning_n,
                 dx=dx,
                 dy=dy,
                 t_end=inertial_t_end,
@@ -977,15 +1051,26 @@ def cli(
                 compute_velocity=False,    # peak_velocity unused here; skip for speed
             )
             depth = result["peak_depth"]
+            # Review C6 follow-up: record converged vs t_end-limited per coastal cell.
+            # Note when the SLR floor is active the early-stop is deliberately disabled
+            # (convergence_window huge), so converged=False there means "ran full t_end
+            # by design", not "failed to converge".
+            click.echo(
+                f"  [coastal] inertial converged={result.get('converged')} "
+                f"steps={result.get('n_steps', '?')} (t_end-limited if False)"
+            )
             # Post-hoc physical cap: in the local-inertial scheme, narrow inlets
             # and sharp coastal gradients can produce localised numerical wave
             # amplification during the sustained peak hold, leaving a few cells
             # with depths exceeding the physical maximum (peak_WSE - bed).  Cap
-            # at peak_WSE - max(0, bed) plus a small velocity-head margin (0.2 m
-            # ≈ 0.5*v²/g for v=2 m/s).  Removes the artefacts without altering
+            # at max(0, peak_WSE - bed) plus a small velocity-head margin (0.2 m
+            # ≈ 0.5*v²/g for v=2 m/s).  The bed term must stay UNclamped: on
+            # below-MSL land (Jakarta polders) peak_WSE - bed exceeds peak_WSE,
+            # and clamping bed at 0 silently truncated the water column there
+            # (the 2026-06-24 cap fix).  Removes the artefacts without altering
             # the bulk extent or genuine physical depths.
             _bed = np.where(np.isfinite(dem), dem.astype(np.float32), 0.0)
-            _phys_cap = np.maximum(0.0, float(level_m) - np.maximum(0.0, _bed)) + 0.2
+            _phys_cap = np.maximum(0.0, float(level_m) - _bed) + 0.2
             depth = np.minimum(depth, _phys_cap.astype(np.float32))
             depth[~np.isfinite(dem)] = np.nan
             _prev_coastal_depth = depth  # seed next RP warm-start

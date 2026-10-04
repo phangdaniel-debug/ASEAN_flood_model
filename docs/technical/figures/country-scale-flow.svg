@@ -1,0 +1,109 @@
+<svg viewBox="0 0 760 892" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="ttl desc" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif">
+  <title id="ttl">Country-scale flood-atlas orchestration flow</title>
+  <desc id="desc">Free global inputs are partitioned into hydrological sub-basins (for fluvial and pluvial) and coastline segments (coastal fringe only). Terrain is a FABDEM bare-earth baseline with per-urban-core calibration patches and a subsidence field. Each tile is solved in parallel: inertial coastal on the fringe, main-stem HAND fluvial per sub-basin, and fill-spill (rural default) or handfill (urban canal cores) pluvial. Tiles are mosaicked by per-pixel maximum, then validated by an urban documented-hotspot gate and rural satellite flood-extent overlap, and assembled into a country atlas across return period, scenario, and horizon.</desc>
+  <style>
+    .bg   { fill: #ffffff; }
+    .box  { fill: #f6f8fa; stroke: #d0d7de; stroke-width: 1.5; }
+    .acc  { fill: #dceeec; stroke: #1b7f7a; stroke-width: 1.5; }
+    .pill { fill: #eaeef2; stroke: #1f2328; stroke-width: 1.5; }
+    .grp  { fill: none; stroke: #1b7f7a; stroke-width: 1.4; stroke-dasharray: 5 4; }
+    .t    { fill: #1f2328; font-size: 15px; font-weight: 650; }
+    .ti   { fill: #1f2328; font-size: 14px; font-weight: 650; }
+    .s    { fill: #57606a; font-size: 12.5px; }
+    .si   { fill: #57606a; font-size: 11.5px; }
+    .glab { fill: #1b7f7a; font-size: 11.5px; font-weight: 700; letter-spacing: .4px; }
+    .edge { stroke: #8c959f; stroke-width: 1.6; fill: none; }
+    .elab { fill: #57606a; font-size: 11px; font-style: italic; }
+    text  { text-anchor: middle; }
+  </style>
+  <defs>
+    <marker id="ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#8c959f"/>
+    </marker>
+  </defs>
+
+  <rect class="bg" x="0" y="0" width="760" height="892"/>
+
+  <!-- edges -->
+  <path class="edge" d="M380,78 L380,103" marker-end="url(#ah)"/>
+  <path class="edge" d="M340,148 L210,187" marker-end="url(#ah)"/>
+  <path class="edge" d="M420,148 L552,187" marker-end="url(#ah)"/>
+  <path class="edge" d="M205,248 L300,287" marker-end="url(#ah)"/>
+  <path class="edge" d="M556,248 L460,287" marker-end="url(#ah)"/>
+  <path class="edge" d="M380,352 L380,383" marker-end="url(#ah)"/>
+  <path class="edge" d="M380,512 L380,547" marker-end="url(#ah)"/>
+  <path class="edge" d="M380,602 L380,631" marker-end="url(#ah)"/>
+  <path class="edge" d="M340,676 L210,715" marker-end="url(#ah)"/>
+  <path class="edge" d="M420,676 L552,715" marker-end="url(#ah)"/>
+  <path class="edge" d="M210,776 L312,815" marker-end="url(#ah)"/>
+  <path class="edge" d="M552,776 L448,815" marker-end="url(#ah)"/>
+  <text class="elab" x="262" y="172">hydro tiles</text>
+  <text class="elab" x="506" y="172">coast segments</text>
+  <text class="elab" x="262" y="700">urban</text>
+  <text class="elab" x="506" y="700">rural</text>
+
+  <!-- INPUTS -->
+  <rect class="box" x="100" y="24" width="560" height="54" rx="9"/>
+  <text class="t" x="380" y="46">Free global inputs</text>
+  <text class="s" x="380" y="65">FABDEM · ICESat-2/GEDI · WorldCover · OSM · GloFAS · tide gauges · AR6 SLR · regional IDF</text>
+
+  <!-- PARTITION -->
+  <rect class="pill" x="290" y="104" width="180" height="44" rx="22"/>
+  <text class="t" x="380" y="131">Partition domain</text>
+
+  <!-- HYDRO TILES -->
+  <rect class="box" x="44" y="188" width="300" height="60" rx="9"/>
+  <text class="t" x="194" y="213">Hydrological tiles</text>
+  <text class="s" x="194" y="232">HydroBASINS → fluvial + pluvial</text>
+
+  <!-- COASTAL SEGMENTS -->
+  <rect class="box" x="416" y="188" width="300" height="60" rx="9"/>
+  <text class="t" x="566" y="213">Coastline segments</text>
+  <text class="s" x="566" y="232">surge+SLR reach → coastal fringe</text>
+
+  <!-- TERRAIN -->
+  <rect class="box" x="120" y="288" width="520" height="64" rx="9"/>
+  <text class="t" x="380" y="312">Terrain — per land-cover class</text>
+  <text class="s" x="380" y="331">FABDEM bare-earth baseline + urban calibration patches</text>
+  <text class="s" x="380" y="347">+ subsidence field</text>
+
+  <!-- HAZARD SOLVE GROUP -->
+  <rect class="grp" x="40" y="384" width="680" height="128" rx="11"/>
+  <text class="glab" x="380" y="404">PER-TILE HAZARD SOLVE · PARALLEL</text>
+  <rect class="acc" x="60"  y="424" width="200" height="74" rx="8"/>
+  <text class="ti" x="160" y="450">Coastal</text>
+  <text class="si" x="160" y="469">inertial on fringe</text>
+  <text class="si" x="160" y="485">defences where documented</text>
+  <rect class="acc" x="280" y="424" width="200" height="74" rx="8"/>
+  <text class="ti" x="380" y="450">Fluvial</text>
+  <text class="si" x="380" y="469">main-stem HAND</text>
+  <text class="si" x="380" y="485">per sub-basin (dominant)</text>
+  <rect class="acc" x="500" y="424" width="200" height="74" rx="8"/>
+  <text class="ti" x="600" y="450">Pluvial</text>
+  <text class="si" x="600" y="469">fill-spill (rural default)</text>
+  <text class="si" x="600" y="485">handfill (urban canals)</text>
+
+  <!-- MOSAIC -->
+  <rect class="box" x="170" y="548" width="420" height="54" rx="9"/>
+  <text class="t" x="380" y="570">Mosaic across tiles</text>
+  <text class="s" x="380" y="589">per-pixel-max composite + severity</text>
+
+  <!-- VALIDATION -->
+  <rect class="pill" x="290" y="632" width="180" height="44" rx="22"/>
+  <text class="t" x="380" y="659">Validation</text>
+
+  <!-- URBAN -->
+  <rect class="box" x="44" y="716" width="300" height="60" rx="9"/>
+  <text class="t" x="194" y="741">Urban — hotspot gate</text>
+  <text class="s" x="194" y="760">HR / CRR / TSS (point skill)</text>
+
+  <!-- RURAL -->
+  <rect class="box" x="416" y="716" width="300" height="60" rx="9"/>
+  <text class="t" x="566" y="741">Rural — satellite extent</text>
+  <text class="s" x="566" y="760">Sentinel-1 / Global Flood DB · CSI</text>
+
+  <!-- ATLAS -->
+  <rect class="acc" x="200" y="816" width="360" height="52" rx="9"/>
+  <text class="t" x="380" y="839">Country atlas</text>
+  <text class="s" x="380" y="858">RP × scenario × horizon</text>
+</svg>

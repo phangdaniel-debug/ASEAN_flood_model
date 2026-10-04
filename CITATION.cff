@@ -1,0 +1,32 @@
+cff-version: 1.2.0
+message: "If you use this software or the maps it produced, please cite both the software and the data record."
+title: "ASEAN multi-hazard flood atlas: code for the SAFE 2026 release"
+abstract: >-
+  An open-source pipeline that produces coastal, fluvial and pluvial flood-depth maps at 30 m
+  for Singapore, Kuala Lumpur, Bangkok and Jakarta, for the present day and for SSP2-4.5 and
+  SSP5-8.5 at 2050 and 2100, with the bare-earth terrain calibration and the frozen validation
+  lists used to test it.
+type: software
+version: safe2026-v4.0
+date-released: 2026-10-04
+authors:
+  - family-names: Phang
+    given-names: Daniel
+    orcid: "https://orcid.org/0009-0006-3785-4458"
+    affiliation: "Independent researcher, Singapore"
+license: GPL-3.0-or-later
+repository-code: "https://github.com/phangdaniel-debug/ASEAN_flood_model"
+keywords:
+  - flood hazard
+  - urban flooding
+  - Southeast Asia
+  - open data
+  - climate scenarios
+references:
+  - type: dataset
+    title: "Open Multi-Hazard Flood Atlas -- Singapore, Kuala Lumpur, Bangkok and Jakarta (30 m; present + SSP2-4.5/SSP5-8.5 x 2050/2100; RP10/100/1000)"
+    authors:
+      - family-names: Phang
+        given-names: Daniel
+    doi: 10.5281/zenodo.20821455
+    license: CC-BY-4.0

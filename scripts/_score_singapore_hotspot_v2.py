@@ -21,42 +21,51 @@ from __future__ import annotations
 import sys
 from pathlib import Path
 
+import click
+
 V2_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(V2_ROOT / "scripts"))
 from hotspot_scoring import load_hotspots, sample_hit, skill_scores, bootstrap_tss_ci  # noqa: E402
 
-# All paths are now in-repo (vendored from the flood-atlas reference-model run),
-# so the scorer is self-contained within flood-v2.0.
-REGISTER = V2_ROOT / "data/singapore/flood_obs/hotspots/sg_pluvial_hotspots.csv"
-SG_OUT = V2_ROOT / "outputs/singapore_ssp585_2020"
-RASTERS = [
-    SG_OUT / "coastal/rp_100/coastal_depth_SSP5-8.5_2020_rp100.tif",
-    SG_OUT / "fluvial/rp_100/fluvial_depth_SSP5-8.5_2020_rp100.tif",
-    SG_OUT / "pluvial/rp_100/pluvial_depth_SSP5-8.5_2020_rp100.tif",
-]
 THRESH = 0.10
+DEFAULT_REGISTER = V2_ROOT / "data/singapore/flood_obs/hotspots/sg_pluvial_hotspots.csv"
+DEFAULT_OUT = V2_ROOT / "outputs/singapore_present"
 
 
-def combined_hit(h, radius_m: float) -> bool:
+def combined_hit(h, rasters, radius_m: float) -> bool:
     return any(
         sample_hit(r, h.lon, h.lat, radius_m=radius_m, depth_threshold_m=THRESH)
-        for r in RASTERS
+        for r in rasters
     )
 
 
-def main() -> None:
-    hotspots = load_hotspots(REGISTER)
-    n_flood = sum(1 for h in hotspots if h.cls == "flood")
-    n_dry = sum(1 for h in hotspots if h.cls == "dry")
-    for r in RASTERS:
+@click.command()
+@click.option("--out-dir", "out_dir", type=click.Path(path_type=Path),
+              default=DEFAULT_OUT, show_default=True,
+              help="multihazard run dir with <hz>/rp_<rp>/<hz>_depth_<scenario>_<horizon>_rp<rp>.tif.")
+@click.option("--register", "register", type=click.Path(path_type=Path),
+              default=DEFAULT_REGISTER, show_default=True)
+@click.option("--rp", type=int, default=100, show_default=True)
+@click.option("--scenario", default="SSP5-8.5", show_default=True)
+@click.option("--horizon", type=int, default=2020, show_default=True)
+@click.option("--label", default="", help="Tag printed in the header, e.g. 'DeltaDTM' or 'DSM control'.")
+def main(out_dir: Path, register: Path, rp: int, scenario: str, horizon: int, label: str) -> None:
+    rasters = [out_dir / hz / f"rp_{rp}" / f"{hz}_depth_{scenario}_{horizon}_rp{rp}.tif"
+               for hz in ("coastal", "fluvial", "pluvial")]
+    for r in rasters:
         if not r.exists():
             raise SystemExit(f"missing raster: {r}")
-    print(f"Singapore register: {n_flood} flood / {n_dry} dry  (combined coastal|fluvial|pluvial RP100, >= {THRESH} m)")
+    hotspots = load_hotspots(register)
+    n_flood = sum(1 for h in hotspots if h.cls == "flood")
+    n_dry = sum(1 for h in hotspots if h.cls == "dry")
+    tag = f" [{label}]" if label else ""
+    print(f"Singapore{tag} register: {n_flood} flood / {n_dry} dry  "
+          f"(combined coastal|fluvial|pluvial RP{rp}, >= {THRESH} m)")
     print(f"{'radius':>8} | {'HR':>5} {'CRR':>5} {'TSS':>6} | 95% CI")
     print("-" * 52)
     for radius_m in (50.0, 150.0):
-        flood_hits = [combined_hit(h, radius_m) for h in hotspots if h.cls == "flood"]
-        dry_hits = [combined_hit(h, radius_m) for h in hotspots if h.cls == "dry"]
+        flood_hits = [combined_hit(h, rasters, radius_m) for h in hotspots if h.cls == "flood"]
+        dry_hits = [combined_hit(h, rasters, radius_m) for h in hotspots if h.cls == "dry"]
         sc = skill_scores(flood_hits, dry_hits)
         point, lo, hi = bootstrap_tss_ci(flood_hits, dry_hits)
         print(f"{radius_m:>6.0f} m | {sc.hit_rate:>5.2f} {sc.correct_reject_rate:>5.2f} "

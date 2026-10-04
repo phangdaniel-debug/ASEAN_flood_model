@@ -5,6 +5,8 @@ A city is "complete and validatable" only when, in addition to its CityConfig
 
     forcing_anchors.csv  hazard,duration_h,anchor_rp,anchor_value,unit,source,citation
     observed_events.csv  event_id,hazard,event_date,est_rp_low,est_rp_high,extent_path,source
+                         (optional: valid_mask_path -- sensor-assessable mask;
+                          required to score SAR/optical extents honestly)
     hotspots.csv         name,lon,lat,kind,confidence,source
     gates.csv            hazard,metric,threshold,direction,citation
 
@@ -74,7 +76,8 @@ def validate_manifest(slug: str, data_root: Path = Path("data")) -> list[str]:
     return problems
 
 
-def load_hotspots_from_manifest(slug: str, data_root: Path = Path("data")):
+def load_hotspots_from_manifest(slug: str, data_root: Path = Path("data"),
+                                filename: str = "hotspots.csv"):
     """Adapt the four-manifest hotspots.csv to hotspot_scoring.Hotspot objects.
 
     Maps: name→label, kind(positive→"flood"/dry→"dry"), confidence→georef_confidence.
@@ -91,8 +94,8 @@ def load_hotspots_from_manifest(slug: str, data_root: Path = Path("data")):
     from scripts.hotspot_scoring import Hotspot
 
     SCORED_KINDS = {"positive", "dry"}
-    path = manifest_dir(slug, data_root) / MANIFEST_FILENAMES["hotspots"]
-    df = pd.read_csv(path)
+    path = manifest_dir(slug, data_root) / filename
+    df = pd.read_csv(path, encoding="utf-8", encoding_errors="replace")
     out = []
     for _, r in df.iterrows():
         if pd.isna(r["lon"]) or pd.isna(r["lat"]) or str(r["lon"]).strip() == "":

@@ -1,0 +1,69 @@
+{
+  "bareearth": "D:/GPTs/Projects/flood-v3.0/dem/jakarta/dem_bareearth_jakarta_nosubs.tif",
+  "n_holdout": 4432,
+  "overall": {
+    "n": 4432,
+    "bias_m": 0.23362032649769754,
+    "mae_m": 1.8063261006466373,
+    "rmse_m": 2.605469780177328,
+    "p5_m": -2.6988710865244583,
+    "p95_m": 4.629252729660789
+  },
+  "zones": {
+    "coastal_flat": {
+      "n": 403,
+      "bias_m": -0.2549980034800862,
+      "mae_m": 1.2177519892165947,
+      "rmse_m": 1.6693422702152747,
+      "p5_m": -2.0871953557588205,
+      "p95_m": 3.4103230743451975
+    },
+    "other": {
+      "n": 918,
+      "bias_m": 0.7088018421182943,
+      "mae_m": 1.9134828746081447,
+      "rmse_m": 2.6505104521446463,
+      "p5_m": -3.0258105168968745,
+      "p95_m": 4.610846870491533
+    },
+    "urban_core": {
+      "n": 1128,
+      "bias_m": 0.853427721255409,
+      "mae_m": 2.4762141917861773,
+      "rmse_m": 3.543213176420545,
+      "p5_m": -4.760735883915205,
+      "p95_m": 5.591439192075432
+    },
+    "vegetated": {
+      "n": 1983,
+      "bias_m": -0.23962535461443538,
+      "mae_m": 1.4952780328726796,
+      "rmse_m": 2.052391609687223,
+      "p5_m": -2.187229900212637,
+      "p95_m": 3.754207875400844
+    }
+  },
+  "coastal_deltadtm_xcheck": {
+    "n_cells": 567951,
+    "mae_m": 1.7355520644372235,
+    "bias_m": 0.9137035806888436
+  },
+  "tolerances": {
+    "coastal_mae": 0.6,
+    "bias": 0.5,
+    "inland_mae": 1.5,
+    "urban_min_points": 30
+  },
+  "gate": {
+    "verdict": "FIX (recalibrate f / revisit backfill \u2014 see reasons)",
+    "reasons": [
+      "urban_core bias +0.85 m exceeds \u00b10.5 m (building over/under-removal). The CBD is the terrain the coastal flood gate is most sensitive to on pumped/dyked deltas \u2014 re-condition the urban core toward the held-out points before flood use.",
+      "coastal MAE 1.22 m / bias -0.25 m outside tolerance."
+    ],
+    "coastal_ok": false,
+    "veg_ok": true,
+    "inland_ok": false,
+    "urban_enough": true,
+    "urban_bias_ok": false
+  }
+}

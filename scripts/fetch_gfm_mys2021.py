@@ -5,16 +5,29 @@ for the December 2021 Malaysia / Selangor flood event.
 NOTE ON URBAN EXCLUSION (key finding):
 GFM systematically excludes urban areas from its flood extent product because
 SAR double-bounce from buildings is indistinguishable from open-water backscatter.
-For the KL bbox (101.40-101.95 E, 2.90-3.42 N), ~69% of pixels are excluded
-(exclusion_mask=1), yielding only ~0.14 km2 of detectable non-urban flood extent.
-This limits GFM to validation of peri-urban / agricultural flooding only.
-See: validate_historical_events.py notes for MYS2021 / R4 status.
+Measured over the KL bbox (101.40-101.95 E, 2.90-3.42 N) on the peak dates,
+**87.2% of pixels are excluded in every pass** (3,085 of 3,539 km2), leaving
+455 km2 assessable and only ~0.14 km2 of detected flood inside it. This limits
+GFM to validation of peri-urban / agricultural flooding only.
+(An earlier note here said ~69%; the measured figure on the Dec 19-22 passes
+this script composites is 87.2%. Corrected 2026-08-16.)
+
+WHY THE EXCLUSION MASK IS DOWNLOADED (fixed 2026-08-16):
+ensemble_flood_extent codes 0 = "not flooded" with NO way to express "could not
+assess". Urban pixels GFM excluded therefore arrive as observed-dry. Any extent
+comparison then scores model water in urban KL as a false positive against
+ground the sensor never saw -- which produced a frequency bias of ~2,900 and a
+precision of 0.00 before this was fixed. The exclusion_mask asset is a SEPARATE
+STAC asset, so it must be fetched explicitly; this script now does, and writes
+gfm_kl_validmask_dec2021.tif (1 = assessable). Pass it to any extent benchmark
+(e.g. flood-v5.0 engine/scripts/benchmark_observed_extent.py --valid-mask).
 
 Data source
 -----------
 EODC STAC API  https://stac.eodc.eu/api/v1
 Collection     GFM
-Asset          ensemble_flood_extent  (Equi7Grid 20 m, uint8, 1=flood 2=water 3=excluded)
+Assets         ensemble_flood_extent  (Equi7Grid 20 m, uint8, 1=flood 2=water 3=excluded)
+               exclusion_mask         (same grid; non-zero = not assessable)
 
 Sentinel-1 acquisitions over the KL domain (101.40-101.95 E, 2.90-3.42 N):
   2021-12-16, 2021-12-19, 2021-12-20, 2021-12-21, 2021-12-22
@@ -27,10 +40,12 @@ We take ALL acquisitions from Dec 17-22 and create:
 
 Output
 ------
-data/kl/flood_obs/MYS2021/
-  gfm_YYYYMMDD_HHMMSS_<tile>.tif   raw Equi7Grid tiles (kept for provenance)
-  gfm_kl_YYYYMMDD.tif              per-date WGS84 flood mask, clipped to KL bbox
+data/kuala_lumpur/flood_obs/MYS2021/     (flood-v5.0 uses data/kl/ instead)
+  raw/                             raw Equi7Grid tiles, both assets, for provenance
+  gfm_kl_<tile>.tif                per-date WGS84 flood mask, clipped to KL bbox
   gfm_kl_composite_dec2021.tif     composite max-flood mask (WGS84, clipped)
+  gfm_kl_validmask_dec2021.tif     1 = assessable, 0 = excluded. Required for
+                                   any extent comparison -- see above.
   README.txt                       provenance note
 
 Usage
@@ -75,7 +90,7 @@ KL_BBOX = (101.40, 2.90, 101.95, 3.42)   # (west, south, east, north)
 DATETIME_RANGE = "2021-12-16T00:00:00Z/2021-12-22T23:59:59Z"
 PEAK_DATES = {"2021-12-19", "2021-12-20", "2021-12-21", "2021-12-22"}   # for composite
 
-OUT_DIR = Path("data/kl/flood_obs/MYS2021")
+OUT_DIR = Path("data/kuala_lumpur/flood_obs/MYS2021")   # v5.0 uses data/kl/
 WGS84 = CRS.from_epsg(4326)
 
 # GFM pixel values
@@ -174,6 +189,48 @@ def _reproject_to_wgs84(src_path: Path, dst_path: Path,
     tmp.unlink(missing_ok=True)
 
 
+def _build_valid_mask(excl_raw_paths: list[Path], grid_path: Path, out_path: Path) -> None:
+    """Write 1 where GFM could assess the pixel, 0 where it was excluded.
+
+    A pixel counts as assessable if exclusion_mask == 0 in AT LEAST ONE peak
+    pass. Reprojected onto the composite's grid so the two align cell-for-cell.
+    """
+    with rasterio.open(grid_path) as ref:
+        meta = ref.meta.copy()
+        shape, transform, crs = (ref.height, ref.width), ref.transform, ref.crs
+
+    excluded_everywhere = np.ones(shape, dtype=bool)
+    used = 0
+    for p in excl_raw_paths:
+        try:
+            with rasterio.open(p) as src:
+                dst = np.full(shape, 255, dtype="uint8")
+                reproject(
+                    source=rasterio.band(src, 1), destination=dst,
+                    src_transform=src.transform, src_crs=src.crs,
+                    dst_transform=transform, dst_crs=crs,
+                    dst_nodata=255, resampling=Resampling.nearest,
+                )
+            excluded_everywhere &= (dst != 0)
+            used += 1
+        except Exception as e:
+            print(f"    [WARN] {p.name}: {e}")
+
+    valid = ~excluded_everywhere
+    meta.update({"dtype": "uint8", "count": 1, "nodata": None,
+                 "compress": "deflate", "predictor": 2})
+    with rasterio.open(out_path, "w", **meta) as dst:
+        dst.write(valid.astype("uint8"), 1)
+
+    px_km2 = (abs(transform.a) * 111_320) ** 2 / 1e6
+    print(f"  tiles used   : {used}")
+    print(f"  assessable   : {valid.sum():,} px = {valid.sum() * px_km2:,.0f} km2 "
+          f"({valid.mean():.1%} of bbox)")
+    print(f"  excluded     : {(~valid).sum():,} px = {(~valid).sum() * px_km2:,.0f} km2 "
+          f"({1 - valid.mean():.1%})")
+    print(f"  Validity mask written: {out_path}")
+
+
 def _merge_flood_masks(tif_paths: list[Path], out_path: Path) -> None:
     """
     Merge multiple WGS84 flood masks into a composite:
@@ -218,18 +275,23 @@ def main() -> None:
     raw_dir = OUT_DIR / "raw"
     raw_dir.mkdir(parents=True, exist_ok=True)
 
-    # Download raw tiles
+    # Download raw tiles: flood extent AND the exclusion mask that says which
+    # pixels GFM could actually assess (see module docstring).
     raw_tifs: list[tuple[str, Path]] = []
+    raw_excl: list[tuple[str, Path]] = []
     for item in items:
         dt_str = item.get("properties", {}).get("datetime", "")[:10]
-        asset = item.get("assets", {}).get("ensemble_flood_extent", {})
-        href = asset.get("href")
-        if not href:
-            continue
-        fname = Path(href).name
-        dest = raw_dir / fname
-        _download(href, dest)
-        raw_tifs.append((dt_str, dest))
+        assets = item.get("assets", {})
+        for asset_name, sink in (("ensemble_flood_extent", raw_tifs),
+                                 ("exclusion_mask", raw_excl)):
+            href = assets.get(asset_name, {}).get("href")
+            if not href:
+                if asset_name == "exclusion_mask":
+                    print(f"  [WARN] {item.get('id','?')}: no exclusion_mask asset")
+                continue
+            dest = raw_dir / Path(href).name
+            _download(href, dest)
+            sink.append((dt_str, dest))
 
     print(f"\nReprojecting {len(raw_tifs)} tiles to WGS84 ...")
 
@@ -265,6 +327,18 @@ def main() -> None:
         _print_stats(composite_path)
     else:
         print("\n[WARN] No peak-date tiles found for composite.")
+
+    # Validity mask: a pixel is assessable if GFM did NOT exclude it in at least
+    # one peak pass. Without this, urban-excluded pixels read as observed-dry.
+    excl_peak = [p for dt, p in raw_excl if dt in PEAK_DATES]
+    if excl_peak and peak_paths:
+        print(f"\nBuilding validity mask from {len(excl_peak)} exclusion tiles ...")
+        _build_valid_mask(excl_peak, composite_path,
+                          OUT_DIR / "gfm_kl_validmask_dec2021.tif")
+    else:
+        print("\n[WARN] No exclusion_mask tiles -- validity mask NOT built.")
+        print("       Extent comparisons using this event will be invalid:")
+        print("       excluded urban pixels will be scored as observed-dry.")
 
     # Write README
     _write_readme(items, peak_paths)
@@ -314,10 +388,19 @@ def _write_readme(items: list[dict], peak_paths: list[Path]) -> None:
             CRS: EPSG:4326  |  Resolution: ~20 m
             Projection: Equi7Grid (original) -> reprojected to WGS84
 
-            Urban exclusion limitation:
-              GFM excludes ~69% of the KL bbox via urban masking (SAR
-              double-bounce from buildings). Composite flood pixels = 345
-              (~0.14 km2). Usable only for peri-urban / agricultural areas.
+            Urban exclusion limitation (measured from exclusion_mask):
+              GFM excludes 87.2% of the KL bbox in EVERY peak pass via urban
+              masking (SAR double-bounce from buildings): 3,085 of 3,539 km2.
+              Assessable = 455 km2; detected flood inside it = 0.14 km2 (345
+              px). Usable only for peri-urban / agricultural areas, and too
+              sparse for a meaningful extent score.
+
+            gfm_kl_validmask_dec2021.tif (1 = assessable, 0 = excluded)
+              REQUIRED for any extent comparison. ensemble_flood_extent codes
+              0 = "not flooded" with no way to say "could not assess", so
+              without this mask excluded urban pixels read as observed-dry and
+              model water there scores as a false positive against ground the
+              sensor never saw.
 
             Use for R4 historical validation (partial):
               validate_historical_events.py --city kuala_lumpur \

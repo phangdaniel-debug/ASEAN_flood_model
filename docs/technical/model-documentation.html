@@ -1,0 +1,3048 @@
+<!DOCTYPE html><html lang='en'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width, initial-scale=1'><meta name='color-scheme' content='light dark'><title>Flood-v4.0 — Multi-Hazard Flood Screen: Technical Documentation</title><style>
+*,*::before,*::after { box-sizing:border-box; }
+:root{
+  --ink:#1a1a1a; --muted:#5a6a66; --accent:#0f6e56; --accent-dk:#0f3d2e;
+  --rule:#d6dedb; --tbl-rule:#c9d2cf; --tbl-head:#e7efec; --tbl-alt:#fafbfb;
+  --code-bg:#eef2f1; --pre-bg:#f5f7f6; --pre-rule:#e0e6e4; --quote-bg:#f6f8f7;
+  --bg:#fff;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --ink:#e6e9e8; --muted:#9fb0ab; --accent:#4fbf9b; --accent-dk:#8fd9c2;
+    --rule:#2b3532; --tbl-rule:#33403c; --tbl-head:#1c2a26; --tbl-alt:#161d1b;
+    --code-bg:#1c2422; --pre-bg:#151b19; --pre-rule:#2b3532; --quote-bg:#161d1b;
+    --bg:#0f1413;
+  }
+}
+html{ -webkit-text-size-adjust:100%; }
+body{
+  font-family:"Segoe UI","Helvetica Neue",Arial,system-ui,sans-serif;
+  font-size:clamp(15px, 0.95rem + 0.15vw, 17px);
+  line-height:1.62; color:var(--ink); background:var(--bg);
+  max-width:64rem; margin:0 auto; padding:1.5rem 1.15rem 4rem;
+  overflow-wrap:break-word;
+}
+h1{ font-size:clamp(1.55rem,1.2rem + 1.6vw,2.1rem); line-height:1.22; margin:0 0 .4rem; color:var(--accent-dk); }
+h2{ font-size:clamp(1.22rem,1.05rem + 0.8vw,1.5rem); line-height:1.3; margin:2.4rem 0 .6rem;
+    padding-bottom:.25rem; border-bottom:2px solid var(--accent); color:var(--accent-dk); }
+h3{ font-size:clamp(1.06rem,1rem + 0.4vw,1.2rem); margin:1.6rem 0 .4rem; color:var(--accent-dk); }
+h4{ font-size:1rem; margin:1.2rem 0 .3rem; color:var(--muted); }
+p,li{ margin:.55rem 0; }
+ul,ol{ padding-left:1.35rem; }
+blockquote{
+  border-left:4px solid var(--accent); margin:1rem 0; padding:.6rem .9rem;
+  color:var(--ink); background:var(--quote-bg); border-radius:0 6px 6px 0;
+}
+blockquote p:first-child{ margin-top:0; } blockquote p:last-child{ margin-bottom:0; }
+code{ font-family:"Consolas","DejaVu Sans Mono",ui-monospace,monospace;
+      font-size:.88em; background:var(--code-bg); padding:.1em .3em; border-radius:3px; }
+pre{ background:var(--pre-bg); border:1px solid var(--pre-rule); border-radius:6px;
+     padding:.7rem .8rem; font-size:.82rem; line-height:1.45; overflow-x:auto;
+     -webkit-overflow-scrolling:touch; }
+pre code{ background:none; padding:0; font-size:inherit; white-space:pre; }
+/* tables: scroll the table, never the page */
+.tw{ overflow-x:auto; -webkit-overflow-scrolling:touch; margin:.9rem 0;
+     border:1px solid var(--tbl-rule); border-radius:6px; }
+.tw table{ border-collapse:collapse; width:100%; min-width:34rem; font-size:.86rem; margin:0; }
+.tw th,.tw td{ border:1px solid var(--tbl-rule); padding:.4rem .55rem;
+               text-align:left; vertical-align:top; }
+.tw th{ background:var(--tbl-head); font-weight:600; position:sticky; top:0; }
+.tw tr:nth-child(even) td{ background:var(--tbl-alt); }
+a{ color:var(--accent); text-decoration:none; } a:hover{ text-decoration:underline; }
+strong{ color:var(--ink); font-weight:650; }
+hr{ border:none; border-top:1px solid var(--rule); margin:2rem 0; }
+/* collapsible contents */
+#toc{ border:1px solid var(--rule); border-radius:8px; padding:.5rem .9rem; margin:1.5rem 0 2rem;
+      background:var(--quote-bg); }
+#toc summary{ cursor:pointer; font-weight:650; color:var(--accent-dk); padding:.25rem 0;
+              font-size:1rem; }
+#toc ol{ list-style:none; padding-left:0; margin:.6rem 0 .3rem; columns:2; column-gap:2rem; }
+#toc li{ margin:.18rem 0; break-inside:avoid; font-size:.92rem; }
+#toc li.sub{ padding-left:1rem; font-size:.86rem; }
+#toc li.sub a{ color:var(--muted); }
+@media (max-width:640px){
+  body{ padding:1rem .85rem 3rem; line-height:1.58; }
+  h2{ margin-top:1.9rem; }
+  #toc ol{ columns:1; }
+  .tw table{ min-width:28rem; font-size:.8rem; }
+  pre{ font-size:.76rem; }
+}
+@media print{
+  @page{ size:A4; margin:1.5cm 1.4cm 1.7cm 1.4cm;
+    @bottom-center{ content:counter(page) " / " counter(pages); font-size:8pt; color:#888; } }
+  body{ max-width:none; font-size:9.3pt; line-height:1.42; color:#1a1a1a; background:#fff;
+        padding:0; margin:0; }
+  h1{ font-size:18pt; } h2{ font-size:13.5pt; page-break-after:avoid; }
+  h3{ font-size:11pt; page-break-after:avoid; } h4{ font-size:9.6pt; page-break-after:avoid; }
+  .tw{ border:none; overflow:visible; } .tw table{ min-width:0; font-size:8.1pt;
+        page-break-inside:avoid; }
+  .tw th{ position:static; }
+  pre{ font-size:7.9pt; overflow:visible; white-space:pre-wrap; page-break-inside:avoid; }
+  #toc{ display:none; }
+}
+</style></head><body>
+<h1
+id="flood-v40--multi-hazard-flood-screen-technical-documentation">Flood-v4.0
+— Multi-Hazard Flood Screen: Technical Documentation</h1>
+<blockquote>
+<p>Open, validated, 30 m coastal + fluvial + pluvial design-event
+flood-depth model for four Southeast Asian cities (Singapore, Kuala
+Lumpur, Bangkok, Jakarta), present-day and four climate scenarios. This
+document describes the model as implemented; the companion manuscript
+(<code>docs/paper/safe2026-v5.tex</code>) gives the scientific framing
+and results.</p>
+<p><strong>New to flood modelling?</strong> Start with the
+<strong>plain-language glossary in §11.2</strong> — it defines every
+term used here (coastal/fluvial/pluvial, bathtub vs inertial, HAND,
+return period, the trust scores, …) in everyday language. The parameter
+register in §11.4 opens with a plain-language reading guide, and each
+parameter group there starts with an <em>"in plain terms"</em> line, so
+a non-specialist can follow what every setting does without reading the
+equations.</p>
+</blockquote>
+<details id="toc" open><summary>Contents</summary>
+<ol>
+<li><a href="#1-overview--scope">1. Overview &amp;amp; scope</a></li>
+<li><a href="#2-system-architecture--pipeline">2. System architecture &amp;amp;
+pipeline</a></li>
+<li><a href="#3-input-data--licensing">3. Input data &amp;amp; licensing</a></li>
+<li><a href="#4-terrain-bare-earth-dem-construction">4. Terrain: bare-earth
+DEM construction</a></li>
+<li><a href="#5-forcing--climate-scenarios">5. Forcing &amp;amp; climate
+scenarios</a></li>
+<li><a href="#6-hazard-models">6. Hazard models</a></li>
+<li class="sub"><a href="#60-common-notation-and-forcing-decomposition">6.0 Common
+notation and forcing decomposition</a></li>
+<li class="sub"><a href="#61-coastal--local-inertia-shallow-water-vs-bathtub">6.1 Coastal
+— local-inertia shallow water vs bathtub</a></li>
+<li class="sub"><a href="#62-fluvial--hand-referencing-vs-other-methods">6.2 Fluvial —
+HAND referencing vs other methods</a></li>
+<li class="sub"><a href="#63-pluvial--four-models-regime-matched">6.3 Pluvial — four
+models, regime-matched</a></li>
+<li><a href="#7-validation-model-blind-hotspot-gate">7. Validation:
+model-blind hotspot gate</a></li>
+<li><a href="#8-outputs--atlas-structure">8. Outputs &amp;amp; atlas
+structure</a></li>
+<li><a href="#9-reproducibility">9. Reproducibility</a></li>
+<li><a href="#10-limitations--known-issues">10. Limitations &amp;amp; known
+issues</a></li>
+<li class="sub"><a href="#101-adversarial-methodology-review--round-3-2026-07-09">10.1
+Adversarial methodology review — Round 3 (2026-07-09)</a></li>
+<li class="sub"><a href="#102-addendum--round-3-follow-ups-closed-2026-07-18">10.2
+Addendum — Round-3 follow-ups closed (2026-07-18)</a></li>
+<li><a href="#11-appendices">11. Appendices</a></li>
+<li class="sub"><a href="#111-per-city-configuration-from-reprorun_atlas_fixedsh">11.1
+Per-city configuration (from repro/run_atlas_fixed.sh)</a></li>
+<li class="sub"><a href="#112-glossary-plain-language">11.2 Glossary (plain-language)</a></li>
+<li class="sub"><a href="#113-script-index-descriptions-verified-from-each-files-header-2026-06-21">11.3
+Script index (descriptions verified from each file&#x27;s header,
+2026-06-21)</a></li>
+<li class="sub"><a href="#114-parameter-register-every-computing-step">11.4 Parameter
+register (every computing step)</a></li>
+<li><a href="#12-references">12. References</a></li>
+</ol>
+</details>
+
+<hr />
+<h2 id="1-overview--scope">1. Overview &amp; scope</h2>
+<blockquote>
+<p><strong>In plain terms.</strong> This document describes a computer
+model that draws flood maps. For each 30-metre square of ground in four
+cities it answers one question — <em>how deep would the water be?</em> —
+and it answers it three times over: once for the sea coming inland, once
+for rivers overflowing, and once for rain falling faster than the drains
+can take it. It then keeps the worst of the three. It repeats all of
+that for several severities of event and for two future climate
+pathways. Everything it uses is free and public, so anyone can rebuild
+it and check the answer — which is the point.</p>
+</blockquote>
+<p><strong>Purpose.</strong> Produce a license-clean,
+third-party-reproducible screen of physical flood hazard at a resolution
+(30 m) and hazard coverage (three perils) that no <em>open</em> product
+currently offers for these cities, so that exposure can be screened,
+priced, and disclosed by agencies that cannot license a commercial
+surface.</p>
+<p><strong>Coverage.</strong></p>
+<ul>
+<li><strong>Cities:</strong> Singapore, Kuala Lumpur (+ Port Klang),
+Bangkok, Jakarta.</li>
+<li><strong>Hazards:</strong> coastal (tide + surge + sea-level rise),
+fluvial (river), pluvial (rain-driven / drainage-overwhelm).</li>
+<li><strong>Resolution:</strong> 30 m, on a per-city UTM grid.</li>
+<li><strong>Return periods (RP):</strong> 10, 100, 1000 year design
+events.</li>
+<li><strong>Scenarios:</strong> present day (treated as SSP5-8.5 / 2020)
+plus four forward combinations — SSP2-4.5 and SSP5-8.5 × 2050 and
+2100.</li>
+<li><strong>Primary output:</strong> per-hazard flood
+<strong>depth</strong> (metres) rasters + a per-pixel
+<strong>combined</strong> (max-of-hazards) layer + a
+<strong>compound</strong> joint-exceedance layer.</li>
+</ul>
+<p><strong>Design philosophy.</strong> Every input is free and openly
+licensed; terrain is the dominant residual bias so the sole flood
+surface is an openly-constructed bare-earth DEM; and trust is
+established not by reproducibility alone but by a
+<strong>pre-registered, model-blind location-skill gate</strong> that
+scores documented flooded/dry localities under a discipline that forbids
+re-tuning.</p>
+<p><strong>Method principle — regime-matching, not
+one-size-fits-all.</strong> Solvers and referencing are matched to each
+city's physical flood regime rather than applied uniformly (see §6). The
+clearest example: the pluvial layer uses <em>fill-spill</em> (depression
+storage) on depression-dominated terrain and a HAND-based
+<em>handfill</em> (near-drainage rain pooling) on canal-dense cities —
+the choice is made on terrain physics, and adopting the wrong one
+measurably degrades the validation gate (documented in §6.3 and
+§10).</p>
+<hr />
+<h2 id="2-system-architecture--pipeline">2. System architecture &amp;
+pipeline</h2>
+<p>Data flow, left to right:</p>
+<pre><code>  free inputs ──► terrain build ──► forcing build ──► hazard solvers ──► validation ──► atlas
+  (DEM, ERA5,      (bare-earth      (design events:    (coastal/         (model-blind    (depth +
+   GloFAS, AR6,     DEM + sea-mask   RP × scenario      fluvial/           hotspot gate,   combined +
+   WorldCover,      + HAND + defence  hazard_levels     pluvial, per-      HR/CRR/TSS)     compound
+   IDF)             crests)           CSVs)             city config)                       rasters)</code></pre>
+<p><strong>Repositories / directory layout (working tree
+<code>D:\GPTs\Projects\flood-v4.0</code>):</strong></p>
+<ul>
+<li><code>dem/</code> — flood terrain. <code>dem/&lt;city&gt;/</code>
+per-city conditioned bare-earth DEMs; <code>dem/_hand/</code> derived
+Height-Above-Nearest-Drainage rasters; <code>dem/_diag/</code> derived
+diagnostics including the seawall-raised DEMs. <em>Derived rasters under
+<code>dem/_hand</code>, <code>dem/_diag</code>, and
+<code>sea_mask_*_framefix</code> are git-ignored and regenerated by
+committed scripts.</em></li>
+<li><code>data/&lt;city&gt;/</code> — per-city forcing
+(<code>hazard_levels_&lt;scenario&gt;_rp&lt;rp&gt;.csv</code>),
+sea-masks, river/drainage masks, runoff-coefficient rasters, and the
+validation <code>manifest/</code> (hotspot registers).</li>
+<li><code>scripts/</code> — the model (<code>run_multihazard.py</code>),
+the gate (<code>validate_hotspots.py</code>), the
+terrain/sea-mask/HAND/defence construction (<code>_fix_*.py</code>,
+<code>apply_pumped_polder.py</code>), and visualisation
+(<code>_viz_*.py</code>).</li>
+<li><code>repro/</code> — resumable end-to-end drivers
+(<code>run_atlas_fixed.sh</code>,
+<code>run_fixed_coastal_rp100.sh</code>).</li>
+<li><code>outputs/</code> — model outputs (see §8).</li>
+<li><code>docs/</code> — this documentation, the paper, and the
+limitations register.</li>
+</ul>
+<p><strong>Two-interpreter rule.</strong> The flood model runs under a
+dedicated Python 3.14 interpreter
+(<code>C:/Users/Daniel/AppData/Local/Python/pythoncore-3.14-64/python.exe</code>),
+kept separate from the geospatial-preprocessing environment. All
+<code>scripts/</code> and <code>repro/</code> calls invoke that
+interpreter explicitly.</p>
+<hr />
+<h2 id="3-input-data--licensing">3. Input data &amp; licensing</h2>
+<p>All inputs are free to use and redistribute, which is what makes the
+atlas license-clean and rebuildable from scratch by a third party.</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Input</th>
+<th>Role</th>
+<th>Source / licence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Copernicus GLO-30 DEM</td>
+<td>base elevation surface (pre-correction)</td>
+<td>ESA, free</td>
+</tr>
+<tr>
+<td>ICESat-2 (ATL08) + GEDI L2A</td>
+<td>lidar ground truth for DEM calibration</td>
+<td>NASA, open</td>
+</tr>
+<tr>
+<td>ERA5-Land</td>
+<td>meteorological reanalysis (rainfall context)</td>
+<td>Copernicus C3S, free</td>
+</tr>
+<tr>
+<td>GloFAS</td>
+<td>fluvial discharge / river return levels</td>
+<td>Copernicus EMS, free</td>
+</tr>
+<tr>
+<td>IPCC AR6 sea-level projections</td>
+<td>scenario sea-level rise by SSP × horizon</td>
+<td>IPCC, open</td>
+</tr>
+<tr>
+<td>ESA WorldCover</td>
+<td>land-cover → runoff coefficient / impervious raster</td>
+<td>ESA, CC-BY</td>
+</tr>
+<tr>
+<td>National IDF standards</td>
+<td>design rainfall the pluvial layer is anchored to</td>
+<td>each national met service</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Why national IDF matters.</strong> Global-synthetic design
+rainfall under-states the four national Intensity–Duration–Frequency
+standards by a large margin (a ~28–62 % deficit), so the pluvial forcing
+is anchored to each country's published IDF rather than to a global
+product. This is the single most important reason the pluvial layer is
+credible here.</p>
+<hr />
+<h2 id="4-terrain-bare-earth-dem-construction">4. Terrain: bare-earth
+DEM construction</h2>
+<blockquote>
+<p><strong>In plain terms.</strong> Water runs downhill, so the
+ground-height map is the single most important input. The problem:
+satellites measure the height of whatever they see from above, which
+over a city means rooftops and treetops, not the ground. Buildings
+therefore look like dry hills, and streets that really flood get hidden
+underneath them. This section is how we strip the buildings and trees
+off to recover the real ground level, and how we check the result
+against laser height measurements taken from two space missions. We do
+the stripping separately for each city and never reuse one city's
+settings on another.</p>
+</blockquote>
+<p><strong>Rationale.</strong> Terrain is the dominant residual bias in
+a flood screen, and the raw Copernicus surface includes buildings and
+canopy. Existing bare-earth products either carry a non-commercial
+licence or are too coarse, so the model builds its own.</p>
+<p><strong>Method.</strong> The Copernicus surface is corrected to
+ground by a <strong>per-city building-and-canopy error model</strong>
+calibrated against <em>held-out</em> ICESat-2 and GEDI lidar, roughly
+halving terrain error while remaining license-clean. The corrected,
+hydrologically-conditioned DEM is the sole flood surface.</p>
+<h4 id="41-the-error-model">4.1 The error model</h4>
+<p>The Copernicus GLO-30 surface <code>z_DSM</code> [R17] over-states
+ground by the building and canopy it contains:</p>
+<pre><code> z_DSM(x,y)  ≈  z_ground(x,y)  +  h_building(x,y)  +  f · h_canopy(x,y)</code></pre>
+<p><code>z_ground</code> (the wanted bare-earth) is recovered by
+subtracting the two bias terms and a flat offset. <strong>Variables,
+with rationale and reference:</strong></p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Symbol</th>
+<th>Meaning</th>
+<th>Value / source</th>
+<th>Rationale</th>
+<th>Reference</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>h_building</code></td>
+<td>fractional-coverage building height</td>
+<td>Google Open Buildings</td>
+<td>per-pixel building bias; masked + back-filled from true-ground
+neighbours</td>
+<td>Sirko et al. 2021 [R13]</td>
+</tr>
+<tr>
+<td><code>h_canopy</code></td>
+<td>canopy height (10 m)</td>
+<td>ETH global CHM</td>
+<td>the vegetation bias term</td>
+<td>Lang et al. 2023 [R12]</td>
+</tr>
+<tr>
+<td><code>f</code></td>
+<td>canopy-penetration coefficient ∈ [0,1]</td>
+<td>fit per city; <strong>0.07–0.29</strong></td>
+<td>radar partially penetrates canopy, so only a fraction of
+<code>h_canopy</code> is bias; fitted not assumed</td>
+<td>this work</td>
+</tr>
+<tr>
+<td><code>b0</code></td>
+<td>flat true-ground offset</td>
+<td>fit per city; <strong>+0.24 … +1.46 m</strong></td>
+<td>residual datum/systematic offset after the two bias terms</td>
+<td>this work</td>
+</tr>
+<tr>
+<td>datum</td>
+<td>vertical reference</td>
+<td><strong>EGM2008</strong></td>
+<td>the GLO-30 native datum; all WSEs/MSL offsets share it</td>
+<td>—</td>
+</tr>
+<tr>
+<td>subsidence δ</td>
+<td>per-city present-day subsidence</td>
+<td>published InSAR rates</td>
+<td>applied to the present-day surface; projected-subsidence reported
+separately</td>
+<td>Chaussard 2013, Abidin 2011, Phien-wej 2006 [R20–22]</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Calibration.</strong> The two free parameters
+<code>(b0, f)</code> are fit <strong>per city</strong> against held-out
+<strong>ICESat-2 ATL08</strong> [R14] and <strong>GEDI L2A</strong>
+[R15] spaceborne-lidar ground returns, and are <strong>never transferred
+between cities</strong> — the discipline that makes "one method, four
+cities" honest rather than four bespoke tunings. Against held-out lidar
+the bare-earth roughly halves mean-absolute terrain error and removes
+the high bias (Bangkok MAE 1.43→0.78 m, bias +1.00→−0.14 m). The fit is
+product-invariant: re-deriving KL on a second canopy model moves
+<code>b0</code> by 3 mm. Rationale for <em>not</em> using FABDEM [R11]
+(the standard open bare-earth): its non-commercial licence cannot back
+an openly-redistributable atlas.</p>
+<p><strong>Per-city specialisation.</strong></p>
+<ul>
+<li><strong>Bangkok / Jakarta / Kuala Lumpur:</strong> the
+building-and-canopy error model is fit and applied directly; the result
+is the <code>_conditioned</code> / <code>_debiased</code> DEM.</li>
+<li><strong>Singapore (hybrid).</strong> Spaceborne-lidar ground truth
+over dense, reclaimed Singapore is too noisy to calibrate the error
+model. Substituting the best independently-validated open bare-earth
+product (DeltaDTM [R28]) for the <em>low</em> terrain and compositing
+<em>high</em> ground from the surface model turns the weakest case into
+a validated one. Without this, the uncorrected product's coverage-capped
+hills collapse their height-above-drainage and spuriously flood the
+island's highest dry controls.</li>
+</ul>
+<p><strong>Coastal defences baked into the terrain.</strong> Continuous
+coastal/riverbank defences are sub-grid in the raw DEM, so a
+continuous-coastline crest is raised onto the DEM at each city's
+<strong>citable, contemporaneous design crest</strong> (above MSL):</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>City</th>
+<th>Crest (m above MSL)</th>
+<th>Provenance</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Singapore</td>
+<td>+3.0</td>
+<td>PUB pre-2011 reclamation standard (the East Coast is pre-2011; +4 m
+is post-2011 only)</td>
+</tr>
+<tr>
+<td>Bangkok</td>
+<td>+2.10</td>
+<td>BMA dike crest (UNESCAP)</td>
+</tr>
+<tr>
+<td>Jakarta</td>
+<td>+2.0</td>
+<td>existing wall ≈1–2 m (Muara Baru 2 m); coastal here is
+subsidence-dominated, so crest barely changes the result</td>
+</tr>
+</tbody>
+</table></div>
+<p>Built by <code>scripts/_fix_coastal_seawall.py</code> →
+<code>dem/_diag/&lt;city&gt;_seawall.tif</code>.</p>
+<p><strong>Sea-mask construction + frame-fix.</strong> The sea-mask is
+value <strong>1 = land, 0 = sea</strong> (note: inverted from its name).
+The raw NaN-BFS sea-mask sweeps the DEM's nodata border frame (W/E/N
+edges) into "sea", which the coastal solver then seeds from, producing
+spurious lateral-edge flooding.
+<code>scripts/_fix_sea_mask_frame.py</code> strips the frame by
+morphological opening and unions the real ≤0 m water back in
+(<code>data/&lt;city&gt;/sea_mask_*_framefix.tif</code>). This matters
+specifically for the <strong>inertial</strong> coastal solver (frame
+seeds bypass attenuation), less so for a bathtub fill.</p>
+<p><strong>HAND rasters.</strong> Height-Above-Nearest-Drainage rasters
+(<code>dem/_hand/</code>) are derived from the conditioned DEM for the
+fluvial and pluvial referencing in §6. A <strong>main-stem</strong> HAND
+restricts "drainage" to channels above a flow-accumulation threshold
+(≥50 km² catchment), versus a <strong>dense</strong> HAND that treats
+the full canal/drain network as channel. Built by
+<code>derive_drainage_mask_from_accumulation</code> and the
+<code>scripts/_fix_*_mainstem_hand.py</code> helpers.</p>
+<hr />
+<h2 id="5-forcing--climate-scenarios">5. Forcing &amp; climate
+scenarios</h2>
+<blockquote>
+<p><strong>In plain terms.</strong> "Forcing" is how much water the
+model is told to throw at the city: how high the sea rises, how much
+river flow arrives, how hard it rains. Those numbers come from
+tide-gauge records, river-flow archives and each country's own official
+design-rainfall standard. They are also the <em>only</em> thing that
+changes between scenarios — the model itself is byte-for-byte identical
+for the present day and for 2100, so any difference you see between two
+maps is the climate input, never a change of method.</p>
+<p>A note on "return period": <strong>RP100</strong> does not mean "once
+every 100 years". It means a severity with a 1-in-100 chance of being
+exceeded <em>in any given year</em>. Two RP100 events can land in
+consecutive years without anything being wrong.</p>
+</blockquote>
+<p><strong>Design events.</strong> Each hazard is driven at three return
+periods (RP 10, 100, 1000). The forcing for a given
+<code>(city, scenario, RP)</code> cell is stored as
+<code>data/&lt;city&gt;/hazard_levels_&lt;scenario&gt;_rp&lt;rp&gt;.csv</code>
+— these are the committed, tracked inputs the atlas driver consumes.</p>
+<p><strong>Scenario stems</strong> (driver <code>SCEN</code> array):</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Stem</th>
+<th>Label</th>
+<th>Horizon</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ssp585_2020</code></td>
+<td>present day (read as SSP5-8.5)</td>
+<td>2020</td>
+</tr>
+<tr>
+<td><code>ssp245_2050</code></td>
+<td>SSP2-4.5</td>
+<td>2050</td>
+</tr>
+<tr>
+<td><code>ssp245_2100</code></td>
+<td>SSP2-4.5</td>
+<td>2100</td>
+</tr>
+<tr>
+<td><code>ssp585_2050</code></td>
+<td>SSP5-8.5</td>
+<td>2050</td>
+</tr>
+<tr>
+<td><code>ssp585_2100</code></td>
+<td>SSP5-8.5</td>
+<td>2100</td>
+</tr>
+</tbody>
+</table></div>
+<p>→ 4 cities × 5 stems × 3 RPs = <strong>60 atlas cells</strong>.</p>
+<p>Each <code>(hazard, RP)</code> row's <code>water_level_m</code> is
+built as below; the GEV/Gumbel maths live in
+<code>scripts/gev_utils.py</code>, the assembly in
+<code>scripts/build_hazard_levels.py</code>.</p>
+<h4 id="51-coastal-still-water-level-water_level_m--peak-wse">5.1
+Coastal still-water level (<code>water_level_m</code> = peak WSE)</h4>
+<pre><code> WSE_coastal(RP, scenario) = MSL_offset + surge_GEV(RP) + SLR_delta(scenario)     (tide folded into the gauge baseline)</code></pre>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Value / source</th>
+<th>Rationale</th>
+<th>Reference</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>WSE_GEV(RP)</td>
+<td>GEV fit to <strong>UHSLC annual-maximum total still-water
+levels</strong> (tide + surge, <strong>de-meaned to local MSL — not
+de-tided</strong>; the tide dominates and must be retained),
+<code>ppf(1−1/RP)</code></td>
+<td>annual-maxima GEV of total water level is the standard extreme-value
+basis for coastal design levels; consistent with global
+extreme-sea-level reanalyses</td>
+<td><code>fetch_uhslc_gauge.py</code>; Muis 2016/2020 [R9,R10]</td>
+</tr>
+<tr>
+<td>GEV shape ξ</td>
+<td>MLE, <strong>clamped to [−0.5, 0.30]</strong></td>
+<td>unclamped MLE allowed heavy Fréchet tails → unphysical RP1000; 0.30
+validated vs PUB ponding 0.07–0.76 m</td>
+<td>this work</td>
+</tr>
+<tr>
+<td>MSL_offset</td>
+<td>SG 1.1588 · JKT 0.9976 · BKK 1.1785 m</td>
+<td>converts the EGM2008 DEM datum to local MSL; observed, <strong>not
+gate-tuned</strong></td>
+<td>derive_msl_egm2008_offsets.py</td>
+</tr>
+<tr>
+<td>SLR_delta</td>
+<td><strong>AR6</strong> tide-gauge zarr, p50, by SSP×horizon,
+<strong>added</strong> to baseline</td>
+<td>scenario sea-level rise is an additive mean shift on the still-water
+level</td>
+<td>IPCC AR6 [R6]</td>
+</tr>
+</tbody>
+</table></div>
+<p>Present-day RP10→RP100 rises only ≈0.15 m (tide-dominated), so the
+coastal hazard is severe even at RP10 and grows slowly with RP.</p>
+<h4
+id="52-fluvial-design-stage-water_level_m--stage-above-channel-bed">5.2
+Fluvial design stage (<code>water_level_m</code> = stage above channel
+bed)</h4>
+<p>GloFAS design <strong>discharge</strong> is converted to a
+<strong>stage</strong> via Manning's wide-rectangular inversion
+(<code>gev_utils.mannings_stage</code>):</p>
+<pre><code> Q ≈ (1/n)·w·d^(5/3)·√S   ⇒   d = (Q·n / (w·√S))^(3/5)</code></pre>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Meaning</th>
+<th>Source / rationale</th>
+<th>Reference</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Q</code></td>
+<td>design peak discharge (m³ s⁻¹)</td>
+<td>GloFAS v4 reanalysis design return levels</td>
+<td>Alfieri 2018 [R30]</td>
+</tr>
+<tr>
+<td><code>n</code></td>
+<td>channel Manning roughness</td>
+<td>per-city channel value</td>
+<td>Manning [R26]</td>
+</tr>
+<tr>
+<td><code>w</code></td>
+<td>channel width (m)</td>
+<td>per-city</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>S</code></td>
+<td>channel slope (m/m)</td>
+<td>per-city, from the DEM</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>d</code></td>
+<td>stage above bed (the fluvial <code>water_level_m</code>)</td>
+<td>mapped through HAND in §6.2</td>
+<td>—</td>
+</tr>
+</tbody>
+</table></div>
+<p>(<code>w/d &gt; 5</code> wide-channel assumption is checked and
+warned on violation.)</p>
+<h4 id="53-pluvial-net-excess-rain-water_level_m--excess-depth-m">5.3
+Pluvial net excess rain (<code>water_level_m</code> = excess depth,
+m)</h4>
+<p>Design rainfall comes from each <strong>national IDF</strong>
+standard, fit with a <strong>two-anchor Gumbel</strong>
+(<code>_refit_pluvial_ifd.fit_gumbel</code>); two (RP, depth) anchors
+<em>exactly</em> determine the two Gumbel parameters:</p>
+<pre><code> y_T = −ln(−ln(1 − 1/T));   σ = (x_b−x_a)/(y_b−y_a);   μ = x_a − σ·y_a
+ design_rain(RP) = μ + σ·y_RP
+ excess_depth_m  = max(0, design_rain(RP) − drainage_loss) / 1000        (runoff coeff applied later, in-model)</code></pre>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Value (per city)</th>
+<th>Rationale</th>
+<th>Reference</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>IDF anchors <code>(RP_a,x_a),(RP_b,x_b)</code></td>
+<td>e.g. KL: (2 yr, 90 mm),(100 yr, 165 mm)</td>
+<td>the published national IDF design-rainfall standard</td>
+<td>PUB / JPS-MSMA / TMD-RID / BMKG [R23]</td>
+</tr>
+<tr>
+<td>Gumbel ξ</td>
+<td><strong>0</strong> (Gumbel, not GEV)</td>
+<td>the standard form for IDF design rainfall; two anchors fix μ,σ
+exactly</td>
+<td>—</td>
+</tr>
+<tr>
+<td>drainage_loss</td>
+<td>e.g. KL 70 mm</td>
+<td>the drain-capacity threshold removed before ponding (drainage design
+level)</td>
+<td>national drainage standard [R23]</td>
+</tr>
+<tr>
+<td>runoff coeff <code>C</code></td>
+<td>raster (WorldCover); SG/KL 0.75, JKT 0.80</td>
+<td>impervious fraction → runoff; <strong>applied once, in the
+model</strong> (verified, no double-count)</td>
+<td>Zanaga 2022 [R16]</td>
+</tr>
+</tbody>
+</table></div>
+<p>National IDF anchoring closes a <strong>28–62 %</strong>
+design-rainfall deficit that global-synthetic products carry over the
+tropics — the single most important reason the pluvial layer is credible
+here.</p>
+<h4 id="54-climate-scaling-future-scenarios">5.4 Climate scaling (future
+scenarios)</h4>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Hazard</th>
+<th>Scaling</th>
+<th>Rationale</th>
+<th>Reference</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Coastal</td>
+<td><strong>additive</strong> AR6 SLR delta (§5.1)</td>
+<td>SLR is a mean-level shift</td>
+<td>IPCC AR6 [R6]</td>
+</tr>
+<tr>
+<td>Fluvial / Pluvial</td>
+<td><strong>multiplicative first-order Clausius–Clapeyron</strong>:
+<code>factor = (1+cc·ΔT)^h</code></td>
+<td>warmer air holds ~<code>cc</code> more moisture per °C;
+<strong>uniform across RP</strong> (see note)</td>
+<td>Lenderink 2017 [R5]</td>
+</tr>
+</tbody>
+</table></div>
+<pre><code> cc  = 0.07 / °C            (Clausius–Clapeyron, sub-daily tropical rainfall)
+ h   = 1.0  (pluvial, linear rain→stage)   |   0.6  (fluvial, Manning Q^0.6)
+ ΔT  by scenario:  SSP2-4.5/2050 ≈ 1.0 °C ·  SSP2-4.5/2100 ≈ 2.1 °C
+                   SSP5-8.5/2050 ≈ 1.5 °C ·  SSP5-8.5/2100 ≈ 4.0 °C        (rel. 2020; AR6 SPM)</code></pre>
+<blockquote>
+<p><strong>Important (implementation fact).</strong>
+<code>build_hazard_levels._gev_cc_factor</code> perturbs the GEV by
+scaling <em>both</em> location and scale by <code>α=(1+cc·ΔT)</code>.
+Because GEV is a location-scale family, the quantile ratio is
+<strong>exactly α for every return period</strong> — a <em>uniform</em>
+first-order CC intensification, <strong>not</strong>
+return-period-specific or super-CC. (The paper §3(iv) and the code
+docstring were corrected to say so, 2026-06-22.)</p>
+</blockquote>
+<hr />
+<h2 id="6-hazard-models">6. Hazard models</h2>
+<p>All three hazards are produced by
+<code>scripts/run_multihazard.py</code>, which dispatches to solver
+modules under <code>model/</code>: <code>inertial_wave_model.py</code>
+(coastal), <code>flood_depth_model.py</code>
+(HAND/bathtub/connectivity), <code>pluvial_model.py</code> (fill-spill
+cascade), and <code>pluvial_rain_model.py</code> (rain-on-grid). The
+per-city invocation is encoded in <code>repro/run_atlas_fixed.sh</code>.
+Outputs are written per hazard under
+<code>&lt;out&gt;/&lt;hazard&gt;/rp_&lt;rp&gt;/&lt;hazard&gt;_depth_&lt;scenario&gt;_&lt;horizon&gt;_rp&lt;rp&gt;.tif</code>.</p>
+<h3 id="60-common-notation-and-forcing-decomposition">6.0 Common
+notation and forcing decomposition</h3>
+<p>Throughout this section (for everyday definitions of Manning's
+<code>n</code>, WSE, HAND, and the rest, see the plain-language
+glossary, §11.2):</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Symbol</th>
+<th>Meaning</th>
+<th>Units</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>z(x,y)</code></td>
+<td>bed elevation (the bare-earth flood DEM), NaN = nodata/wall</td>
+<td>m (EGM2008)</td>
+</tr>
+<tr>
+<td><code>d(x,y,t)</code></td>
+<td>water depth above bed</td>
+<td>m</td>
+</tr>
+<tr>
+<td><code>η = z + d</code></td>
+<td>water-surface elevation (WSE)</td>
+<td>m</td>
+</tr>
+<tr>
+<td><code>q</code></td>
+<td>unit discharge across a cell interface (depth-integrated velocity,
+<code>q = u·h</code>)</td>
+<td>m² s⁻¹</td>
+</tr>
+<tr>
+<td><code>h_f</code></td>
+<td>flow depth at an interface =
+<code>max(η_L,η_R) − max(z_L,z_R)</code></td>
+<td>m</td>
+</tr>
+<tr>
+<td><code>n</code></td>
+<td>Manning's roughness coefficient</td>
+<td>s m^(−1/3)</td>
+</tr>
+<tr>
+<td><code>g</code></td>
+<td>gravitational acceleration = 9.806</td>
+<td>m s⁻²</td>
+</tr>
+<tr>
+<td><code>HAND(x,y)</code></td>
+<td>height above nearest drainage</td>
+<td>m</td>
+</tr>
+<tr>
+<td><code>Δx,Δy,Δt</code></td>
+<td>grid spacing (30 m) and timestep</td>
+<td>m, s</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>One forcing field, three interpretations.</strong> Each
+<code>(hazard, RP)</code> row of the <code>hazard_levels</code> CSV
+carries a single <code>water_level_m</code>, but its meaning differs per
+hazard — this is the central wiring fact of the model:</p>
+<ul>
+<li><strong>Coastal</strong> — <code>water_level_m</code> is the
+<strong>peak still-water level</strong> (absolute WSE, in the DEM datum)
+= MSL + tide + surge + SLR. It is the <em>boundary condition</em>, not
+the answer; depth is solved.</li>
+<li><strong>Fluvial</strong> — <code>water_level_m</code> is the
+<strong>river stage at the return period</strong>, above which the
+<em>overbank</em> excess <code>max(0, stage_RP − bankfull)</code> is
+mapped through HAND.</li>
+<li><strong>Pluvial</strong> — <code>water_level_m</code> is the
+<strong>net excess rain depth</strong>
+<code>(design_rain − drainage_loss)</code>, later multiplied by a
+per-cell runoff coefficient to become a runoff volume.</li>
+</ul>
+<p>The <strong>runoff coefficient</strong> <code>C(x,y)</code> (from
+WorldCover land cover, <code>--runoff-coeff-raster</code>, scalar
+fallback <code>--runoff-coeff</code>) scales rain to runoff: per-cell
+runoff volume = <code>excess × C × cell_area</code>.</p>
+<h3 id="61-coastal--local-inertia-shallow-water-vs-bathtub">6.1 Coastal
+— local-inertia shallow water <em>vs</em> bathtub</h3>
+<blockquote>
+<p><strong>In plain terms.</strong> There are two ways to work out how
+far the sea gets inland. The quick way — the "bathtub" — fills every low
+spot connected to the sea, instantly, as though the city were a bath. It
+has no notion of momentum, friction, or time, so it floods ground
+fifteen kilometres inland at the same moment as the shoreline. The
+slower way, which we use, steps the water forward in time with momentum
+and friction, so land the water cannot physically reach during a
+six-hour surge stays dry.</p>
+<p>This matters more than it sounds. Behind a working sea defence the
+two answers differ by about five times, because the bathtub leaks
+through canals that a 30-metre map cannot resolve and quietly floods the
+whole protected interior. Every headline coastal number in this atlas is
+read off the slower, physical solver.</p>
+</blockquote>
+<p>This is the headline methodological choice. The atlas computes
+coastal inundation with a <strong>2-D local-inertia shallow-water
+solver</strong> (<code>model/inertial_wave_model.py</code>,
+<code>--coastal-solver inertial</code>), and explicitly rejects the
+<strong>bathtub</strong> (connectivity) fill that open tools default to.
+The two are derived below, with the reason the bathtub
+over-predicts.</p>
+<h4
+id="611-the-shallow-water-equations-and-the-local-inertia-simplification">6.1.1
+The shallow-water equations and the local-inertia simplification</h4>
+<p>The full 2-D shallow-water (Saint-Venant) momentum equation for unit
+discharge <code>q</code> in the x-direction is</p>
+<pre><code> ∂q/∂t  +  ∂(q²/h)/∂x  +  g·h·∂η/∂x  +  g·n²·q·|q|/h^(7/3)  =  0
+ (local accel)  (advection)   (pressure grad)      (friction)</code></pre>
+<p>For slowly-evolving flood waves at <strong>low Froude number</strong>
+(<code>Fr = u/√(gh) ≪ 1</code> — true for coastal/urban flatland
+inundation), the nonlinear <strong>advection</strong> term
+<code>∂(q²/h)/∂x</code> is negligible and is dropped. Discretising the
+remaining three terms explicitly in time and solving for
+<code>q^{n+1}</code> gives the <strong>Bates, Horritt &amp; Fewtrell
+(2010)</strong> update used here:</p>
+<pre><code>                q^n  −  g · h_f · (∂η/∂x) · Δt
+ q^{n+1}  =  ───────────────────────────────────────
+              1  +  g · n² · |q^n| · Δt / h_f^(7/3)</code></pre>
+<p>where <code>h_f = max(η_L,η_R) − max(z_L,z_R)</code> is the interface
+flow depth (the "two-cell" depth that lets water cross a sill only when
+the higher WSE exceeds the higher bed). The numerator advances momentum
+under the <strong>water-surface-slope pressure gradient</strong>; the
+denominator applies <strong>Manning friction</strong> semi-implicitly
+(it appears as <code>q^{n+1}</code> in friction but
+<code>q^n·|q^n|</code> in the quadratic, which keeps the scheme stable
+without a matrix solve). Mass is then conserved by the explicit
+<strong>continuity</strong> update:</p>
+<pre><code> d^{n+1}_{i,j} = d^n_{i,j} − (Δt/Δx)(q_x,{i,j} − q_x,{i,j−1})
+                            − (Δt/Δy)(q_y,{i,j} − q_y,{i−1,j})        , clipped ≥ 0</code></pre>
+<p><strong>Stability (CFL).</strong> The explicit scheme requires
+<code>Δt ≤ α · min(Δx,Δy) / (√(g·d) + |u|)</code> with safety factor
+<code>α = CFL_ALPHA = 0.7</code>. The solver recomputes <code>Δt</code>
+adaptively every step (<code>_adaptive_dt</code>) from the current max
+gravity-wave celerity <code>√(g·d)</code> and max interface velocity,
+capped at <code>--inertial-dt-max</code> (default 30 s). Sea (Dirichlet)
+cells are excluded from the CFL test so their large depths don't
+throttle the land timestep.</p>
+<p><strong>Implementation.</strong> Hot kernels
+(<code>_flux_x/_flux_y/_continuity</code>) are JIT-compiled with
+<code>numba</code> (<code>@njit(parallel=True, fastmath=True)</code>)
+when available, with verified pure-numpy fallbacks. The domain is
+auto-cropped to the bounding box of cells that can ever wet
+(<code>sea ∪ {z ≤ peak_WL}</code> + 32-cell pad), often halving per-step
+cost. <code>g = 9.806</code>, <code>MIN_DEPTH = 1 mm</code> (interfaces
+shallower than this carry no flux).</p>
+<h4 id="612-boundary-condition--surge-hydrograph-on-an-slr-floor">6.1.2
+Boundary condition — surge hydrograph on an SLR floor</h4>
+<p>Sea cells are held at a <strong>time-varying Dirichlet WSE</strong>
+<code>wl_fn(t)</code> (<code>_surge_hydrograph</code>), a synthetic
+asymmetric triangular surge riding on a <strong>permanent still-water
+floor</strong>:</p>
+<pre><code> floor   = MSL_EGM2008 + SLR            (this row&#39;s coastal_delta_m)
+ 0 → 3h         : linear ramp  0 → peak_WSE   (gentle start; a dry-bed step shocks
+                                               the explicit scheme)
+ 3h → 4h        : hold at peak_WSE
+ 4h → 6h        : linear recession peak_WSE → floor   (NOT → 0)</code></pre>
+<p>The recession stops at the floor, <strong>not zero</strong>, so
+sea-connected land below MSL+SLR stays inundated after the surge
+withdraws — the physically correct persistent SLR signal. When
+<code>floor &gt; 0</code> the early-convergence test is disabled
+(<code>convergence_window</code> set huge) so the solver actually
+simulates the full ramp/hold/recession rather than exiting on the
+sub-tolerance warm-start state.</p>
+<p><strong>Warm-start.</strong> Two stacked initialisers cut
+steps-to-solution 3–5×: (1) <code>subsea_init</code> pre-floods
+below-MSL land to the floor (steady-state start), and (2) the
+<strong>previous RP's</strong> peak depth seeds the next RP so only the
+surge <em>increment</em> must be resolved. RPs are therefore run in
+ascending order with depth chained forward.</p>
+<p><strong>Post-hoc physical cap.</strong> Narrow inlets/steep gradients
+can numerically amplify a few cells during the sustained peak hold.
+Depth is capped at</p>
+<pre><code> d ≤ (peak_WSE − bed) + 0.2 m                      (2026-06-24: bed, NOT max(0,bed))</code></pre>
+<p>the static maximum plus a velocity-head margin (<code>≈ ½v²/g</code>
+for v = 2 m s⁻¹) — removing artefacts without touching genuine depths or
+bulk extent. <strong>The <code>bed</code> (not <code>max(0,bed)</code>)
+form is essential on subsided coasts:</strong> clamping the bed at 0
+caps below-MSL cells at the water level itself and silently under-states
+the water column in Jakarta's below-sea-level polders (the cap fix of
+2026-06-24; see §10 and the depth caveat in §6.1.3). Note the resulting
+depths are <em>equilibrium-fill</em> values — the full column from surge
+surface to bed — which is the damage-relevant depth where a polder is
+sea-connected but an upper bound where active pumping holds it lower.
+The inertial solver resolves connectivity intrinsically, so <strong>no
+BFS connectivity filter</strong> is applied to its output (unlike
+bathtub).</p>
+<h4 id="613-the-bathtub-method-and-why-it-over-predicts">6.1.3 The
+bathtub method, and why it over-predicts</h4>
+<p>The bathtub depth (<code>flood_depth_bathtub</code>) is purely
+static:</p>
+<pre><code> d(x,y) = max(0, WL − z(x,y))</code></pre>
+<p>followed by a <strong>connectivity filter</strong>
+(<code>connected_flood_mask</code>): a 4/8-connected BFS from the sea
+boundary (and tidal-channel seeds) keeps only flooded cells
+hydraulically connected to open water, discarding isolated inland lows.
+There is <strong>no momentum, no friction, and no time</strong> — every
+cell connected to the sea and below <code>WL</code> floods to the full
+<code>WL − z</code>, regardless of how far inland it is or what
+gradient/roughness the water would have to traverse to get there.</p>
+<p>This is the over-prediction mechanism, and it is an artifact of
+<strong>solver architecture, not 30 m resolution</strong>: on a
+gradient- and defence-rich delta, a momentum-and-friction solver leaves
+far-field low ground dry within a 6-hour surge because the water cannot
+physically arrive and persist, whereas the bathtub floods it instantly.
+The gap is <strong>regime-dependent</strong>, up to ≈5× on the Bangkok
+delta. Every headline coastal exposure figure is read off the
+<strong>inertial</strong> layer.</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th></th>
+<th>bathtub</th>
+<th>local-inertia (this model)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Pressure gradient (backwater)</td>
+<td>✗ static flat WSE</td>
+<td>✓ <code>g·h·∂η/∂x</code></td>
+</tr>
+<tr>
+<td>Mass conservation</td>
+<td>✗ none</td>
+<td>✓ strict continuity</td>
+</tr>
+<tr>
+<td>Friction / travel time</td>
+<td>✗ instantaneous</td>
+<td>✓ Manning <code>n</code>, finite surge window</td>
+</tr>
+<tr>
+<td>Connectivity</td>
+<td>BFS post-filter (4/8)</td>
+<td>intrinsic to the 2-D solve</td>
+</tr>
+<tr>
+<td>Velocity / <code>h·v</code> hazard</td>
+<td>✗</td>
+<td>✓ (optional)</td>
+</tr>
+<tr>
+<td>RP100 bias on defended delta</td>
+<td>up to ~5× high</td>
+<td>reference</td>
+</tr>
+<tr>
+<td>Cost</td>
+<td>seconds</td>
+<td>~30 min/RP/city (inertial)</td>
+</tr>
+</tbody>
+</table></div>
+<p><code>--coastal-solver bathtub</code> is retained as a fast screening
+fallback (and is used when no sea-mask is available); it is
+<strong>not</strong> used for the published atlas.</p>
+<h4 id="614-datum-negative-land-defences">6.1.4 Datum, negative land,
+defences</h4>
+<ul>
+<li><strong>Datum.</strong> WSEs are referenced to local MSL via
+per-city EGM2008 offsets (<code>--coastal-msl-egm2008</code>): Singapore
+1.1588, Jakarta 0.9976, Bangkok 1.1785.</li>
+<li><strong>Negative land.</strong> Jakarta/Bangkok pass
+<code>--no-clamp-negative-land</code>: genuine below-MSL land exists
+(Jakarta subsidence) and clamping would erase real exposure.</li>
+<li><strong>Defences.</strong> Continuous coastal crests are baked into
+the DEM (§4); Bangkok adds the pumped-polder post-process (§6.1.5).</li>
+</ul>
+<h4 id="615-pumped-polders-bangkok-only">6.1.5 Pumped polders (Bangkok
+only)</h4>
+<p>Bangkok's King's-Dyke CBD stays dry behind pumped polders, so
+<code>scripts/apply_pumped_polder.py</code> dries documented polder
+rings in post-processing (<code>&lt;out&gt;_polder</code> — the
+scored/published composite). Tested for Jakarta and
+<strong>rejected</strong>: Jakarta's Pluit/Muara Baru polders genuinely
+flood at RP100 and the flooded dry control there (Cipete) is fluvial,
+not coastal — so the polder fix is Bangkok-only.</p>
+<h3 id="62-fluvial--hand-referencing-vs-other-methods">6.2 Fluvial —
+HAND referencing <em>vs</em> other methods</h3>
+<blockquote>
+<p><strong>In plain terms.</strong> River flooding is handled by asking,
+for every point in the city, "how far above the river am I?" — then
+raising the river by the design amount and seeing what ends up
+underwater. The subtlety is <em>which</em> river. A city is threaded
+with hundreds of small drains as well as a few big rivers, and the flow
+figure we have describes only the big ones. Measure height above every
+little drain and you flood the whole city; measure height above the main
+trunk the flow actually belongs to and you get something sensible. That
+choice is the substance of this section.</p>
+</blockquote>
+<h4 id="621-what-hand-is">6.2.1 What HAND is</h4>
+<p><strong>HAND</strong> (Height Above Nearest Drainage; Rennó et al.
+2008, Nobre et al. 2011) is a terrain transform: every cell's vertical
+height above the channel cell its D8 flow path drains to. It
+renormalises absolute elevation into <em>elevation relative to the local
+river</em>, which is the natural vertical reference for river flooding.
+It is computed once per city from the conditioned DEM: D8 flow
+directions on the pit-/ flat-resolved surface, a drainage network
+defined by flow-accumulation threshold, and for each cell the drop to
+its nearest network cell along the flow path.</p>
+<h4 id="622-depth-mapping-the-model">6.2.2 Depth mapping (the
+model)</h4>
+<p>Fluvial depth is a <strong>static stage-minus-HAND</strong> map
+(<code>flood_depth_hand</code>), but the stage is the <strong>overbank
+excess above bankfull</strong>, not the raw return-period stage:</p>
+<pre><code> overbank   = max(0, stage_RP − bankfull_stage)         (--fluvial-bankfull-rp sets bankfull; 0 here)
+ d(x,y)     = max(0, overbank − HAND(x,y))
+ d(channel) = 0                                          (burned channel cells masked — see below)</code></pre>
+<p>Cells with <code>HAND &lt; overbank</code> flood, to a depth that is
+greatest at the channel (<code>HAND ≈ 0</code>) and tapers to zero at
+the inundation edge (<code>HAND = overbank</code>). Subtracting bankfull
+first means a return period only inundates the floodplain by the
+<em>excess</em> over the channel's design conveyance — below bankfull,
+the river is in-bank and the floodplain is dry.</p>
+<p><strong>Channel masking.</strong> HAND is 0 on the burned channel
+network, so every channel cell would "flood" on any overbank — but a
+canal carrying water is <em>conveyance</em>, not inundation, and many
+channels are below-grade (engineered beds), which would make the map
+appear to flood "underground". Channel cells are therefore zeroed
+(<code>depth = where(river_mask, 0, depth)</code>), mirroring the
+pluvial treatment of channels as sinks.</p>
+<h4
+id="623-main-stem-vs-dense-network-drainage--the-threshold-that-matters">6.2.3
+Main-stem <em>vs</em> dense-network drainage — the threshold that
+matters</h4>
+<p>The single most consequential fluvial parameter is the
+<strong>flow-accumulation threshold</strong> that defines "drainage"
+(<code>derive_drainage_mask_from_accumulation</code>):</p>
+<ul>
+<li><strong>Dense HAND</strong> — the full canal/drain network is
+"channel". On canal-dense cities this labels a huge fraction of land as
+<code>HAND ≈ 0</code> (Singapore's dense hybrid HAND: 96.5 km² ≈ 19 % of
+land), so a modest stage floods ~40 % of the island and the
+<em>fluvial</em> layer silently <strong>absorbs the pluvial
+hotspots</strong> — the failure that crashed Singapore's gate from 0.84
+to 0.13 when fluvial was reduced naively.</li>
+<li><strong>Main-stem HAND</strong> — only channels draining above a
+<strong>per-city accumulation threshold</strong> count: <strong>≥50
+km²</strong> for Singapore and Jakarta, <strong>≥180 km²</strong> (the
+larger Klang trunk) for Kuala Lumpur. The stage then floods land within
+reach of the <em>trunk</em> river, not of every minor drain. This
+corrects the fluvial extent (SG fluvial 180→28 km², channel 96.5→2.8
+km²) and forces the pluvial hazard onto the pluvial layer where it
+belongs.</li>
+</ul>
+<p>Per-city HAND rasters: Singapore
+<code>singapore_hand_v3_mainstem</code>, Jakarta
+<code>jakarta_hand_v3_mainstem</code>, Bangkok
+<code>hand_trunk_v3_debiased</code>, KL
+<code>kl_hand_mainstem_v3eth</code> (already main-stem at ≈0.9 %
+channel).</p>
+<p><strong>Provenance and reproducibility (all four now resolved;
+2026-07-18).</strong> Every raster in the repo is git-ignored by
+convention; the <em>primary</em> inputs (bare-earth DEMs, masks,
+forcing) ship in the Zenodo archive's <code>inputs/</code>, and
+committed scripts regenerate the <em>derived</em> ones. The four fluvial
+HANDs sit in two categories:</p>
+<ul>
+<li><strong>Script-derived</strong> (regenerated by the atlas driver
+from committed inputs): Singapore
+<code>scripts/_fix_sg_mainstem_hand.py</code>, Jakarta
+<code>_fix_jakarta_mainstem_hand.py</code>, and — as of 2026-07-18 —
+<strong>KL <code>scripts/_fix_kl_trunk_hand.py</code></strong>. A plain
+flow-accumulation threshold does <strong>not</strong> reproduce the KL
+trunk (a ≥180 km² threshold gives only ~3 km² of channel and IoU 0.82
+against the shipped HAND — the shipped Klang trunk is a denser
+v2-lineage network), so the topology is shipped as an explicit
+<strong>frozen drainage mask</strong>
+(<code>data/kuala_lumpur/trunk_drainage_mask_utm47n.tif</code>, 12,362
+channel cells) and the builder computes
+<code>compute_hand(DEM, mask)</code> from it. Verified:
+<strong>regenerates the shipped raster to max|Δ| = 0
+(bit-identical)</strong>; the mask now ships in the KL Zenodo
+inputs.</li>
+<li><strong>Primary frozen input</strong> (shipped in the archive, not
+script-derived): Bangkok <code>hand_trunk_v3_debiased</code>. Its
+drainage is the v2 Chao-Phraya-trunk network <strong>plus an opaque
+debiasing step</strong> that no committed script reverses (from-mask and
+from-accumulation rebuilds reach only IoU ≈ 0.65 and would change the
+shipped fluvial layer). It is therefore shipped as a primary frozen
+input in the Bangkok Zenodo <code>inputs/</code> — <strong>the same
+category as the bare-earth DEMs</strong>, which likewise have no in-repo
+builder and ship as frozen inputs. This is a documented, bounded
+provenance limitation, not an availability gap: the exact raster is
+obtainable and the Bangkok fluvial result reproduces from it.</li>
+</ul>
+<blockquote>
+<p><strong>Flat-delta note.</strong> Even a main-stem HAND keeps a large
+fluvial footprint on a low-gradient delta, because everything sits
+within the trunk stage of the river (Jakarta fluvial ≈181 km²). This is
+physical, not a bug — the whole delta <em>is</em> the Ciliwung
+floodplain.</p>
+</blockquote>
+<h4 id="624-hand-vs-the-alternatives">6.2.4 HAND <em>vs</em> the
+alternatives</h4>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Physics</th>
+<th>Cost</th>
+<th>Why not (for this screen)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>HAND</strong> (used)</td>
+<td>static stage on drainage-relative terrain</td>
+<td>~seconds</td>
+<td>the screening sweet spot — topographically coherent, no routing,
+scales to 60 cells</td>
+</tr>
+<tr>
+<td>Bathtub fluvial</td>
+<td><code>max(0, stage − z)</code> + BFS from channel</td>
+<td>seconds</td>
+<td>references absolute elevation, not the river; floods any low ground
+at <code>z &lt; stage</code> even if it is nowhere near a river</td>
+</tr>
+<tr>
+<td>2-D hydrodynamic (inertial, array BC)</td>
+<td>full local-inertia with a <strong>per-cell channel WSE
+field</strong> held as Dirichlet (the solver <em>supports</em> this —
+<code>wl_boundary</code> as an ndarray) and spill routed onto the
+floodplain</td>
+<td>~30 min/RP</td>
+<td>overkill for design-event <em>screening</em>; needs reach-by-reach
+channel geometry/discharge the open forcing doesn't resolve at 30 m</td>
+</tr>
+<tr>
+<td>Full hydraulic model (HEC-RAS etc.)</td>
+<td>1-D/2-D coupled, surveyed cross-sections</td>
+<td>hours–days</td>
+<td>not license-clean, not rebuildable from free data, not scalable to
+the atlas</td>
+</tr>
+</tbody>
+</table></div>
+<p>HAND is chosen because it captures the dominant control on fluvial
+extent — <em>height above the river</em> — at screening cost and from
+free terrain, while the heavier options need data the open pipeline
+cannot supply uniformly across four countries. The inertial
+<em>riverine</em> path exists in the code (array boundary condition) for
+future per-reach work.</p>
+<h3 id="63-pluvial--four-models-regime-matched">6.3 Pluvial — four
+models, regime-matched</h3>
+<blockquote>
+<p><strong>In plain terms.</strong> This is flooding caused purely by
+rain arriving faster than the ground and the drains can carry it away —
+the "flash flood" that global flood products usually leave out entirely,
+and the biggest single hazard in three of our four cities. Rain floods a
+city in one of two ways, and which one depends on the shape of the land.
+On flat ground with lots of hollows, water collects in the hollows and
+spills from one to the next; that is Bangkok. In cities threaded with
+canals and open drains, water backs up along the drainage network and
+floods the low land beside it; that is Kuala Lumpur, Singapore and
+Jakarta. We use a different method for each, because using the wrong one
+measurably lowers the trust score in §7.</p>
+</blockquote>
+<p>Pluvial (rain-driven) flooding is where method choice matters most,
+because the physical mechanism differs by terrain: water either
+<strong>collects in closed basins</strong> (depression storage) or
+<strong>backs up beside overwhelmed drains</strong>
+(drainage-overwhelm). <code>run_multihazard.py</code> implements four
+<code>--pluvial-model</code> options. Two are in production use —
+<code>fillspill</code> and <code>handfill</code> — and two are
+alternatives (<code>raingrid</code>, <code>legacy</code>). All share the
+same forcing: <code>water_level_m</code> is the net excess rain depth,
+scaled by the per-cell runoff coefficient <code>C</code>.</p>
+<blockquote>
+<p><strong>⚠ The atlas is built in two stages.</strong> §6.3.1–6.3.5
+below document the solvers and the <em>original</em> regime assignment
+(fill-spill: Bangkok, KL; handfill: Singapore, Jakarta), which is what
+the <strong>Stage-1 solve loop</strong> in
+<code>repro/run_atlas_fixed.sh</code> invokes. That Stage-1 atlas is
+then modified by the two applies below, and the outputs/paper reflect
+the post-retrofit state. Since 2026-07-13 both run inside the same
+driver as <strong>STAGE 2</strong>, so one command reproduces the
+shipped product:</p>
+<ol type="1">
+<li><strong>Canal-HAND retrofit (2026-07-04)</strong> — a HAND handfill
+referenced to the <em>real mapped drain network</em> (not a synthetic
+dense net), applied under a selection rule rather than blanket-applied.
+Measured verdicts: <strong>KL applied</strong> (unioned per-pixel with
+its depression cascade), <strong>Jakarta applied</strong>,
+<strong>Singapore rejected</strong> (its shipped pluvial already scores
+strongly), <strong>Bangkok rejected</strong> (pumped flat delta — CRR
+collapses). The rule: retrofit only where the shipped pluvial-only HR is
+demonstrably low <strong>and</strong> the register's dry controls sit
+topographically above its positives; on flat pumped deltas engineered
+drainage decouples flooding from topography, so no HAND variant can
+discriminate. Run docs:
+<code>docs/runs/2026-07-04-*canal-hand-pluvial.md</code>.</li>
+<li><strong>Pluvial closing (2026-07-07)</strong> — see
+<code>docs/runs/</code>.</li>
+</ol>
+<p><strong>§6.3.5 documents both stages and states the shipped
+post-retrofit configuration</strong> — read it for what the atlas and
+paper actually report. Gate numbers quoted inside §6.3.1–6.3.4 are
+<strong>Stage-1 (pre-retrofit)</strong> values, retained because they
+are the evidence that selected each city's <em>base</em> solver.</p>
+</blockquote>
+<h4 id="631-fillspill--catchment-routed-fill-and-spill-cascade">6.3.1
+<code>fillspill</code> — catchment-routed fill-and-spill cascade</h4>
+<p>The production depression-storage model
+(<code>model/pluvial_model.py</code>) is a topologically-ordered
+<strong>fill-and-spill cascade</strong> — a screening-grade
+approximation of Barnes et al. (2020) Fill-Spill-Merge — not a lumped
+fill. It is built once per city (<code>build_pluvial_topography</code>)
+and routed per RP (<code>route_pluvial_rp</code>).</p>
+<p><strong>Step 1 — depression inventory.</strong> Pit-fill the DEM
+(<code>filled</code>), then label connected components (8-connectivity)
+of <code>filled − dem &gt; 0</code>. Each component is a depression,
+kept only if it passes three physical filters that screen out DEM noise
+and non-ponding features:</p>
+<pre><code> depth   d(x,y) = filled(x,y) − dem(x,y)
+ keep depression  iff  0.5 m ≤ max(d) ≤ 3.0 m   and   area ≥ 9 cells (≈0.8 ha)</code></pre>
+<p>(<code>&lt; 0.5 m</code> = noise; <code>&gt; 3.0 m</code> =
+quarry/valley/reservoir/artefact, excluded like sea;
+<code>&lt; 9 cells</code> = sub-pixel inter-building voids in the GLO-30
+DSM.)</p>
+<p><strong>Step 2 — hypsometric curve.</strong> Each depression stores
+its cell bed elevations sorted ascending. Its
+<strong>volume–level</strong> relation is</p>
+<pre><code> V(h) = cell_area · Σ_i max(0, h − bed_i)            (capacity = V(pour_elev))</code></pre>
+<p>inverted analytically (<code>_fill_level</code>) to find the water
+level <code>h</code> that holds a given inflow volume.</p>
+<p><strong>Step 3 — catchment supply.</strong> Per-cell runoff volume
+<code>excess · C · cell_area</code> is routed by <strong>D8 steepest
+descent</strong> on the raw DEM; every cell is credited to the
+depression its flow path terminates in
+(<code>compute_catchment_supply</code>, via terminal-label propagation
+in ascending-elevation order). Runoff that terminates in an
+excluded/edge sink is dropped (it drains away, exactly as sea/river
+sinks do).</p>
+<p><strong>Step 4 — spill cascade.</strong> Each depression's overflow
+destination is found by walking the <em>conditioned</em> D8 field until
+it reaches another depression or a sea/river sink
+(<code>build_spill_graph</code>). Depressions are then filled in
+<strong>topological order</strong> (<code>run_cascade</code>): if total
+inflow ≥ capacity, the depression fills to its pour elevation and the
+surplus cascades to its downstream destination; otherwise it fills
+partially via the inverted hypsometric curve. Processing
+downstream-after-upstream guarantees each depression's inflow is final
+before it fills.</p>
+<p><strong>Step 5 — paint depth.</strong>
+<code>d = max(0, level_d − bed)</code> for each depression's cells;
+cells below <code>WET_THRESHOLD_M = 0.05 m</code> are set dry.</p>
+<p>This is <strong>RP-dependent</strong> (extent grows with return
+period) and <strong>parameter-light</strong> — no free stage parameter,
+just the runoff excess. It is physically correct exactly where flooding
+<em>is</em> basin storage: <strong>flat depression-dominated
+deltas</strong> (Bangkok) and any terrain whose lows are genuine closed
+basins.</p>
+<h4 id="632-handfill--rain-pooling-near-open-drainage">6.3.2
+<code>handfill</code> — rain pooling near open drainage</h4>
+<p>On canal-dense cities most excess rain never enters a closed basin —
+it sheets down open gradients and <strong>backs up at low points beside
+saturated drains</strong>. <code>fillspill</code> structurally reports
+almost no ponding there (Singapore: 1/38 hotspots).
+<code>handfill</code> models this drainage-overwhelm regime as a
+<strong>HAND stage on the dense network</strong>:</p>
+<pre><code> d(x,y) = max(0, stage − HAND_dense(x,y))                  (flood_depth_hand on the dense HAND)
+ d = 0   where  river_mask  OR  HAND_dense &lt; 0.05 m        (channels = conveyance, not flood)
+ d = min(d, depth_cap)                                     (life-safety flash-flood bound)</code></pre>
+<p>It reuses the HAND depth kernel (§6.2.2) but on the
+<strong>dense</strong> HAND (the full drain network, not the trunk), so
+it floods the low land <em>adjacent to every open drain</em> to a
+rain-driven <code>stage</code>. Two parameters:
+<code>--pluvial-hand-stage</code> sets the flood-prone
+<strong>extent</strong>, <code>--pluvial-depth-cap</code> bounds the
+<strong>depth</strong> (without the cap, <code>stage − HAND</code>
+over-deepens right next to drains). Production values: Singapore (hybrid
+HAND, stage 1.5 m, cap 0.5 m), Jakarta (<code>jakarta_hand_v3</code>,
+stage 2.5 m, cap 1.0 m). Result <em>(Stage-1, pre-retrofit)</em>:
+Singapore pluvial 15→95 km² (present-day), gate HR 0.13→0.71 PASS;
+Jakarta TSS 0.66→0.76 PASS. Jakarta's base layer was subsequently
+unioned with a canal-HAND layer (Stage 2, §6.3.5), lifting its gate to
+0.85/0.92/<strong>0.77</strong>; Singapore's base layer ships
+unchanged.</p>
+<p><strong>Return-period / climate scaling (2026-06-22).</strong> With a
+<em>fixed</em> stage the handfill layer is
+<strong>forcing-invariant</strong> — it ignores
+<code>water_level_m</code>, so the SG/Jakarta pluvial extent was
+identical at every RP and every scenario (SG 95.1 km², Jakarta 168.0 km²
+everywhere). The opt-in flag
+<code>--pluvial-hand-stage-baseline &lt;excess_m&gt;</code> fixes this:
+the effective stage scales with this row's rain excess,
+<code>stage_eff = stage × clip(level_m / baseline, 0.4, 2.5)</code>,
+where <code>baseline</code> is the present-day RP100 excess the stage
+was calibrated against (SG 0.0696, Jakarta 0.1300). At
+<code>level_m == baseline</code> the stage is unchanged, so the
+<strong>present-day RP100 gate is preserved by construction</strong>;
+other RPs/scenarios now respond (SG 49→95→129; Jakarta 108→168→217 km²
+at RP10/100/1000, pre-closing). <strong>The shipped atlas carries the
+scaled layer</strong> (measured: SG pluvial 56.7/111.2/150.2 km² at
+RP10/100/1000 present-day, ≥0.10 m) — historically applied post-rebuild
+by <code>repro/rerun_handfill_scaled.sh</code>, and since 2026-07-17
+produced directly by the driver, whose SG/Jakarta lines pass
+<code>--pluvial-hand-stage-baseline</code> (0.069602 / 0.129999) in
+Stage 1.</p>
+<p><strong>Physical bracket on the base stages (anchored 2026-07-18;
+review C7 follow-up #3).</strong> The base stages were chosen with gate
+visibility (§10 item 3); the external standards do not <em>pin</em>
+either value, but they <strong>bracket</strong> it, which bounds the
+choice physically:</p>
+<ul>
+<li><strong>Singapore 1.5 m.</strong> The dense-HAND reference surface
+sits at the DEM's drain elevation (engineered beds read below grade —
+limitations register #1), so the stage is the height of ponding
+<em>above the drain bed</em>: drain depth + surcharge above bank. PUB's
+Code of Practice on Surface Water Drainage requires roadside drains ≥
+0.6 m deep, classes ordinary open drains by ≤ 1 m / &gt; 1 m depth (i.e.
+metre-deep drains are routine), sets freeboard at <strong>15 % of drain
+depth</strong> (CoP §7.3.4), and designs minor catchments (&lt; 100 ha)
+to a 10-yr storm (CoP §7.1.3) — beyond which the drain surcharges. A
+1.0–1.2 m outlet drain surcharged to bank-top plus ponding within PUB's
+own documented 0.07–0.76 m range spans <strong>≈ 1.1–2.0 m above the
+bed</strong>; 1.5 m sits mid-band.</li>
+<li><strong>Jakarta 2.5 m.</strong> BNPB's reporting for the
+January-2020 monsoon event — the design-class event for this layer —
+recorded 268 flooded locations at depths <strong>0.2–2.5 m</strong>, six
+kampungs ≥ 2 m (Cipinang Melayu peaking ≈ 4 m). The 2.5 m stage is the
+top of BNPB's city-wide band: the layer floods land up to, and not
+beyond, the documented envelope of the design-class event. (Indonesian
+practice — SNI 03-2406-1991 / Pd T-02-2006-B — sets drain freeboard at
+5–30 % of flow depth, same order as PUB's 15 %.)</li>
+<li><strong>KL / Jakarta canal-HAND stage_ref (0.5 / 0.3 m,
+§6.3.5).</strong> MSMA (2nd ed., ch. 26) dimensions lined open drains at
+0.5–1.2 m with 50–300 mm freeboard; the 0.5 m and 0.3 m reference stages
+are the depth class of the <em>mapped minor-drain network</em> they are
+referenced to, not the metre-deep outlet class above.</li>
+</ul>
+<p>The honest provenance statement is therefore <strong>GATE-SELECTED
+within a standards-bracketed range</strong>: the bracket comes from
+PUB/MSMA/SNI + the BNPB event record; the specific value inside the
+bracket was chosen with gate visibility. §11.4 carries this
+classing.</p>
+<h4 id="633-raingrid--2-d-rain-on-grid-alternative">6.3.3
+<code>raingrid</code> — 2-D rain-on-grid (alternative)</h4>
+<p>The most physical pluvial option
+(<code>model/pluvial_rain_model.py</code>): the <strong>same
+local-inertia solver as the coastal model</strong> (§6.1.1), but with a
+distributed <strong>rainfall source term</strong> instead of a sea
+boundary:</p>
+<pre><code> net rain rate = (excess · C) / storm_duration        applied to land cells while t &lt; storm
+ d^{n+1} += rain_rate · Δt                              (source, on top of the SWE update)
+ outlets (sea ∪ open channels): d = 0 each step         (free-drainage sinks)</code></pre>
+<p>Manning's <code>n</code> is spatially variable (land-cover-derived,
+<code>≈ clip(0.11 − 0.08·C, 0.03, 0.10)</code>). Drains can be made
+<strong>finite-capacity</strong> (<code>--drain-conveyance-m-s</code>):
+a perfect-sink mask (sea + major rivers) drains freely while minor
+channels shed only <code>conveyance · Δt</code> per step and pond the
+remainder when overwhelmed. Output is the <strong>peak</strong> depth
+over a storm-plus-settling window (default 1 h storm + 0.5 h settle),
+denoised (<code>denoise_min_cluster</code>, drop &lt; 6-cell ≈0.5 ha
+speckle) and floored at 0.05 m. RPs are solved in a process pool
+(<code>--raingrid-workers</code>). <em>Not</em> in production: on steep
+terrain it over-drains (KL → ~0 pluvial), and where it works it is far
+costlier than <code>handfill</code> for a similar result.</p>
+<h4 id="634-legacy--lumped-depression-fill-deprecated">6.3.4
+<code>legacy</code> — lumped depression fill (deprecated)</h4>
+<p>The original model (<code>flood_depth_pluvial_ponding</code>):
+<code>d = min(WL, filled − dem)</code>. RP-frozen extent (the depression
+footprint is identical at every RP, only depth scales), superseded by
+<code>fillspill</code>. Retained for reproducing earlier results.</p>
+<h4 id="635-model-selection--two-gate-arbitrated-decisions">6.3.5 Model
+selection — two gate-arbitrated decisions</h4>
+<p>The shipped pluvial layer is the result of <strong>two</strong>
+decisions, taken three months apart and both arbitrated by the
+model-blind register rather than by preference. Stage 1 chose the
+<em>base</em> solver per city (2026-06); Stage 2 retrofitted a
+<strong>canal-HAND</strong> layer onto two of the four (2026-07-04).
+Both are documented here because the second changes what several earlier
+sections imply.</p>
+<h5 id="stage-1--fillspill-vs-handfill-the-base-layer">Stage 1 —
+<code>fillspill</code> <em>vs</em> <code>handfill</code> (the base
+layer)</h5>
+<p>Regime-matching is <strong>empirically validated, not
+stylistic</strong>: forcing the wrong model measurably degrades the
+model-blind gate (expanded register, present-day RP100). These are the
+<strong>pre-retrofit</strong> scores that selected each city's base
+solver:</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>City</th>
+<th>Regime</th>
+<th>fill-spill TSS [95% CI]</th>
+<th>handfill TSS [95% CI]</th>
+<th>base solver</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Singapore</td>
+<td>canal-dense island</td>
+<td>fails (1/38 hotspots)</td>
+<td><strong>0.61</strong> [0.41, 0.79] PASS</td>
+<td>handfill</td>
+</tr>
+<tr>
+<td>Jakarta</td>
+<td>canal-dense delta</td>
+<td>0.66</td>
+<td><strong>0.76</strong> [0.61, 0.91] PASS</td>
+<td>handfill</td>
+</tr>
+<tr>
+<td>Kuala Lumpur</td>
+<td>steep, sub-grid</td>
+<td><strong>0.65</strong> [0.48, 0.81]</td>
+<td>0.51 [0.23, 0.76]</td>
+<td>fill-spill</td>
+</tr>
+<tr>
+<td>Bangkok</td>
+<td>flat khlong delta</td>
+<td><strong>0.34</strong> [0.19, 0.50]</td>
+<td>0.37 <strong>[−0.01, 0.72]</strong></td>
+<td>fill-spill</td>
+</tr>
+</tbody>
+</table></div>
+<p>The two failure modes are instructive and
+<strong>opposite</strong>:</p>
+<ul>
+<li><strong>Bangkok (handfill fails).</strong> On a flat khlong-laced
+delta <em>everything</em> is within 1.5 m of a drain, so handfill floods
+≈617 km² (vs fill-spill's 179) — most of the delta. HR rises spuriously
+(flood-everything) but specificity collapses and the <strong>TSS CI
+crosses zero</strong> — it loses statistical significance. Fill-spill's
+depression geometry preserves specificity (CRR 1.00).</li>
+<li><strong>KL (handfill underperforms).</strong> Handfill gives a more
+<em>coherent-looking</em> map (3.5k zones vs fill-spill's 12k tiny pits)
+and slightly higher HR, but floods two dry controls, dropping TSS
+0.65→0.51. The spotty fill-spill is gate-optimal precisely because its
+scattered pits dodge the dry controls. KL's flash floods are
+fundamentally <strong>sub-grid</strong> at 30 m; neither model is ideal,
+and fill-spill is retained for the gate.</li>
+<li><strong>Singapore / Jakarta (handfill wins decisively).</strong>
+Canal-dense, bounded terrain where the hotspots sit beside open drains —
+exactly handfill's regime — so it lifts both cities over the PASS bar
+where fill-spill cannot represent the mechanism at all.</li>
+</ul>
+<p><strong>Stage-1 decision rule.</strong> Use <code>fillspill</code>
+for depression-dominated terrain (closed basins: flat deltas, steep
+pits) and <code>handfill</code> for canal-dense cities whose flooding is
+drainage-overwhelm beside open drains. See §10 for the open caveat that
+handfill's <code>stage</code> was effectively gate-selected and needs
+re-anchoring to a documented value.</p>
+<h5 id="stage-2--the-canal-hand-retrofit-2026-07-04">Stage 2 — the
+canal-HAND retrofit (2026-07-04)</h5>
+<p>Stage 1's <code>handfill</code> references a <strong>synthetic dense
+HAND</strong>. Stage 2 asks a sharper question: reference the stage to
+the <strong>real, mapped drain network</strong> instead. The retrofit
+adds a canal-HAND layer <strong>unioned per-pixel</strong> with the
+city's existing (Stage-1) layer, so it can only <em>add</em> wet
+cells:</p>
+<pre><code> pluvial_new(x,y) = max( pluvial_shipped(x,y),  clip(stage_cell − HAND_canal(x,y), 0, cap) )
+ d = 0 on channels                                   (conveyance, as everywhere else)
+ HAND_canal        = height above the MAPPED drain network (OSM / river mask)
+ stage_cell        = stage_ref × clip(cell excess / baseline_excess, lo, hi)</code></pre>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>City</th>
+<th><code>HAND_canal</code> network</th>
+<th><code>stage_cell</code></th>
+<th>cap</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Kuala Lumpur</td>
+<td><code>drainage_waterways_utm47n</code>, <strong>pruned to drains
+with ≥0.5 km² flow accumulation</strong></td>
+<td><code>0.5 m × (excess/0.095)</code>, clip [0.4, 2.5]</td>
+<td>3.0 m</td>
+</tr>
+<tr>
+<td>Jakarta</td>
+<td><code>river_mask_utm48s</code>, <strong>unpruned (full
+network)</strong></td>
+<td><code>0.3 m × (excess/0.130)</code>, clip [0.15, 1.5]</td>
+<td>3.0 m</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Why the pruning differs is physical, not tuning.</strong> KL
+is hilly: unpruned, headwater ditches carry <code>HAND_canal ≈ 0</code>
+onto the ridges and flood the high dry controls (Federal Hill, TTDI). An
+accumulation prune removes ditches that are not conveyance. Jakarta is a
+flat delta whose canals are <em>all</em> engineered conveyance — there
+are no hill headwater ditches to remove, and the gate is insensitive to
+pruning there. <strong>Rule: prune in hilly cities; do not prune on
+deltas.</strong></p>
+<p><strong>The 4-city assessment — tested on all four <em>before</em>
+applying to any:</strong></p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>City</th>
+<th>shipped pluvial-only HR</th>
+<th>dry-control geometry</th>
+<th>canal-HAND verdict</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Kuala Lumpur</td>
+<td><strong>0.13</strong> (under-powered)</td>
+<td>all high ground (min 49.7 m)</td>
+<td><strong>applied</strong></td>
+</tr>
+<tr>
+<td>Jakarta</td>
+<td>0.64</td>
+<td>high ground (min 31.9 m)</td>
+<td><strong>applied</strong> — strict win, TSS improves</td>
+</tr>
+<tr>
+<td>Singapore</td>
+<td>0.71 (already strong)</td>
+<td>moderate relief (min 6.7 m)</td>
+<td><strong>rejected</strong> — TSS 0.61 → 0.39–0.54 across every
+variant</td>
+</tr>
+<tr>
+<td>Bangkok</td>
+<td>0.25</td>
+<td>degenerate (all controls &lt; 5 m)</td>
+<td><strong>rejected</strong> — CRR 1.00 → 0.43, TSS 0.34 → 0.02</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p><strong>Stage-2 selection rule (the transferable finding).</strong>
+Retrofit canal-HAND <strong>only</strong> where (a) the shipped
+pluvial-only HR is demonstrably low <strong>and</strong> (b) the
+register's dry controls sit meaningfully <strong>higher</strong> than
+its positives — i.e. topographic position relative to drainage is
+informative. <strong>Both are checkable before building
+anything.</strong> The two rejections explain why: on a <strong>flat
+pumped delta</strong> (Bangkok) engineered drainage decouples flooding
+from topography, so <em>no</em> HAND variant can discriminate — it
+floods the low dry controls and specificity collapses; in an
+<strong>already-skilful, heavily-drained</strong> city (Singapore) it
+only adds false alarms.</p>
+</blockquote>
+<p><strong>Measured effect of the two applications:</strong></p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th></th>
+<th>KL shipped → retrofit</th>
+<th>Jakarta shipped → retrofit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>pluvial extent (RP100/2020)</td>
+<td>37.9 → <strong>246</strong> km²</td>
+<td>163 → <strong>245</strong> km²</td>
+</tr>
+<tr>
+<td>largest contiguous patch</td>
+<td>0.18 → <strong>6.5</strong> km²</td>
+<td>—</td>
+</tr>
+<tr>
+<td>documented flash-flood streets hit</td>
+<td>13 % → <strong>55 %</strong></td>
+<td>—</td>
+</tr>
+<tr>
+<td>gate HR / CRR / TSS</td>
+<td>0.65/1.00/0.65 → <strong>0.71/0.92/0.63</strong></td>
+<td>0.76/1.00/0.76 → <strong>0.85/0.92/0.77</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>KL trades a hill dry-control (CRR 1.00→0.92) for three recovered
+documented streets (Segambut Dalam, Jalan Tun Razak, Bangsar); TSS is
+<strong>parity within the ±0.16 bootstrap CI</strong> while HR rises
+0.06 — the layer stops being near-redundant (pre-retrofit NO-PLUVIAL HR
+0.58 vs ALL 0.65). Jakarta is a <strong>strict win</strong> — the
+headline TSS improves. Both scale monotonically with RP (KL ≈224→315
+km², Jakarta 179→342 km² across RP10→RP1000/2100). <em>(All extents in
+this subsection are as measured at the 2026-07-04 retrofit, before the
+2026-07-07 bridge-closing scaled every city's pluvial extent ×1.20–1.28;
+the shipped present-day values are in §8.)</em></p>
+<h5
+id="shipped-per-city-configuration-post-retrofit--what-the-atlas-and-paper-report">Shipped
+per-city configuration (post-retrofit — what the atlas and paper
+report)</h5>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>City</th>
+<th>Base solver (Stage 1)</th>
+<th>Canal-HAND (Stage 2)</th>
+<th>Shipped pluvial</th>
+<th>Gate HR/CRR/TSS</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Singapore</td>
+<td><code>handfill</code> (hybrid HAND, stage 1.5 m
+<strong>scaled</strong>, baseline 0.0696, cap 0.5 m)</td>
+<td>rejected</td>
+<td>base only</td>
+<td>0.71 / 0.90 / <strong>0.61</strong></td>
+</tr>
+<tr>
+<td>Kuala Lumpur</td>
+<td><code>fillspill</code> (cap 3.0 m)</td>
+<td><strong>applied</strong> (pruned ≥0.5 km²)</td>
+<td><code>max(base, canal-HAND)</code></td>
+<td>0.71 / 0.92 / <strong>0.63</strong></td>
+</tr>
+<tr>
+<td>Bangkok</td>
+<td><code>fillspill</code> (cap 3.0 m)</td>
+<td>rejected</td>
+<td>base only</td>
+<td>0.34 / 1.00 / <strong>0.34</strong></td>
+</tr>
+<tr>
+<td>Jakarta</td>
+<td><code>handfill</code> (stage 2.5 m <strong>scaled</strong>, baseline
+0.1300, cap 1.0 m)</td>
+<td><strong>applied</strong> (unpruned)</td>
+<td><code>max(base, canal-HAND)</code></td>
+<td>0.85 / 0.92 / <strong>0.77</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>("scaled" = the RP/climate stage-scaling of §6.3.2,
+<code>stage × clip(excess/baseline, 0.4, 2.5)</code>; both handfill
+cities ship it, and the driver's Stage-1 lines carry the
+<code>--pluvial-hand-stage-baseline</code> flag so a clean rebuild
+reproduces it.)</p>
+<p><strong>Implementation note (STAGE 2 of the driver).</strong> Since
+2026-07-13 the retrofit runs inside
+<code>repro/run_atlas_fixed.sh</code> as <strong>STAGE 2</strong>, after
+the Stage-1 solve loop. The order is load-bearing:</p>
+<ol type="1">
+<li><strong>canal-HAND applies</strong>
+(<code>scripts/_apply_kl_canal_pluvial.py</code>,
+<code>_apply_jakarta_canal_pluvial.py</code>) — idempotent: each
+recomputes from the pristine <code>*.tif.orig</code> sidecar, so a
+resumed or repeated run is safe.</li>
+<li><strong>bridge-closing</strong>
+(<code>_apply_city_pluvial_closing.py</code>, all four cities) — backs
+the <em>current</em> raster up to <code>*.preclose</code> once and
+closes that. It must run <strong>after</strong> the applies, and must
+never read <code>*.orig</code>.</li>
+<li><strong>summary/severity regen</strong>
+(<code>_regen_pluvial_summary_severity.py</code>) — must run
+<strong>last</strong>, so the CSVs and severity rasters describe the
+final depths.</li>
+</ol>
+<p>The regen is <strong>read-only on the depth raster</strong>. It
+formerly also re-masked each cell to the footprint stored in
+<code>*.orig</code> — a one-time repair for footprint damage the
+2026-07-04 apply introduced, correct only while the regen ran
+immediately after that apply. Once the closing exists it is actively
+destructive: <code>*.orig</code> predates the canal-HAND, whereas the
+closing deliberately keeps bridged cells falling <em>outside</em> that
+footprint, so re-masking silently deleted them (measured on
+<code>jakarta_ssp585_2100_rp100</code>: pluvial extent cut 337.2 → 334.4
+km² at ≥ 0.10 m, −2.81 km², taking the cell off its published Table-II
+value of 337). Removed 2026-07-13: the depth the chain leaves is
+authoritative, and this step only derives the severity raster and the
+summary row from it.</p>
+<p><strong>Singapore's gate is new, not changed.</strong> The SG
+register (<code>hotspots_expanded.csv</code>, PUB <em>List of
+Flood-Prone Areas</em> Nov 2025 — 38 positives / 20 dry controls) was
+imported 2026-07-04; SG scores 0.71/0.90/0.61 <strong>with no model
+change</strong> — a validation result the model previously lacked, not a
+retrofit effect.</p>
+<p><strong>Runoff coefficient.</strong> Common to all four:
+<code>--runoff-coeff-raster</code> (WorldCover-derived) with scalar
+fallback <code>--runoff-coeff</code> (Singapore/KL 0.75, Jakarta
+0.80).</p>
+<hr />
+<h2 id="7-validation-model-blind-hotspot-gate">7. Validation:
+model-blind hotspot gate</h2>
+<blockquote>
+<p><strong>In plain terms.</strong> A model that is easy to rebuild can
+still be wrong, so this is the part where we try to catch it being
+wrong. For each city we wrote down two lists: places documented to have
+flooded, and places documented to have stayed dry. Then we checked
+whether the model floods the first list and leaves the second alone.</p>
+<p>Two rules make it a real test rather than a formality. The lists are
+<strong>frozen before</strong> the final scoring, so the model cannot be
+quietly adjusted until it agrees. And nothing is reclassified once
+frozen — if the model floods a place on the frozen dry list, that counts
+against it permanently. (Two Jakarta labels were corrected on documented
+flood records before the final freeze; the published list records both,
+and Jakarta passes either way — see
+<code>docs/presentation/SAFE2026-FAQ.md</code>, F8.) Three scores come
+out: how many real flood spots it catches, how many dry spots it
+correctly leaves alone, and a single combined number where 0 is no skill
+and 1 is perfect.</p>
+</blockquote>
+<p><strong>Principle.</strong> Trust is established by a
+<strong>pre-registered, model-blind location-skill gate</strong>
+(<code>scripts/validate_hotspots.py</code>, math in
+<code>scripts/hotspot_scoring.py</code>), not by reproducibility alone.
+A frozen register of documented-<strong>flooded</strong> ("positive")
+and documented-<strong>dry</strong> ("control") localities is scored
+against the model's combined flood layer. The register is fixed before
+scoring and the model is never tuned against it.</p>
+<h4 id="71-the-buffered-hit-test">7.1 The buffered hit test</h4>
+<p>Each register entry is a georeferenced point <code>(lon, lat)</code>
+with class ∈ {flood, dry}. A point scores a <strong>hit</strong>
+(<code>sample_hit</code>) iff any cell within a radius buffer exceeds
+the depth threshold:</p>
+<pre><code> hit(point) = TRUE   iff   ∃ cell ∈ window(point, r) : depth(cell) ≥ τ
+ τ = 0.10 m (depth threshold)        r = 50 m (hit radius)</code></pre>
+<p>The window is the pixel box <code>±⌈r/res⌉</code> cells about the
+point (at 30 m, <code>r = 50 m → ±2</code> cells), and the test is
+<code>≥ τ</code> over finite cells in that box. A point outside the
+raster, or with no finite cells in its window, scores <code>FALSE</code>
+(a miss for a flood point, a correct rejection for a dry point). The
+buffer absorbs geocoding/DEM co-registration error;
+<code>τ = 0.10 m</code> is the nuisance-flood threshold.</p>
+<h4 id="72-skill-metrics-skill_scores">7.2 Skill metrics
+(<code>skill_scores</code>)</h4>
+<p>With <code>H</code> = hits among <code>P</code> flood positives and
+<code>F</code> = false-alarms among <code>N</code> dry controls:</p>
+<pre><code> HR  (hit rate / sensitivity)         = H / P
+ CRR (correct-reject rate / specificity) = (N − F) / N = 1 − F/N
+ TSS (True Skill / Peirce statistic)  = HR + CRR − 1   ∈ [−1, 1]</code></pre>
+<p><code>TSS = 0</code> is no skill
+(random/flood-everything/dry-everything); <code>TSS = 1</code> is
+perfect. TSS is used because it is
+<strong>prevalence-independent</strong> and rewards specificity equally
+to sensitivity — the <strong>dry-control discipline</strong>: inflating
+HR by flooding more area immediately raises <code>F</code> and crashes
+CRR, so the gate cannot be gamed by over-prediction. (Edge cases: empty
+positives → HR 0; empty negatives → CRR 1.)</p>
+<h4
+id="73-confidence-interval--stratified-bootstrap-bootstrap_tss_ci">7.3
+Confidence interval — stratified bootstrap
+(<code>bootstrap_tss_ci</code>)</h4>
+<p>The TSS uncertainty is a <strong>stratified percentile
+bootstrap</strong> (not analytic). Positives and negatives are
+independent samples, so each of <code>n_boot = 10,000</code> iterations
+resamples them <strong>separately</strong> with replacement and
+recomputes TSS:</p>
+<pre><code> for b in 1..10000:
+   HR*_b  = mean(resample(flood_hits, P))         # P draws with replacement
+   CRR*_b = 1 − mean(resample(dry_hits, N))       # N draws with replacement
+   TSS*_b = HR*_b + CRR*_b − 1
+ CI_95 = [ quantile(TSS*, 0.025) , quantile(TSS*, 0.975) ]     # percentile method</code></pre>
+<p>Deterministic (<code>seed = 12345</code>). <strong>Significant
+discriminative skill ⇔ the 95 % CI excludes zero.</strong></p>
+<blockquote>
+<p><strong>Reconciled (2026-06-22).</strong> The implementation is a
+<em>stratified percentile</em> bootstrap (<code>np.quantile</code> on
+the resampled TSS) — there is no bias-correction <code>z₀</code> or
+acceleration <code>â</code> term, so it is <strong>not</strong> BCa. An
+earlier paper draft called it "BCa"; the manuscript
+(<code>safe2026-v5.tex</code>) now reads "stratified percentile
+bootstrap", matching the code and this section.</p>
+</blockquote>
+<h4 id="74-gate-criteria">7.4 Gate criteria</h4>
+<p>Two gate forms exist in the codebase:</p>
+<ul>
+<li><p><strong>Absolute PASS gate</strong> (<code>evaluate_gate</code>,
+the headline) — pre-registered and stricter:</p>
+<pre><code>PASS  ⇔  HR ≥ 0.70  AND  CRR ≥ 0.70          (--hr-floor, --crr-floor)</code></pre></li>
+<li><p><strong>Baseline-margin gate</strong>
+(<code>passes_numeric_gate</code>, for "beats the open-baseline" claims)
+— <code>HR ≥ floor</code> AND TSS exceeds every baseline's TSS by a
+margin (default 0.20), tested with a <strong>paired</strong> stratified
+bootstrap (<code>bootstrap_tss_diff_ci</code>: resample one index set,
+apply to both classifiers, so shared sampling noise cancels) and a
+threshold-free <strong>ROC-AUC</strong> companion (<code>roc_auc</code>
+= Mann-Whitney <code>P(score_flood &gt; score_dry)</code>, with
+<code>bootstrap_auc_diff_ci</code>).</p></li>
+</ul>
+<p><strong>Present-day results</strong> (RP100, ≥0.10 m, 50 m radius,
+expanded/frozen registers — the <strong>shipped post-retrofit
+atlas</strong>, re-baselined 2026-07-12; Fisher = one-sided exact;
+reproduce with <code>repro/reproduce_gate.sh</code>):</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>City</th>
+<th>pos/dry</th>
+<th>HR</th>
+<th>CRR</th>
+<th>TSS [95% CI]</th>
+<th>Fisher p</th>
+<th>status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Jakarta</td>
+<td>33/12</td>
+<td>0.85</td>
+<td>0.92</td>
+<td><strong>0.77</strong> [0.54, 0.94]</td>
+<td>4.5×10⁻⁶</td>
+<td><strong>PASS</strong></td>
+</tr>
+<tr>
+<td>Kuala Lumpur</td>
+<td>31/12</td>
+<td>0.71</td>
+<td>0.92</td>
+<td><strong>0.63</strong> [0.38, 0.84]</td>
+<td>2.6×10⁻⁴</td>
+<td><strong>PASS</strong> (narrowest)</td>
+</tr>
+<tr>
+<td>Singapore*</td>
+<td>38/20</td>
+<td>0.71</td>
+<td>0.90</td>
+<td><strong>0.61</strong> [0.41, 0.79]</td>
+<td>7.9×10⁻⁶</td>
+<td><strong>PASS</strong></td>
+</tr>
+<tr>
+<td>Bangkok†</td>
+<td>32/7</td>
+<td>0.34</td>
+<td>1.00</td>
+<td>0.34 [0.19, 0.50]</td>
+<td>0.077</td>
+<td>positive, <strong>not robustly significant</strong> (see †)</td>
+</tr>
+</tbody>
+</table></div>
+<p>* Singapore = hybrid bare-earth + main-stem fluvial + handfill
+pluvial. † Bangkok's HR is bounded by the <strong>out-of-domain</strong>
+Chao Phraya catchment [R29] and sub-30 m street flooding. Its skill is
+<strong>not robustly significant</strong>: the frozen 7-control stratum
+is degenerate (7/7 correct → zero CRR variance, Fisher p = 0.077,
+marginal), and <strong>expanding it to 10 documented dry controls
+(2026-07-18) flips the result to TSS 0.24 [−0.02, 0.47], Fisher p =
+0.137 — CI crosses zero</strong>
+(<code>docs/runs/2026-07-18-bangkok-control-expansion.md</code>). The
+flip turns on one borderline riverside control (Grand Palace, transient
+ankle water in 2011 held dry by pumping). This <strong>corroborates the
+SAFE abstract's "positive but marginal in the fourth city"</strong> —
+Bangkok is not counted among the three significant cities. All of
+Singapore / KL / Jakarta clear the stricter PASS bar and are significant
+by the exact test; Bangkok is the disclosed <em>structural</em>
+shortfall (§10), not a tuning failure. The <strong>Stage-1
+(pre-retrofit)</strong> gate — Jakarta 0.76/1.00/0.76, KL 0.65/1.00/0.65
+— lives in §6.3.5, where it is the evidence that selected each city's
+base solver.</p>
+<hr />
+<h2 id="8-outputs--atlas-structure">8. Outputs &amp; atlas
+structure</h2>
+<blockquote>
+<p><strong>In plain terms.</strong> What you actually download is a
+folder per city, per climate scenario, per severity. Inside each are
+image-like map files (GeoTIFFs) that open in any GIS tool — one per
+hazard, holding the water depth in metres for every 30-metre square —
+plus a "severity" version that bins those depths into classes, and a
+small spreadsheet summarising how much area flooded and how deep it
+got.</p>
+<p>One thing to know before comparing numbers: the summary spreadsheets
+count any cell with water at all, while the manuscript counts only cells
+at least 10 cm deep. The same map legitimately yields two different area
+figures. Neither is wrong — the depth files are the authoritative thing,
+and both numbers can be recomputed from them.</p>
+</blockquote>
+<p><strong>Per-cell output directory:</strong>
+<code>outputs/_fixed_atlas/&lt;city&gt;_&lt;stem&gt;_rp&lt;rp&gt;/</code>
+(Bangkok adds a <code>_polder</code> sibling holding the polder-dried
+composite that is the one scored/published). Inside, per hazard:</p>
+<pre><code>&lt;cell&gt;/&lt;hazard&gt;/rp_&lt;rp&gt;/&lt;hazard&gt;_depth_&lt;scenario&gt;_&lt;horizon&gt;_rp&lt;rp&gt;.tif   # depth (m)
+&lt;cell&gt;/&lt;hazard&gt;/rp_&lt;rp&gt;/&lt;hazard&gt;_severity_&lt;...&gt;.tif                       # classed severity
+&lt;cell&gt;/summary_&lt;label&gt;_&lt;horizon&gt;.csv                                      # per-hazard extent/stats</code></pre>
+<p><strong>Derived layers.</strong></p>
+<ul>
+<li><strong>Combined</strong> = per-pixel <strong>max</strong> of
+coastal, fluvial, pluvial depth (computed for the maps in
+<code>_viz_*</code>; conceptually the screening layer).</li>
+<li><strong>Compound</strong> = a joint-exceedance layer whose
+<em>footprint</em> is dependence-robust while its <em>depth</em>
+amplifies into the tail.</li>
+</ul>
+<p><strong>Headline extents (shipped post-retrofit atlas, measured from
+the rasters 2026-07-17).</strong> Present-day RP100, per hazard,
+<strong>≥ 0.10 m</strong> (the manuscript's reporting convention; the
+shipped <code>summary_*.csv</code> count at the engine's
+<code>&gt; 0</code> and therefore read higher — the convention note
+ships in every Zenodo README), km²:</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>City</th>
+<th>Coastal</th>
+<th>Fluvial</th>
+<th>Pluvial</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Singapore</td>
+<td>0.9</td>
+<td>28.5</td>
+<td>111.2</td>
+</tr>
+<tr>
+<td>Kuala Lumpur</td>
+<td>— (inland)</td>
+<td>70.2</td>
+<td>296.2</td>
+</tr>
+<tr>
+<td>Jakarta</td>
+<td>182.1</td>
+<td>180.9</td>
+<td>297.6</td>
+</tr>
+<tr>
+<td>Bangkok (polder composite)</td>
+<td>68.0</td>
+<td>349.1</td>
+<td>229.1</td>
+</tr>
+</tbody>
+</table></div>
+<p>The canonical headline (paper Table 2) is <strong>SSP5-8.5/2100
+RP100</strong>: Singapore 2/37/133, KL 0/87/326, Bangkok 853/377/326,
+Jakarta 229/214/337 (coastal/fluvial/pluvial; verified raster-to-table
+2026-07-13).</p>
+<ul>
+<li><strong>Bathtub bias</strong> (full model domain, SSP5-8.5/2100,
+same basis as Table 2): the connectivity bathtub over-predicts the
+inertial coastal extent by <strong>1.2×</strong> (Jakarta, 229→283 km²)
+to <strong>5.2×</strong> (Bangkok, 853→4,432 km²). The inertial bars
+equal the Table 2 coastal extents exactly. The defended-coast ratio is
+effectively unbounded at present-day (the dike holds the design surge,
+so the inertial footprint approaches zero), so the bias is reported at
+the 2100 horizon where both layers are substantial (§6.1.3). Earlier
+drafts clipped this comparison to the city admin boundary (7.6×/1.6×),
+which did not reconcile with the full-domain Table 2 extents and was
+dropped.</li>
+<li><strong>KL pluvial</strong> 0→41.7 km² <em>(Stage-1; the fill-spill
+fix — the "0" was the raingrid-drain bug)</em> → <strong>296</strong>
+km² shipped (canal-HAND retrofit + closing, §6.3.5).</li>
+<li><strong>Singapore</strong> fluvial 180→<strong>28.5</strong> km²
+(main-stem) + pluvial 15→95 <em>(Stage-1 handfill)</em> →
+<strong>111</strong> shipped (stage scaling + closing).</li>
+<li><strong>Mitigation delta:</strong> meeting SSP2-4.5 rather than
+SSP5-8.5 avoids ≈<strong>92</strong> km² of Bangkok's 100-year coastal
+exposure by 2100.</li>
+<li><strong>Compound (Jakarta present RP100):</strong> joint footprint
+502.1 vs marginal 501.9 km² (dependence-robust; independence adds ≲0.2
+km² in every city — KL exactly 0); depth amplification +0.10 m (RP100) →
++1.47 m (RP1000, 90th pct +3.26 m). Re-derived 2026-07-12 on the
+post-retrofit atlas (canal-HAND 07-04 + pluvial closing 07-07); the
+larger pluvial grew the marginal from 396.5 km² and diluted the RP1000
+mean amp from +1.67 m (the earlier depth-capped value; +1.45 m
+pre-cap).</li>
+</ul>
+<hr />
+<h2 id="9-reproducibility">9. Reproducibility</h2>
+<p><strong>End-to-end rebuild.</strong>
+<code>bash repro/run_atlas_fixed.sh</code> regenerates the full atlas
+(60 cells). It is <strong>resumable</strong>: any
+<code>(city, stem, rp)</code> whose summary CSV already exists is
+skipped, so an interrupted run continues where it stopped. It first
+regenerates the cheap derived rasters (sea-mask frame-fix, seawall DEMs,
+main-stem HANDs) idempotently, then runs the Stage-1 solve loop, then
+the <strong>STAGE 2 post-solve chain</strong> (canal-HAND applies →
+bridge-closing → summary/severity regen, in that load-bearing order —
+§6.3.5), so one command reproduces the shipped product.</p>
+<p><strong>Present-day RP100 fast slice.</strong>
+<code>bash repro/run_fixed_coastal_rp100.sh</code> produces just the
+present-day RP100 verification outputs (the visual/gate slice).</p>
+<p><strong>Interpreter.</strong> All runs use the Python 3.14
+interpreter named in §2.</p>
+<p><strong>Representative invocation</strong> (Singapore, from the
+driver — flags verified against
+<code>scripts/run_multihazard.py --help</code>, 2026-06-21):</p>
+<pre><code>python scripts/run_multihazard.py --dem dem/_diag/singapore_seawall.tif \
+  --fluvial-hand-raster dem/_hand/singapore_hand_v3_mainstem.tif \
+  --hazard-levels data/singapore/hazard_levels_&lt;stem&gt;_rp&lt;rp&gt;.csv \
+  --scenario &lt;label&gt; --horizon &lt;hz&gt; --out-dir &lt;out&gt; \
+  --coastal-solver inertial --coastal-msl-egm2008 1.1588 \
+  --sea-mask-raster data/singapore/sea_mask_utm48n_framefix.tif \
+  --tidal-channel-raster data/singapore/river_mask_utm48n.tif --tidal-burn-elevation 2.0 \
+  --pluvial-model handfill --pluvial-hand-raster dem/_hand/singapore_hand_v3_hybrid.tif \
+  --pluvial-hand-stage 1.5 --pluvial-hand-stage-baseline 0.069602 --pluvial-depth-cap 0.5 \
+  --runoff-coeff-raster data/singapore/runoff_coeff_utm48n.tif --runoff-coeff 0.75 \
+  --fluvial-bankfull-rp 0</code></pre>
+<p>All flags above are confirmed present.
+<code>--clamp-negative-land</code> is a boolean-optional action, so
+<code>--no-clamp-negative-land</code> (used for Jakarta/Bangkok) is its
+negation.</p>
+<p><strong>Other notable flags</strong>
+(<code>run_multihazard.py --help</code>), for tuning the solvers:</p>
+<ul>
+<li>Coastal/inertial: <code>--coastal-seed-latlon</code>,
+<code>--seed-water-raster</code>, <code>--inertial-dt-max</code>,
+<code>--inertial-t-end</code>, <code>--inertial-convergence-tol</code>,
+<code>--manning-raster</code>,
+<code>--connectivity-neighbors</code>.</li>
+<li>Pluvial/rain: <code>--pluvial-dem-raster</code>,
+<code>--rain-storm-hours</code>, <code>--rain-total-hours</code>,
+<code>--drain-conveyance-m-s</code>,
+<code>--raingrid-workers</code>.</li>
+<li>Fluvial: <code>--major-river-raster</code>.</li>
+<li>Scope: <code>--only-hazard-types</code> (e.g.
+<code>fluvial,pluvial</code> for inland KL).</li>
+</ul>
+<hr />
+<h2 id="10-limitations--known-issues">10. Limitations &amp; known
+issues</h2>
+<blockquote>
+<p><strong>In plain terms.</strong> This is a <em>screening</em> tool.
+It is built to tell you which places and which scenarios deserve a
+closer look — not to size a flood wall, settle an insurance claim, or
+design a building. Three limits matter most for anyone using it without
+reading the rest of this document.</p>
+<p>It cannot see flooding driven from outside the mapped area, which is
+why Bangkok's score is capped: the river that flooded it in 2011 rises
+well upstream of the map's edge. It cannot see flooding smaller than 30
+metres across, which is most street-corner flash flooding. And it
+reports a <em>plausible</em> severity, not a range — we have not carried
+the uncertainty in the input data through to the maps, so treat the
+depths as an upper-bound screen rather than a best estimate with error
+bars.</p>
+<p>Everything below is reported rather than quietly fixed. Several items
+are things our own adversarial reviews found and we chose to
+disclose.</p>
+</blockquote>
+<ol type="1">
+<li><p><strong>Bangkok hit-rate is forcing-bounded, not
+terrain-bounded.</strong> Accurate terrain cannot manufacture skill the
+forcing domain withholds: Bangkok's HR (0.34) is capped by the
+out-of-domain Chao Phraya mega-river [R29] and by sub-30 m street
+flooding. More accurate terrain helps a flood screen only
+<em>conditionally</em>.</p></li>
+<li><p><strong>KL pluvial is resolution-bounded and looks
+spotty.</strong> KL's flash floods are sub-grid; <code>fillspill</code>
+on steep terrain ponds in ~12,000 tiny disconnected pits. It is retained
+because it is gate-optimal (perfect CRR), but the map reads as speckle —
+an honest artifact of representing sub-grid flash floods at 30 m, not a
+model error.</p></li>
+<li><p><strong>Handfill <code>stage</code> — gate-selected base; now
+standards-bracketed, with a measured held-out bound.</strong> The
+Singapore (1.5 m) and Jakarta (2.5 m) <em>base</em> stages were chosen
+from the gate trade-off, which brushes against the "never tune to the
+gate" principle. Two mitigations executed 2026-07-18 (review C7
+follow-ups):</p>
+<ul>
+<li><strong>Bracketing:</strong> external standards bracket both values
+(SG 1.5 ∈ ≈[1.1, 2.0] m from PUB CoP drain geometry + freeboard +
+documented ponding; JKT 2.5 = top of the BNPB Jan-2020 0.2–2.5 m band) —
+the values are physically bounded, but the choice <em>within</em> the
+bracket saw the gate. Full derivation §6.3.2.</li>
+<li><strong>Held-out event test (measured, logged, not
+re-tuned):</strong> the 2024-10-15 DBKL flash-flood bulletin (10 roads
+absent from every register) scores <strong>HR 0.30</strong> at gate
+protocol (0.60 at road-scale 250 m radius) against the shipped layer —
+<code>docs/runs/2026-07-18-kl-held-out-event.md</code>. The register
+PASS is <strong>register-class skill</strong> (recurrent flood-prone
+localities); single-event road-bulletin generalisation is measured and
+bounded at 0.30, consistent with the sub-grid convective failure mode
+(item 2). Any per-event prediction claim must carry this number.
+Separately, the fixed stage made the layer <strong>ignore the
+forcing</strong> — resolved by the stage-scaling (§6.3.2), now passed
+directly by the driver's Stage-1 lines
+(<code>--pluvial-hand-stage-baseline</code>, 2026-07-17). [Residual: the
+within-bracket selection remains gate-visible — disclose in the paper's
+methods; the held-out number is the quantitative disclosure.]</li>
+</ul></li>
+<li><p><strong>Uniform coastal crest is a simplification.</strong> A
+single continuous crest per city is more conservative than documented
+per-segment crests; production should move to per-segment crests for
+realistic residual flooding behind defences.</p></li>
+<li><p><strong>Jakarta coastal is real, not an artifact.</strong> The
+persistent coastal depth is chronic below-sea-level subsidence; it
+should not be "corrected" away.</p></li>
+</ol>
+<h3 id="101-adversarial-methodology-review--round-3-2026-07-09">10.1
+Adversarial methodology review — Round 3 (2026-07-09)</h3>
+<p>A third adversarial round (<a
+href="adversarial-review-2026-07-09.md">full record</a>) challenged the
+rationale behind every major methodological choice and the cross-city
+heterogeneity, building on the two referee stress-tests (gate
+statistics; elevation-null and stage sensitivity). Outcomes:</p>
+<ul>
+<li><strong>Four paper claims corrected in
+<code>ieee-kse2026.tex</code></strong> — most materially, the
+mitigation-delta mechanism: on the bare-earth atlas the connectivity
+bathtub <em>saturates</em> the flat Bangkok delta under both 2100
+pathways (avoided area ≈35 km² vs the inertial 92 km²), so it <em>washes
+out</em> the scenario signal rather than inflating it as the
+DSM-era-derived sentence claimed. Also fixed: the abstract's DSM-bias
+mechanism (the high bias <strong>masks</strong> documented flooding —
+measured bathtub extents are <em>larger</em> on bare earth — it does not
+drive over-prediction; the solver does), a stale pluvial-limitations
+sentence, and the KL pluvial union description.</li>
+<li><strong>Two "looks-wrong-but-isn't" audit traps documented:</strong>
+<code>--fluvial-bankfull-rp 0</code> in the release script (bankfull
+subtraction is baked upstream in <code>fit_fluvial_glofas.py</code>;
+run-time 0 avoids double-subtraction), and Jakarta's pumped-polder rings
+existing in <code>apply_pumped_polder.py</code> but deliberately
+unapplied (Pluit/rob flooding is documented to defeat the pumps;
+Bangkok's 2011-proven pump core is the only drained polder — the
+asymmetry follows the evidence).</li>
+<li><strong>Heterogeneity register</strong> (review §3): the per-city
+differences split into evidence-driven choices (terrain recipe, pump
+floor, canal pruning, IDF durations, depth caps — each with a documented
+anchor) and deliberately homogeneous simplifications (coastal Manning n
+= 0.06, the 3-1-2 h surge hydrograph) whose <em>uniformity</em> is the
+untested assumption.</li>
+<li><strong>Two OPEN sensitivity items</strong> logged (not blocking):
+coastal n ∈ {0.03, 0.10} and t_end = 16 h bracket for Bangkok 2100;
+held-out-event validation of the canal-HAND layer remains the standing
+pre-submission recommendation (with item 3 above, the base-stage
+re-anchoring).</li>
+</ul>
+<h3 id="102-addendum--round-3-follow-ups-closed-2026-07-18">10.2
+Addendum — Round-3 follow-ups closed (2026-07-18)</h3>
+<p>The three ranked follow-ups from the Round-3 review are now executed
+(<a href="adversarial-review-2026-07-18-addendum.md">full record</a>;
+held-out run in <a
+href="../runs/2026-07-18-kl-held-out-event.md">docs/runs/2026-07-18-kl-held-out-event.md</a>):</p>
+<ul>
+<li><strong>C6 (t_end):</strong> measured — Bangkok-2100 inertial extent
+grows <strong>+18 % at t_end = 16 h</strong>, still not converged; 98.8
+% of the added area is below the permanent SLR floor, so it is
+floor-fill propagation, not surge truncation. The 8 h extent is a lower
+bound; the durable (t_end-independent) bathtub over-prediction is the
+<strong>above-floor 743 km²</strong>, not the full 8 h ratio. Two
+paper-side framing decisions logged (do not change any shipped
+number).</li>
+<li><strong>C5 (Manning), regime split:</strong> the friction lever is
+<strong>≈±6 % undefended (Jakarta)</strong> but <strong>≈±25–40 % on
+defended deltas (Bangkok:</strong> n=0.03/0.06/0.10 → 1300/920/710 km²).
+The earlier "friction ~6 %" reassurance was undefended-only and is
+corrected.</li>
+<li><strong>C7 (held-out event):</strong> the 2024-10-15 DBKL bulletin
+(10 held-out roads) scores <strong>HR 0.30</strong> at gate protocol —
+register skill is register-class, single-event generalisation is bounded
+(§10 item 3). Handfill base stages now standards-bracketed
+(§6.3.2).</li>
+<li><strong>C13 (Bangkok degenerate control stratum):</strong> expanding
+the 7-control stratum to 10 documented dry controls flips Bangkok from
+bootstrap-significant to <strong>TSS 0.24 [−0.02, 0.47], Fisher p
+0.077→0.137</strong> — confirming the significance was stratum-fragile,
+and corroborating the paper's "positive but marginal" framing. Not
+re-tuned; the paper's frozen register is untouched
+(<code>docs/runs/2026-07-18-bangkok-control-expansion.md</code>). §7.4
+Bangkok row corrected to "not robustly significant".</li>
+<li><strong>C14 (KL IDF-duration sensitivity):</strong> the KL gate is
+<strong>byte-identical</strong> across the design-depth bracket. Running
+the KL pluvial at RP100 excess 65 / 95 / 130 mm (spanning a
+1-hour-duration design to the current) moves the base fill-spill extent
+only −22 % at the 1-hour end (29.4 vs 37.9 km²) and the shipped-dominant
+canal-HAND extent only <strong>−5.4 %/+10 %</strong> (246 / 260 / 287
+km²) — because the canal-HAND stage
+<code>clip(0.5·excess/0.095, 0.4, 2.5)</code> floor-clips at 0.40 m at
+the 1-hour end. Scored at gate protocol, the 1-hour end (stage 0.40,
+pluvial 68.5 km²) and the current design (stage 0.50, 89.5 km²) give
+<strong>identical HR 0.65 / CRR 0.92 / TSS 0.56</strong> (no-closing
+basis; the closing lifts both equally to the shipped 0.71/0.92/0.63):
+the design-depth cut removes only the shallowest far-from-drain cells,
+which are neither documented flood streets nor dry controls. The
+IDF-duration choice is immaterial to KL's validation. (A definitive
+1-hour refit still needs the MSMA station IDF coefficients, not in the
+repo; the bracket bounds the answer regardless.)</li>
+</ul>
+<p>(See also <code>docs/limitations_register.md</code>.)</p>
+<hr />
+<h2 id="11-appendices">11. Appendices</h2>
+<h3 id="111-per-city-configuration-from-reprorun_atlas_fixedsh">11.1
+Per-city configuration (from <code>repro/run_atlas_fixed.sh</code>)</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Singapore</th>
+<th>Jakarta</th>
+<th>Bangkok</th>
+<th>Kuala Lumpur</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Flood DEM</td>
+<td><code>_diag/singapore_seawall</code></td>
+<td><code>_diag/jakarta_seawall</code></td>
+<td><code>_diag/bangkok_seawall</code></td>
+<td><code>kl/dem_bareearth_kl_eth_present_conditioned</code></td>
+</tr>
+<tr>
+<td>Fluvial HAND</td>
+<td><code>singapore_hand_v3_mainstem</code></td>
+<td><code>jakarta_hand_v3_mainstem</code></td>
+<td><code>hand_trunk_v3_debiased</code></td>
+<td><code>kl_hand_mainstem_v3eth</code></td>
+</tr>
+<tr>
+<td>Coastal solver</td>
+<td>inertial</td>
+<td>inertial</td>
+<td>inertial</td>
+<td>— (inland)</td>
+</tr>
+<tr>
+<td>MSL-EGM2008</td>
+<td>1.1588</td>
+<td>0.9976</td>
+<td>1.1785</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Sea-mask</td>
+<td><code>sea_mask_utm48n_framefix</code></td>
+<td><code>sea_mask_utm48s_framefix</code></td>
+<td><code>sea_mask_utm47n_framefix</code></td>
+<td><code>sea_mask_utm47n</code></td>
+</tr>
+<tr>
+<td>Pluvial model</td>
+<td>handfill</td>
+<td>handfill</td>
+<td>fillspill</td>
+<td>fillspill</td>
+</tr>
+<tr>
+<td>Pluvial HAND / stage / cap</td>
+<td>hybrid / 1.5 / 0.5</td>
+<td><code>jakarta_hand_v3</code> / 2.5 / 1.0</td>
+<td>— / — / 3.0</td>
+<td>— / — / 3.0</td>
+</tr>
+<tr>
+<td>Handfill stage baseline (§6.3.2)</td>
+<td>0.069602</td>
+<td>0.129999</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Runoff coeff</td>
+<td>0.75</td>
+<td>0.80</td>
+<td>raster</td>
+<td>0.75</td>
+</tr>
+<tr>
+<td>Coastal crest (m MSL)</td>
+<td>+3.0</td>
+<td>+2.0</td>
+<td>+2.10</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Polder post-process</td>
+<td>—</td>
+<td>—</td>
+<td>yes</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Hazards</td>
+<td>coastal+fluvial+pluvial</td>
+<td>coastal+fluvial+pluvial</td>
+<td>coastal+fluvial+pluvial</td>
+<td>fluvial+pluvial</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="112-glossary-plain-language">11.2 Glossary (plain-language)</h3>
+<p>Everyday definitions of the terms and symbols used above, grouped by
+topic. Where a term also has a precise technical meaning, the section
+that defines it rigorously is noted.</p>
+<p><strong>The three flood types ("hazards").</strong></p>
+<ul>
+<li><strong>Coastal flooding</strong> — the sea coming inland: high
+tide, plus a storm surge, plus long-term sea-level rise. (§6.1)</li>
+<li><strong>Fluvial flooding</strong> — a river overflowing its banks.
+(§6.2)</li>
+<li><strong>Pluvial flooding</strong> — rain falling faster than the
+ground and drains can carry it away, so it ponds in low spots or backs
+up beside drains. This is the "flash-flood" type that global products
+usually leave out, and it is the dominant hazard in three of our four
+cities. (§6.3)</li>
+</ul>
+<p><strong>Terrain (the ground the water flows over).</strong></p>
+<ul>
+<li><strong>DEM</strong> (Digital Elevation Model) — a grid of
+ground-height numbers, one per 30 m square. The single most important
+input, because water runs downhill.</li>
+<li><strong>DSM vs bare-earth DEM</strong> — the raw satellite surface
+(<strong>DSM</strong>) includes the tops of buildings and trees; the
+<strong>bare-earth</strong> version strips those off to leave the true
+ground. We build our own bare-earth surface (§4) because buildings and
+trees would otherwise look like high, dry land and hide real
+floods.</li>
+<li><strong>Subsidence</strong> — land slowly sinking, here mostly from
+groundwater pumping. North Jakarta sinks up to ~25 cm per year (locally
+20–28), which matters as much as sea-level rise — a decade of it
+outweighs a century of AR6 sea-level rise at that spot. Bangkok now
+sinks 1–2 cm per year, having historically reached ~12 cm per year
+before pumping controls. Only Jakarta and Bangkok get a subsidence
+correction, because only they have documented InSAR rates; Singapore and
+Kuala Lumpur have no comparable signal. (§5.4, §11.1)</li>
+<li><strong>HAND</strong> (Height Above Nearest Drainage) — how high a
+spot sits above the nearest river or drain it flows to: 0 m means you
+are in the channel, a large value means you are safely above it. A
+natural "how flood-prone" ruler. <em>Main-stem</em> HAND measures height
+above the big river trunks only; <em>dense</em> HAND measures height
+above every small drain too. (§6.2)</li>
+</ul>
+<p><strong>How the water is simulated ("solvers").</strong></p>
+<ul>
+<li><strong>Bathtub vs inertial</strong> — two ways to spread the water.
+<strong>Bathtub</strong> instantly fills every connected low spot up to
+the water level, like a filling bath — fast, but it over-floods, because
+real water needs time and meets friction as it travels.
+<strong>Inertial</strong> (local-inertia shallow-water, Bates 2010)
+moves the water step by step with momentum and friction, so far-inland
+low ground the water cannot physically reach within a ~6-hour surge
+stays dry. We use inertial for the coast; the two can differ ~5x on a
+defended delta. (§6.1)</li>
+<li><strong>fill-spill vs handfill</strong> — two ways to model rain
+ponding. <strong>fill-spill</strong> collects rain in closed basins and
+spills the overflow to the next basin downhill (suits flat,
+pit-dominated Bangkok). <strong>handfill</strong> floods the low land
+beside every drain (suits canal-dense cities where rain backs up along
+drains). Terrain sets the choice, and using the wrong one measurably
+lowers the trust score. (§6.3)</li>
+<li><strong>Manning's n</strong> — one number for how rough the ground
+is, i.e. how much it slows moving water. Smooth pavement ~0.03,
+vegetated floodplain ~0.10; we use 0.06. Rougher ground = water spreads
+less far. (§6.1, §11.4)</li>
+<li><strong>Surge hydrograph</strong> — the shape of a storm surge over
+time: how fast it rises, how long it holds at its peak, how it falls
+back. We use a generic 3 h-rise / 1 h-hold / 2 h-fall shape.
+(§6.1.2)</li>
+<li><strong>CFL / timestep</strong> — a numerical safety rule: the
+simulation may only advance time in steps small enough that water never
+jumps more than one cell at once, or the maths becomes unstable.
+<code>CFL_ALPHA = 0.7</code> is that safety margin. (§6.1.1, §11.4)</li>
+</ul>
+<p><strong>Design events and forcing (what drives the
+flood).</strong></p>
+<ul>
+<li><strong>Return period (RP)</strong> — how rare an event is. "RP100"
+(100-year) means a severity with a 1-in-100 chance of being exceeded in
+<em>any given year</em> — not "once every 100 years." We map RP10,
+RP100, and RP1000.</li>
+<li><strong>MSL / WSE / EGM2008</strong> — <strong>MSL</strong> is mean
+sea level (the average the tide swings around); <strong>WSE</strong> is
+water-surface elevation (the actual height of the water surface at a
+moment); <strong>EGM2008</strong> is the global height reference (the
+"zero") every elevation is measured from.</li>
+<li><strong>GEV / Gumbel</strong> — standard statistical curves
+describing how extremes (the biggest surge or heaviest rain of the year)
+get rarer as they get larger. We fit them to observed records to read
+off the RP100 severity. (§5.1, §5.3)</li>
+<li><strong>IDF</strong> (Intensity-Duration-Frequency) — a country's
+official design-rainfall standard: how much rain falls in a given time
+span at a given return period. Anchoring to each national IDF closes a
+28-62% gap that global rainfall data carries in this region. (§5.3)</li>
+<li><strong>Runoff coefficient</strong> — the fraction of rain that runs
+off rather than soaking in. Paved city ~0.75-0.80; it scales rainfall
+into flood volume. (§5.3, §6.0)</li>
+</ul>
+<p><strong>The trust test (validation).</strong></p>
+<ul>
+<li><strong>Hotspot register</strong> — a frozen list of real places
+documented to flood (<em>positives</em>) and documented to stay dry
+(<em>controls</em>). Fixed before scoring, so the model cannot be
+quietly tuned to match it. (§7)</li>
+<li><strong>HR / CRR / TSS</strong> — the three trust scores.
+<strong>HR</strong> (hit rate) = fraction of known flood spots the model
+floods (sensitivity). <strong>CRR</strong> (correct-reject rate) =
+fraction of known dry spots the model correctly leaves dry
+(specificity). <strong>TSS</strong> (true-skill statistic) = HR + CRR −
+1, one number from −1 to 1 where 0 is no skill and 1 is perfect.
+(§7.2)</li>
+<li><strong>Significant vs PASS</strong> — <strong>significant</strong>
+is the weaker bar (the model tells flood from dry better than chance);
+<strong>PASS</strong> is the stricter, pre-registered bar (HR and CRR
+both at least 0.70). Three of the four cities PASS. (§7.4)</li>
+<li><strong>Expanded register</strong> — the larger frozen hotspot list
+behind the headline scores (vs a smaller base list).</li>
+</ul>
+<p><strong>Other.</strong></p>
+<ul>
+<li><strong>Polder</strong> — a low area kept dry by embankments and
+pumps. Bangkok's pumped city-centre polder is modelled as staying dry;
+Jakarta's flooding polders are not. (§6.1.5)</li>
+<li><strong>Frame-fix</strong> — a fix that removes a data-border
+artefact from the sea-mask so the coastal solver does not flood inward
+from the edge of the map. (§4)</li>
+</ul>
+<h3
+id="113-script-index-descriptions-verified-from-each-files-header-2026-06-21">11.3
+Script index (descriptions verified from each file's header,
+2026-06-21)</h3>
+<ul>
+<li><code>scripts/run_multihazard.py</code> — the three-hazard solver +
+CLI.</li>
+<li><code>scripts/validate_hotspots.py</code> — "Documented-hotspot
+validation — the primary gate (Plan 2)", generalised to a
+<code>--ci</code> bootstrap confidence interval.</li>
+<li><code>scripts/_fix_coastal_seawall.py</code> — "Fix coastal
+over-prediction: burn a continuous coastline seawall crest into" the
+DEM.</li>
+<li><code>scripts/_fix_sea_mask_frame.py</code> — "Fix spurious coastal
+edge-flooding: the build_sea_mask NaN-BFS sweeps the" nodata border into
+sea; strip it.</li>
+<li><code>scripts/_fix_sg_mainstem_hand.py</code> — "Fix SG fluvial
+over-prediction: rebuild the Singapore HAND against a" main-stem
+drainage network.</li>
+<li><code>scripts/_fix_jakarta_mainstem_hand.py</code> — "Jakarta
+main-stem HAND: rebuild HAND against a main-stem drainage network".</li>
+<li><code>scripts/apply_pumped_polder.py</code> — "Apply a documented
+pumped-polder drainage floor to a present-day flood composite"
+(Bangkok).</li>
+<li><code>scripts/_viz_make_maps_fixed.py</code> — "Leaflet flood-map of
+the FIXED present-day verification run (outputs/_fixed)".</li>
+<li><code>repro/run_atlas_fixed.sh</code>,
+<code>repro/run_fixed_coastal_rp100.sh</code> — drivers.</li>
+</ul>
+<h3 id="114-parameter-register-every-computing-step">11.4 Parameter
+register (every computing step)</h3>
+<p>Every numerical parameter in the model, grouped by computing step,
+with value, rationale, and reference. DEM and forcing parameters are
+tabulated in §4.1 and §5.1–5.4; this register covers the solver and gate
+constants. Source of truth: the module named in each section.</p>
+<blockquote>
+<p><strong>How to read this register (plain-language).</strong> A
+"parameter" is a single number the model uses — think of it as one
+setting on a dial. Each row names the dial, gives the value we set it
+to, says why, and — in the last column — labels <strong>where that
+number comes from</strong> so you can judge how much to trust it. The
+label matters more than it looks: it separates numbers pinned to outside
+evidence (published science, official design standards, or values we
+measured from data) from numbers that are our own engineering judgement
+with no external source. One label, <strong>GATE-SELECTED</strong>,
+marks the honest weak spot — a value we chose while we could see how it
+moved the trust score. The whole point of labelling every number this
+way is that a reader can see, at a glance, which settings are anchored
+and which are judgement calls, rather than having to take the model on
+faith.</p>
+</blockquote>
+<p><strong>Provenance classes.</strong> Every parameter is explicitly
+classed, so that a reader can tell what is anchored to external evidence
+from what is an engineering choice. A value with no literature source
+says so — that is the honest statement of a screening assumption, and it
+is what makes the assumption auditable rather than hidden:</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Class</th>
+<th>In plain terms — how much is it anchored?</th>
+<th>Meaning</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>LITERATURE</strong></td>
+<td>Backed by published science</td>
+<td>value (or its range) is taken from published, citable science</td>
+<td>Manning <code>n = 0.06</code> ← Chow 1959 / Arcement &amp; Schneider
+1989</td>
+</tr>
+<tr>
+<td><strong>STANDARD</strong></td>
+<td>Backed by an official design standard</td>
+<td>value comes from a published national/engineering design
+standard</td>
+<td>IDF anchors ← PUB / JPS-MSMA / TMD-RID / BMKG; defence crests</td>
+</tr>
+<tr>
+<td><strong>MEASURED</strong></td>
+<td>We derived it from real data (not the trust test)</td>
+<td>value is fitted/derived from observed data <em>in this work</em>,
+never from the gate</td>
+<td><code>(b0, f)</code> ← held-out ICESat-2/GEDI; MSL offsets; GEV
+fits</td>
+</tr>
+<tr>
+<td><strong>PHYSICAL/NUMERICAL</strong></td>
+<td>A law of physics or a computing requirement</td>
+<td>a physical constant or a scheme-stability requirement</td>
+<td><code>g</code>; CFL <code>α = 0.7</code> ← Bates 2010</td>
+</tr>
+<tr>
+<td><strong>SCREENING CHOICE</strong></td>
+<td>Our judgement call, reasoned but unsourced</td>
+<td>engineering judgment with a stated rationale but <strong>no
+literature source</strong>; the residual assumption class</td>
+<td>depression filters; surge-hydrograph shape; velocity-head
+margin</td>
+</tr>
+<tr>
+<td><strong>GATE-SELECTED</strong></td>
+<td>Judgement call that saw the trust score — the disclosed weak
+spot</td>
+<td>chosen with validation-gate visibility — <strong>a disclosed
+weakness</strong>, flagged for re-anchoring</td>
+<td>handfill <code>stage</code> (§10 item 3)</td>
+</tr>
+</tbody>
+</table></div>
+<p>Where a SCREENING CHOICE has been sensitivity-tested, the measured
+range is given in its row; where it has not, the row says so (these are
+the open items in §10.1's review).</p>
+<p><strong>Coastal — inertial solver
+(<code>model/inertial_wave_model.py</code>, §6.1)</strong></p>
+<p><em>In plain terms: the settings for the coastal flood simulation —
+how the water flows (gravity, roughness), how long the storm surge
+lasts, and the numerical safety limits that keep the simulation stable.
+Most are physics or computing requirements, not free choices.</em></p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Value</th>
+<th>Rationale</th>
+<th>Reference</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>g</code></td>
+<td>9.806 m s⁻²</td>
+<td>standard gravity</td>
+<td><strong>PHYSICAL</strong> — constant</td>
+</tr>
+<tr>
+<td><code>CFL_ALPHA</code></td>
+<td>0.7</td>
+<td>explicit-scheme Courant safety factor (&lt;1);
+<code>Δt ≤ α·Δx/(√(gd)+|u|)</code></td>
+<td><strong>NUMERICAL</strong> — Bates 2010 [R1] (stability requirement
+of the explicit scheme, not a free knob)</td>
+</tr>
+<tr>
+<td><code>MIN_DEPTH</code></td>
+<td>1×10⁻³ m</td>
+<td>dry-interface threshold (no flux below)</td>
+<td><strong>NUMERICAL</strong> — wetting/drying floor; 3 orders below
+the 0.10 m reporting threshold so it cannot affect extent</td>
+</tr>
+<tr>
+<td><code>n</code> (Manning)</td>
+<td>0.06 s·m^(−1/3), spatially uniform</td>
+<td>urban/coastal floodplain roughness; developed-floodplain tables give
+0.05–0.15, so 0.06 is a low-mid value</td>
+<td><strong>LITERATURE</strong> — Chow 1959 [R7] (standard n tables);
+Arcement &amp; Schneider 1989 [R8] (USGS WSP 2339 floodplain-roughness
+guide). <em>Not</em> Bates 2010, which sources the solver, not the
+roughness. <strong>Sensitivity measured, regime-dependent.</strong>
+Undefended (C5, <code>repro/coastal_manning_sensitivity.sh</code>):
+n=0.06/0.08/0.10 → Jakarta present-RP100 182.1/177.1/171.1 km² (−6.1 %
+at 0.10), IoU 0.94. Defended (2026-07-18,
+<code>repro/coastal_c6_bracket.sh</code>): n=0.03/0.06/0.10 →
+Bangkok-2100 1300.0/919.9/710.2 km² (<strong>+41 %/−23 %</strong>) —
+behind a dike the extent <em>is</em> the overtopping run-out distance,
+so friction is first-order. <strong>The lever is ≈±6 % undefended but
+≈±25–40 % on defended deltas</strong>; the shipped Bangkok cell uses the
+polder (removes the sensitive interior), and even n=0.03 stays ~3.4×
+below the bathtub. See the 2026-07-18 addendum</td>
+</tr>
+<tr>
+<td><code>dt_max</code></td>
+<td>30 s</td>
+<td>timestep ceiling; the adaptive CFL test reduces it further</td>
+<td><strong>NUMERICAL</strong> — ceiling only; CFL binds in
+practice</td>
+</tr>
+<tr>
+<td><code>t_end</code></td>
+<td>8 h (<code>--inertial-t-end</code>)</td>
+<td>must exceed the 6 h surge window so the peak is captured and the
+surface settles</td>
+<td><strong>SCREENING CHOICE</strong> — set from the hydrograph length
+(below). <strong>Sensitivity measured 2026-07-18</strong> (C6 closed,
+<code>repro/coastal_c6_bracket.sh</code>): Bangkok-2100 extent grows
++18.1% at t_end=16 h and is still not converged; 98.8% of the added area
+is below the permanent SLR floor, so this is SLR-floor propagation (the
+8 h extent is a lower bound on the floor equilibrium), not surge-peak
+truncation. See the 2026-07-18 addendum</td>
+</tr>
+<tr>
+<td><code>convergence_tol</code></td>
+<td>1×10⁻³ m</td>
+<td>early-stop on mean |Δd|; 100× below the 0.10 m reporting
+threshold</td>
+<td><strong>NUMERICAL</strong> — cannot move reported extent</td>
+</tr>
+<tr>
+<td><code>convergence_window</code></td>
+<td>100 (disabled when SLR floor &gt; 0)</td>
+<td>forces the full surge simulation whenever a permanent floor
+exists</td>
+<td><strong>NUMERICAL</strong> — correctness guard, not a tuning
+knob</td>
+</tr>
+<tr>
+<td>surge hydrograph</td>
+<td>3 h ramp / 1 h hold / 2 h recession, on the MSL+SLR floor</td>
+<td>asymmetric ramp avoids dry-bed shock; recession stops at the floor
+to preserve the permanent SLR signal</td>
+<td><strong>SCREENING CHOICE — synthetic shape, no literature
+source.</strong> A real surge hydrograph is site- and storm-specific;
+this is a generic design envelope. The <em>peak</em> (which sets extent)
+is forced by <code>water_level_m</code>; the shape affects only how long
+the peak is held. <em>Duration sensitivity untested</em> (review item
+C6, §10.1)</td>
+</tr>
+<tr>
+<td>physical cap</td>
+<td>(peak_WSE − <strong>bed</strong>) + 0.2 m</td>
+<td>strips inlet wave-amplification; 0.2 ≈ ½v²/g at v = 2 m s⁻¹</td>
+<td>SCREENING CHOICE (velocity-head margin from first principles).
+<strong>Fixed 2026-06-24</strong>: was <code>max(0,bed)</code>, which
+under-capped below-MSL depth on subsided coasts; Jakarta coastal
+re-solved (§6.1.1)</td>
+</tr>
+<tr>
+<td>crop pad</td>
+<td>32 cells</td>
+<td>solver-bbox buffer</td>
+<td>performance</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Fluvial — HAND
+(<code>flood_depth_model.flood_depth_hand</code>, §6.2)</strong></p>
+<p><em>In plain terms: how the river-flood layer decides which land
+counts as "near the river." The accumulation threshold sets how big a
+channel must be to count as a real river trunk (rather than a small
+drain), so the flood is tied to the main river, not to every
+ditch.</em></p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Value</th>
+<th>Rationale</th>
+<th>Reference</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>accumulation threshold</td>
+<td>≥50 km² (SG, JKT); ≥180 km² (KL, Klang trunk)</td>
+<td>main-stem trunk, not dense canals</td>
+<td>HAND [R2,R3]; this work</td>
+</tr>
+<tr>
+<td><code>--fluvial-bankfull-rp</code></td>
+<td>0 (production)</td>
+<td>full design stage mapped via HAND (no overbank subtraction)</td>
+<td>this work</td>
+</tr>
+<tr>
+<td>channel mask</td>
+<td>channel cells → 0</td>
+<td>conveyance ≠ inundation</td>
+<td>this work</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Pluvial — fill-spill cascade
+(<code>model/pluvial_model.py</code>, §6.3.1)</strong></p>
+<p><em>In plain terms: the rain-ponding model's rules for what counts as
+a real basin that collects water — deep enough to not be noise,
+shallow/small enough to not be a quarry or lake — and how deep ponding
+is allowed to get. These are judgement calls, each with a stated
+reason.</em></p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Value</th>
+<th>Rationale</th>
+<th>Reference</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>WET_THRESHOLD_M</code></td>
+<td>0.05 m</td>
+<td>cells shallower are set dry</td>
+<td><strong>SCREENING CHOICE</strong> — below the 0.10 m reporting
+threshold, so it cannot move reported extent</td>
+</tr>
+<tr>
+<td><code>MIN_DEPRESSION_DEPTH_M</code></td>
+<td>0.5 m</td>
+<td>reject depressions shallower than the DEM's own noise as
+spurious</td>
+<td><strong>SCREENING CHOICE — no literature source.</strong> Rationale:
+GLO-30's local (cell-to-cell) vertical noise makes sub-0.5 m "basins"
+indistinguishable from DSM artefact. <em>Swept 0.4–0.8 m in the v5
+country work: every level that de-speckles loses a documented hotspot
+somewhere — no threshold separates noise from signal, so the data raster
+is left pristine and speckle is handled at display level</em></td>
+</tr>
+<tr>
+<td><code>MAX_DEPRESSION_DEPTH_M</code></td>
+<td>3.0 m</td>
+<td>exclude quarries/valleys/reservoirs — not urban rain ponding</td>
+<td><strong>SCREENING CHOICE — no literature source.</strong> Rationale:
+a &gt;3 m closed basin is a landform or waterbody, not a street-scale
+ponding site; excluded like the sea</td>
+</tr>
+<tr>
+<td><code>MIN_DEPRESSION_AREA_CELLS</code></td>
+<td>9 (≈0.8 ha)</td>
+<td>drop sub-pixel inter-building voids</td>
+<td><strong>SCREENING CHOICE</strong> — resolvability argument: &lt;9
+cells at 30 m is at/below the DSM's ability to define a basin</td>
+</tr>
+<tr>
+<td>depth cap</td>
+<td>3.0 m (BKK, KL)</td>
+<td>upper bound on ponded depth</td>
+<td><strong>SCREENING CHOICE — no literature source.</strong> A
+life-safety/plausibility bound on a steady-state model that has no
+outlet timing; binds rarely</td>
+</tr>
+<tr>
+<td>depression fill</td>
+<td>pysheds (priority-flood family)</td>
+<td>hydrological conditioning</td>
+<td>Wang &amp; Liu 2006 [R19] / pysheds [R27]; cascade after Barnes 2021
+[R4] <em>(paper cites Planchon–Darboux [R18] — reconcile)</em></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Pluvial — handfill (<code>flood_depth_hand</code> on dense
+HAND, §6.3.2)</strong></p>
+<p><em>In plain terms: the rain-flood model for canal-dense cities — how
+high rain pools beside the drains (the "stage"), how that pooling scales
+up with bigger storms, and a cap on how deep it can get. The stage is
+the one setting that saw the trust score, so it is flagged and
+standards-bracketed rather than presented as externally fixed.</em></p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Value</th>
+<th>Rationale</th>
+<th>Reference</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--pluvial-hand-stage</code></td>
+<td>1.5 m (SG), 2.5 m (JKT)</td>
+<td>rain-pool extent above drainage (base, present-RP100)</td>
+<td><strong>GATE-SELECTED within a standards-bracketed range</strong>
+(2026-07-18, §6.3.2): SG 1.5 ∈ ≈[1.1, 2.0] m (PUB CoP drain depths + 15
+% freeboard + documented 0.07–0.76 m ponding); JKT 2.5 = top of BNPB
+Jan-2020 0.2–2.5 m depth band. Held-out single-event HR 0.30 (§10 item
+3)</td>
+</tr>
+<tr>
+<td><code>--pluvial-hand-stage-baseline</code></td>
+<td>0.0696 (SG), 0.1300 (JKT)</td>
+<td>present-RP100 excess; enables RP/climate stage scaling
+<code>stage×clip(level/baseline,0.4,2.5)</code></td>
+<td>this work, 2026-06-22 (§6.3.2)</td>
+</tr>
+<tr>
+<td><code>--pluvial-depth-cap</code></td>
+<td>0.5 m (SG), 1.0 m (JKT)</td>
+<td>documented flash-flood depth bound</td>
+<td>flash-flood records</td>
+</tr>
+<tr>
+<td>near-channel mask</td>
+<td>HAND &lt; 0.05 m, + river_mask → 0</td>
+<td>channels = conveyance</td>
+<td>this work</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Pluvial — raingrid (alternative,
+<code>model/pluvial_rain_model.py</code>, §6.3.3)</strong></p>
+<p><em>In plain terms: an alternative, more physical rain model (not
+used in the shipped atlas) — how long the storm runs and how rough the
+ground is. Listed for completeness.</em></p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Value</th>
+<th>Rationale</th>
+<th>Reference</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>storm_duration</td>
+<td>3600 s (1 h)</td>
+<td>matches 1 h IDF parameterisation</td>
+<td>[R23]</td>
+</tr>
+<tr>
+<td>total_duration</td>
+<td>5400 s (1.5 h)</td>
+<td>storm + settling to capture peak</td>
+<td>this work</td>
+</tr>
+<tr>
+<td>Manning <code>n</code></td>
+<td>clip(0.11 − 0.08·C, 0.03, 0.10)</td>
+<td>land-cover-derived roughness</td>
+<td>this work</td>
+</tr>
+<tr>
+<td>denoise min_cluster</td>
+<td>6 cells (≈0.5 ha)</td>
+<td>drop ponding speckle</td>
+<td>this work</td>
+</tr>
+<tr>
+<td>depth floor</td>
+<td>0.05 m</td>
+<td>strip sub-threshold sheet</td>
+<td>this work</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Validation gate (<code>scripts/hotspot_scoring.py</code>,
+§7)</strong></p>
+<p><em>In plain terms: the scoring rules for the trust test — how deep
+water must be to count as "flooded" (0.10 m), how close a prediction
+must land to a real flood site to count as a hit (50 m), and the pass
+mark. All fixed before scoring, which is what makes the test
+honest.</em></p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Value</th>
+<th>Rationale</th>
+<th>Reference</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>depth threshold <code>τ</code></td>
+<td>0.10 m</td>
+<td>a cell counts as "flooded" at ≥0.10 m</td>
+<td><strong>SCREENING CHOICE — no literature source.</strong> Rationale:
+below ~0.1 m the depth is within model/DEM noise and is not damaging;
+0.1 m is also the conventional minimum mapped depth in global
+flood-hazard products. <strong>Pre-registered before scoring</strong>
+and applied identically to every city/RP</td>
+</tr>
+<tr>
+<td>hit radius <code>r</code></td>
+<td>50 m → ±2 px <strong>square</strong> window at 30 m</td>
+<td>absorbs geocoding + co-registration error (§7.1)</td>
+<td><strong>SCREENING CHOICE</strong>, anchored to an external quantity:
+Nominatim geocoding precision (~one city block). <strong>Fixed before
+scoring and never varied to move a verdict</strong> — this is the
+discipline that matters more than the value</td>
+</tr>
+<tr>
+<td><code>n_boot</code></td>
+<td>10,000</td>
+<td>stable percentile CI</td>
+<td><strong>LITERATURE</strong> — Efron &amp; Tibshirani [R25]</td>
+</tr>
+<tr>
+<td><code>seed</code></td>
+<td>12345</td>
+<td>deterministic reproducibility</td>
+<td><strong>NUMERICAL</strong> — any fixed seed; stated so results are
+bit-reproducible</td>
+</tr>
+<tr>
+<td>PASS</td>
+<td>HR ≥ 0.70 ∧ CRR ≥ 0.70 ∧ TSS CI &gt; 0</td>
+<td>pre-registered joint sensitivity/specificity bar</td>
+<td><strong>SCREENING CHOICE (pre-registered)</strong> — 0.70 is a
+conventional "useful skill" bar, not a derived constant; fixed
+<em>before</em> scoring, which is what makes it a gate rather than a
+fit. TSS = Peirce [R24]. Exact one-sided Fisher p reported alongside
+(the bootstrap flatters an all-correct control stratum)</td>
+</tr>
+<tr>
+<td>baseline margin</td>
+<td>0.20</td>
+<td>"beats open baseline" gate</td>
+<td><strong>SCREENING CHOICE</strong> — pre-registered margin</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="12-references">12. References</h2>
+<p>Most entries match the manuscript bibliography
+(<code>docs/paper/safe2026-v5.tex</code>). Entries marked
+<strong>[verify]</strong> are tool/product citations I did not confirm
+to an exact reference.</p>
+<ul>
+<li><strong>[R1]</strong> Bates, Horritt &amp; Fewtrell (2010), <em>A
+simple inertial formulation of the shallow water equations</em>, J.
+Hydrol. 387:33–45.</li>
+<li><strong>[R2]</strong> Nobre et al. (2011), <em>Height Above the
+Nearest Drainage</em>, J. Hydrol. 404:13–29.</li>
+<li><strong>[R3]</strong> Rennó et al. (2008), <em>HAND, a new terrain
+descriptor… SRTM-DEM</em>, Remote Sens. Environ. 112:3469–3481.</li>
+<li><strong>[R4]</strong> Barnes, Callaghan &amp; Wickert (2021),
+<em>Computing water flow through complex landscapes — Part 3:
+Fill–Spill–Merge</em>, Earth Surf. Dynam. 9:105–121.</li>
+<li><strong>[R5]</strong> Lenderink et al. (2017),
+<em>Super-Clausius–Clapeyron scaling of extreme hourly convective
+precipitation</em>, J. Climate 30:6037–6052.</li>
+<li><strong>[R6]</strong> IPCC AR6 WGI / Fox-Kemper et al. (2021),
+<em>Ocean, Cryosphere and Sea Level Change</em>.</li>
+<li><strong>[R7]</strong> Chow, V.T. (1959), <em>Open-Channel
+Hydraulics</em>, McGraw-Hill — standard Manning's n tables;
+developed/urban overbank n ≈ 0.05–0.15.</li>
+<li><strong>[R8]</strong> Arcement &amp; Schneider (1989), <em>Guide for
+Selecting Manning's Roughness Coefficients for Natural Channels and
+Flood Plains</em>, USGS Water-Supply Paper 2339 — the standard
+floodplain-roughness selection guide.</li>
+<li><strong>[R9]</strong> Muis et al. (2016), <em>A global reanalysis of
+storm surges and extreme sea levels</em>, Nat. Commun. 7:11969.</li>
+<li><strong>[R10]</strong> Muis et al. (2020), <em>A high-resolution
+global dataset of extreme sea levels…</em>, Front. Mar. Sci. 7:263.</li>
+<li><strong>[R11]</strong> Hawker et al. (2022), <em>A 30 m global map
+of elevation with forests and buildings removed (FABDEM)</em>, Environ.
+Res. Lett. 17:024016.</li>
+<li><strong>[R12]</strong> Lang et al. (2023), <em>A high-resolution
+canopy height model of the Earth</em>, Nat. Ecol. Evol.
+7:1778–1789.</li>
+<li><strong>[R13]</strong> Sirko et al. (2021), <em>Continental-scale
+building detection… (Google Open Buildings)</em>, arXiv:2107.12283.</li>
+<li><strong>[R14]</strong> Neuenschwander &amp; Pitts (2019), <em>The
+ATL08 land and vegetation product for ICESat-2</em>, Remote Sens.
+Environ. 221:247–259.</li>
+<li><strong>[R15]</strong> Dubayah et al. (2020), <em>The Global
+Ecosystem Dynamics Investigation (GEDI)</em>, Sci. Remote Sens.
+1:100002.</li>
+<li><strong>[R16]</strong> Zanaga et al. (2022), <em>ESA WorldCover 10 m
+2021 v200</em>, Zenodo doi:10.5281/zenodo.7254221.</li>
+<li><strong>[R17]</strong> ESA &amp; Airbus (2022), <em>Copernicus DEM
+GLO-30</em>, doi:10.5270/ESA-c5d3d65.</li>
+<li><strong>[R18]</strong> Planchon &amp; Darboux (2002), <em>A fast,
+simple and versatile algorithm to fill the depressions of DEMs</em>,
+Catena 46:159–176.</li>
+<li><strong>[R19]</strong> Wang &amp; Liu (2006), <em>An efficient
+method for identifying and filling surface depressions</em>
+(priority-flood family) — <strong>[verify: confirm pysheds' exact fill
+algorithm]</strong>.</li>
+<li><strong>[R20]</strong> Chaussard et al. (2013), <em>Sinking cities
+in Indonesia</em>, Remote Sens. Environ. 128:150–161.</li>
+<li><strong>[R21]</strong> Abidin et al. (2011), <em>Land subsidence of
+Jakarta…</em>, Nat. Hazards 59:1753–1771.</li>
+<li><strong>[R22]</strong> Phien-wej, Giao &amp; Nutalaya (2006),
+<em>Land subsidence in Bangkok, Thailand</em>, Eng. Geol.
+82:187–201.</li>
+<li><strong>[R23]</strong> National IDF / drainage standards: PUB
+(Singapore), JPS-MSMA (Malaysia), TMD-RID (Thailand), BMKG
+(Indonesia).</li>
+<li><strong>[R24]</strong> Peirce (1884), <em>The numerical measure of
+the success of predictions</em>, Science 4:453–454 (true-skill / Peirce
+skill statistic).</li>
+<li><strong>[R25]</strong> Efron &amp; Tibshirani (1993), <em>An
+Introduction to the Bootstrap</em>, Chapman &amp; Hall.</li>
+<li><strong>[R26]</strong> Manning (1891), <em>On the flow of water in
+open channels and pipes</em>, Trans. ICE Ireland.</li>
+<li><strong>[R27]</strong> pysheds (M. Bartos), simplified
+flow-modelling library — <strong>[verify exact
+citation/version]</strong>.</li>
+<li><strong>[R28]</strong> Pronk, Hooijer, Eilander et al. (2024),
+<em>DeltaDTM: A global coastal digital terrain model</em>, Sci. Data
+11:273, doi:10.1038/s41597-024-03091-9 (Singapore hybrid low
+terrain).</li>
+<li><strong>[R29]</strong> Komori et al. (2012), <em>Characteristics of
+the 2011 Chao Phraya River flood</em>, Hydrol. Res. Lett. 6:41–46.</li>
+<li><strong>[R30]</strong> Alfieri et al. (2018), <em>A global network
+for operational flood risk reduction (GloFAS)</em>, Environ. Sci. Policy
+84:149–158.</li>
+</ul>
+<p><em>(Numbering note, 2026-07-17: [R7]/[R8] were each accidentally
+assigned twice; Alfieri moved to [R30] and the orphaned T_TIDE entry
+(Pawlowicz 2002) was removed — the coastal forcing is de-meaned
+annual-maximum total water level, never harmonically de-tided, so T_TIDE
+is not used anywhere in the pipeline.)</em></p>
+
+<script>if(matchMedia('(max-width:640px)').matches){var t=document.getElementById('toc');if(t)t.open=false;}</script>
+</body></html>

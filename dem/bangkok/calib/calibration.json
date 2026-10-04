@@ -1,0 +1,71 @@
+{
+  "n_points": 84874,
+  "source_counts": {
+    "ATL08": 84874
+  },
+  "f_fit": {
+    "bias0_m": 0.24080688686136398,
+    "n_trueground_calib": 6484,
+    "f_raw": 0.06641506947030376,
+    "f_clipped": 0.06641506947030376,
+    "n_veg_calib": 31578,
+    "per_bin": {
+      "(3, 6]": {
+        "n": 12021,
+        "mean_resid_minus_bias0_m": -0.2116427721639811,
+        "mean_canopy_m": 4.983445636802263
+      },
+      "(6, 10]": {
+        "n": 11520,
+        "mean_resid_minus_bias0_m": 0.4056402892606158,
+        "mean_canopy_m": 8.38654513888889
+      },
+      "(10, 15]": {
+        "n": 7377,
+        "mean_resid_minus_bias0_m": 1.2142073446373445,
+        "mean_canopy_m": 12.437440694049071
+      },
+      "(15, 25]": {
+        "n": 660,
+        "mean_resid_minus_bias0_m": 1.8015484407406674,
+        "mean_canopy_m": 16.95909090909091
+      }
+    }
+  },
+  "zones": {
+    "coastal_flat": {
+      "n_total": 13209,
+      "n_holdout": 3926,
+      "raw_bias_m": 1.125824445100579,
+      "raw_mae_m": 1.4198367707873316,
+      "raw_rmse_m": 2.2158480997498953
+    },
+    "other": {
+      "n_total": 11904,
+      "n_holdout": 3597,
+      "raw_bias_m": 0.40343834256393984,
+      "raw_mae_m": 1.2621511782609083,
+      "raw_rmse_m": 1.9240375890397512
+    },
+    "urban_core": {
+      "n_total": 14812,
+      "n_holdout": 4452,
+      "raw_bias_m": 1.1035697776958182,
+      "raw_mae_m": 2.389218637036823,
+      "raw_rmse_m": 3.2519205713064943
+    },
+    "vegetated": {
+      "n_total": 44949,
+      "n_holdout": 13371,
+      "raw_bias_m": 0.626081701052166,
+      "raw_mae_m": 0.9744675720143667,
+      "raw_rmse_m": 1.5247355322253642
+    }
+  },
+  "params": {
+    "holdout": 0.3,
+    "seed": 42,
+    "coastal_flat_max_m": 2.0
+  },
+  "note": "f fit on vegetated non-built CALIB points only; zone stats on HOLDOUT. Urban-core check-point count is the honesty metric (spec \u00a71.5)."
+}

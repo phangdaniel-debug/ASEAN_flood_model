@@ -1,0 +1,68 @@
+{
+  "bareearth": "dem\\kl\\dem_bareearth_kl_eth.tif",
+  "n_holdout": 4951,
+  "overall": {
+    "n": 4951,
+    "bias_m": 0.0761118669749193,
+    "mae_m": 3.478757056030831,
+    "rmse_m": 5.9230075977062215,
+    "p5_m": -5.92120569389925,
+    "p95_m": 8.867489697698336
+  },
+  "zones": {
+    "coastal_flat": {
+      "n": 5,
+      "bias_m": 0.7339045187357732,
+      "mae_m": 2.4653206133226697,
+      "rmse_m": 2.579521490469728,
+      "p5_m": -2.5227780044037007,
+      "p95_m": 3.2910403026608495
+    },
+    "other": {
+      "n": 1179,
+      "bias_m": 0.6506250308947826,
+      "mae_m": 3.344019762307342,
+      "rmse_m": 5.4856661575747045,
+      "p5_m": -4.952948556357635,
+      "p95_m": 11.736278796603912
+    },
+    "urban_core": {
+      "n": 1036,
+      "bias_m": 0.1789781225991201,
+      "mae_m": 3.792915089352586,
+      "rmse_m": 8.73950935925748,
+      "p5_m": -10.202013876646454,
+      "p95_m": 7.270745466514024
+    },
+    "vegetated": {
+      "n": 2731,
+      "bias_m": -0.21213764761570508,
+      "mae_m": 3.4196046316413025,
+      "rmse_m": 4.649960374860423,
+      "p5_m": -5.30755851287989,
+      "p95_m": 8.284050237272226
+    }
+  },
+  "coastal_deltadtm_xcheck": {
+    "n_cells": 539845,
+    "mae_m": 2.1292651101915983,
+    "bias_m": -0.7841455771139194
+  },
+  "tolerances": {
+    "coastal_mae": 0.6,
+    "bias": 0.5,
+    "inland_mae": 1.5,
+    "urban_min_points": 30
+  },
+  "gate": {
+    "verdict": "FIX (recalibrate f / revisit backfill \u2014 see reasons)",
+    "reasons": [
+      "coastal MAE 2.47 m / bias +0.73 m outside tolerance."
+    ],
+    "coastal_ok": false,
+    "veg_ok": true,
+    "inland_ok": false,
+    "urban_enough": true,
+    "urban_bias_ok": true
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "bareearth": "D:/GPTs/Projects/flood-v3.0/dem/jakarta/dem_bareearth_jakarta_nosubs_composite.tif",
+  "n_holdout": 4432,
+  "overall": {
+    "n": 4432,
+    "bias_m": 0.29170160327039507,
+    "mae_m": 1.6083160171038065,
+    "rmse_m": 2.5062569762507514,
+    "p5_m": -2.5966326025364457,
+    "p95_m": 4.464708159004276
+  },
+  "zones": {
+    "coastal_flat": {
+      "n": 403,
+      "bias_m": -0.22471963063831227,
+      "mae_m": 0.9020587089305672,
+      "rmse_m": 1.3616459566268482,
+      "p5_m": -2.0871953557588205,
+      "p95_m": 2.176193481682265
+    },
+    "other": {
+      "n": 918,
+      "bias_m": 0.5523388942660827,
+      "mae_m": 1.791717515766138,
+      "rmse_m": 2.550228144094502,
+      "p5_m": -3.016278110390621,
+      "p95_m": 4.459831860735012
+    },
+    "urban_core": {
+      "n": 1128,
+      "bias_m": 0.853427721255409,
+      "mae_m": 2.4762141917861773,
+      "rmse_m": 3.543213176420545,
+      "p5_m": -4.760735883915205,
+      "p95_m": 5.591439192075432
+    },
+    "vegetated": {
+      "n": 1983,
+      "bias_m": -0.04353507698978043,
+      "mae_m": 1.173252970396838,
+      "rmse_m": 1.8734486828235426,
+      "p5_m": -1.998493144440216,
+      "p95_m": 3.4255392161583176
+    }
+  },
+  "coastal_deltadtm_xcheck": {
+    "n_cells": 576224,
+    "mae_m": 1.2025834265707736,
+    "bias_m": 0.9116719232594435
+  },
+  "tolerances": {
+    "coastal_mae": 0.6,
+    "bias": 0.5,
+    "inland_mae": 1.5,
+    "urban_min_points": 30
+  },
+  "gate": {
+    "verdict": "FIX (recalibrate f / revisit backfill \u2014 see reasons)",
+    "reasons": [
+      "urban_core bias +0.85 m exceeds \u00b10.5 m (building over/under-removal). The CBD is the terrain the coastal flood gate is most sensitive to on pumped/dyked deltas \u2014 re-condition the urban core toward the held-out points before flood use.",
+      "coastal MAE 0.90 m / bias -0.22 m outside tolerance."
+    ],
+    "coastal_ok": false,
+    "veg_ok": true,
+    "inland_ok": false,
+    "urban_enough": true,
+    "urban_bias_ok": false
+  }
+}

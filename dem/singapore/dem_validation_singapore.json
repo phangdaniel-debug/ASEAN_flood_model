@@ -1,0 +1,69 @@
+{
+  "bareearth": "dem\\singapore\\dem_bareearth_singapore.tif",
+  "n_holdout": 3341,
+  "overall": {
+    "n": 3341,
+    "bias_m": -0.08770913951471394,
+    "mae_m": 3.9719126715189588,
+    "rmse_m": 5.234049284060116,
+    "p5_m": -7.523685593728831,
+    "p95_m": 8.870639260277146
+  },
+  "zones": {
+    "coastal_flat": {
+      "n": 51,
+      "bias_m": 0.868741994845017,
+      "mae_m": 2.746863487349753,
+      "rmse_m": 4.539306290701578,
+      "p5_m": -2.623191994627883,
+      "p95_m": 10.076796509868064
+    },
+    "other": {
+      "n": 1089,
+      "bias_m": -0.12763644446513728,
+      "mae_m": 3.8574477493507797,
+      "rmse_m": 5.318065718410283,
+      "p5_m": -7.432766062244545,
+      "p95_m": 8.212354464088886
+    },
+    "urban_core": {
+      "n": 467,
+      "bias_m": 0.5198140450823476,
+      "mae_m": 4.387248639010783,
+      "rmse_m": 6.128106501530386,
+      "p5_m": -11.109010172534013,
+      "p95_m": 8.667436794816188
+    },
+    "vegetated": {
+      "n": 1734,
+      "bias_m": -0.2543824382276107,
+      "mae_m": 3.9679725975945614,
+      "rmse_m": 4.92974020452916,
+      "p5_m": -6.972075004992256,
+      "p95_m": 9.132634306426253
+    }
+  },
+  "coastal_deltadtm_xcheck": {
+    "n_cells": 566329,
+    "mae_m": 2.625529250405256,
+    "bias_m": -0.8194109311206302
+  },
+  "tolerances": {
+    "coastal_mae": 0.6,
+    "bias": 0.5,
+    "inland_mae": 1.5,
+    "urban_min_points": 30
+  },
+  "gate": {
+    "verdict": "FIX (recalibrate f / revisit backfill \u2014 see reasons)",
+    "reasons": [
+      "urban_core bias +0.52 m exceeds \u00b10.5 m (building over/under-removal). The CBD is the terrain the coastal flood gate is most sensitive to on pumped/dyked deltas \u2014 re-condition the urban core toward the held-out points before flood use.",
+      "coastal MAE 2.75 m / bias +0.87 m outside tolerance."
+    ],
+    "coastal_ok": false,
+    "veg_ok": true,
+    "inland_ok": false,
+    "urban_enough": true,
+    "urban_bias_ok": false
+  }
+}

@@ -1,0 +1,46 @@
+name,lon,lat,kind,confidence,source,driver
+Kampung Melayu,106.86362,-6.21936,positive,high,Ciliwung overflow; chronic 2007/2013/2020 flooding (BPBD DKI; news),fluvial
+Bukit Duri,106.85843,-6.22109,positive,high,Ciliwung bank; recurrent inundation 2007/2013/2020 (news; academic),fluvial
+Kampung Pulo,106.86337,-6.21838,positive,high,Ciliwung meander; iconic chronic flood site (BPBD DKI),fluvial
+Cawang,106.87123,-6.24591,positive,high,Ciliwung corridor; 2007/2013/2020 flooding (news),fluvial
+Rawajati,106.85499,-6.25802,positive,high,Ciliwung bank South Jakarta; recurrent (news),fluvial
+Bidara Cina,106.86647,-6.23302,positive,high,Ciliwung corridor; recurrent (news),fluvial
+Cipinang Melayu,106.90377,-6.24834,positive,high,East Jakarta; among worst-hit Jan-2020 (news),pluvial
+Kemang,106.81533,-6.26111,positive,high,Krukut river; affluent-South pocket flooded Jan-2020 (widely reported),pluvial
+Kelapa Gading,106.90248,-6.15994,positive,high,North-East low pluvial basin; chronic ponding 2013/2020 (news),pluvial
+Grogol,106.78961,-6.16204,positive,high,West Jakarta; Sekretaris/Grogol canal flooding 2020 (news),pluvial
+Cengkareng,106.74472,-6.15290,positive,high,West Jakarta; Angke/Cengkareng drain flooding 2020 (news),pluvial
+Penjaringan,106.76743,-6.11727,positive,high,North Jakarta polder below MSL; rob + 2007/2020 coastal flooding (BAPPENAS; news),coastal
+Pluit,106.78736,-6.11503,positive,high,"North Jakarta below sea level; chronic rob, pump-dependent (news)",coastal
+Muara Baru,106.79982,-6.11042,positive,high,North Jakarta fastest-subsiding; rob flooding (Abidin et al.; news),coastal
+Kalibaru,106.92325,-6.10404,positive,high,North-East coast; rob + tidal flooding (news),coastal
+Cilincing,106.94445,-6.12901,positive,high,North-East coastal kelurahan; rob (news),coastal
+Menteng,106.83222,-6.19503,positive,high,Reclassified J2: documented flooded 2013 (Cikini/Menteng on Ciliwung; Thamrin/Bundaran-HI corridor) + 2007 â€” central Jakarta inundates in RP50-100 events,fluvial
+Gambir,106.83065,-6.17666,positive,high,Reclassified J2: documented flooded 2013 (Merdeka Palace/Monas area surrounded by floodwater) â€” central Jakarta,pluvial
+Cilandak,106.79693,-6.28980,dry,high,Elevated South Jakarta; not on the 2007/2013/2020 flood lists (terrain-high control),dry
+Jagakarsa,106.82224,-6.33010,dry,high,Elevated far-South Jakarta; higher ground toward Depok (control),dry
+Lebak Bulus,106.77969,-6.30167,dry,high,Elevated South Jakarta (control),dry
+Pasar Minggu,106.84486,-6.28333,dry,high,South Jakarta upland away from Ciliwung bank (elevated off-river point; control),fluvial
+Cipete,106.79732,-6.27836,dry,high,Elevated South Jakarta residential (control),dry
+Ragunan,106.82048,-6.29767,dry,high,"Elevated South Jakarta (zoo area, higher ground off the Ciliwung); not a documented event-flood area (J2 control)",fluvial
+Pondok Labu,106.79786,-6.30877,dry,high,Elevated far-South Jakarta near Cilandak; no major event flooding (J2 control),dry
+Pondok Pinang,106.77895,-6.27364,dry,high,Elevated South Jakarta (Kebayoran Lama upland); not on documented flood lists (J2 control),dry
+Kebon Pala,106.86123,-6.21298,positive,high,"Ciliwung kampung <15m from river, inundated Jan-2020 (Jakarta Post)",fluvial
+Manggarai,106.84994,-6.21017,positive,high,"Ciliwung floodgate area, recurrent 2007/2013/2020 (BPBD)",fluvial
+Balekambang,106.85179,-6.28322,positive,high,"Ciliwung riverbank East Jakarta, flooded 2020 (Kompas)",fluvial
+Pengadegan,106.85435,-6.24891,positive,high,"South-Jakarta Ciliwung bank, flooded 2020 (Kompas)",fluvial
+Pondok Bambu,106.90145,-6.23533,positive,high,"East-Jakarta, flooded Jan-2020 (Jakarta Post)",pluvial
+Halim,106.89364,-6.26557,positive,high,airport+area inundated Jan-2020 (BBC; Reuters),pluvial
+Jatinegara Kaum,106.90276,-6.20113,positive,high,"East-Jakarta, flooded 2020 (Kompas)",pluvial
+Cipinang,106.89262,-6.20605,positive,high,"East-Jakarta Cipinang basin, 2020 (Jakarta Post)",pluvial
+Pesanggrahan,106.76311,-6.25546,positive,high,"Pesanggrahan-river West/South Jakarta, 2020 (Kompas)",pluvial
+Kebon Jeruk,106.76973,-6.19257,positive,high,"West-Jakarta, flooded 2020 (Kompas)",pluvial
+Kembangan,106.74059,-6.19136,positive,high,"West-Jakarta low-lying, flooded 2020 (Kompas/BPBD)",pluvial
+Marunda,106.96017,-6.12316,positive,high,"North-East coastal kampung, tidal rob + 2020 (Kompas)",coastal
+Rorotan,106.95670,-6.14572,positive,high,"far-North-East low coastal, rob/flooding (BPBD)",coastal
+Ancol,106.84514,-6.12812,positive,high,"North-Jakarta coastal, flooded 2020 (Jakarta Post)",coastal
+Sunter,106.89624,-6.11903,positive,high,"North-Jakarta Sunter basin, chronic ponding 2020 (Jakarta Post)",pluvial
+Ragunan,106.82048,-6.29767,dry,high,elevated south Jakarta toward Bogor piedmont; not on 2020 flood lists (research doc),control_elevated_south
+Pondok Labu,106.79786,-6.30877,dry,high,"elevated south-west Jakarta, outside documented 2020 inundation",control_elevated_south
+Pondok Pinang,106.77895,-6.27364,dry,high,elevated south Jakarta upland (research doc control),control_elevated_south
+Jagakarsa,106.82224,-6.33010,dry,high,"southernmost Jakarta, highest DKI ground toward Depok",control_elevated_south

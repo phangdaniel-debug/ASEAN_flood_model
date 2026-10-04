@@ -1,0 +1,76 @@
+{
+  "n_points": 16397,
+  "source_counts": {
+    "ATL08": 16397
+  },
+  "f_fit": {
+    "bias0_m": 1.4567302909434794,
+    "n_trueground_calib": 5384,
+    "f_raw": 0.6892982488138006,
+    "f_clipped": 0.6892982488138006,
+    "n_veg_calib": 1335,
+    "per_bin": {
+      "(3, 6]": {
+        "n": 637,
+        "mean_resid_minus_bias0_m": 4.121898149463142,
+        "mean_canopy_m": 4.8995290423861855
+      },
+      "(6, 10]": {
+        "n": 451,
+        "mean_resid_minus_bias0_m": 5.844392053132618,
+        "mean_canopy_m": 8.339246119733925
+      },
+      "(10, 15]": {
+        "n": 213,
+        "mean_resid_minus_bias0_m": 7.334195591150461,
+        "mean_canopy_m": 12.291079812206572
+      },
+      "(15, 25]": {
+        "n": 33,
+        "mean_resid_minus_bias0_m": 14.124695719893436,
+        "mean_canopy_m": 18.727272727272727
+      },
+      "(25, 100]": {
+        "n": 1,
+        "mean_resid_minus_bias0_m": 10.602667379685759,
+        "mean_canopy_m": 26.0
+      }
+    }
+  },
+  "zones": {
+    "coastal_flat": {
+      "n_total": 115,
+      "n_holdout": 32,
+      "raw_bias_m": 4.205947927901553,
+      "raw_mae_m": 4.23682708606982,
+      "raw_rmse_m": 5.039444300178051
+    },
+    "other": {
+      "n_total": 10982,
+      "n_holdout": 3311,
+      "raw_bias_m": 2.7170945266955195,
+      "raw_mae_m": 3.441478463716389,
+      "raw_rmse_m": 5.374322731068394
+    },
+    "urban_core": {
+      "n_total": 3393,
+      "n_holdout": 1036,
+      "raw_bias_m": 1.828349343227777,
+      "raw_mae_m": 3.2587723062959637,
+      "raw_rmse_m": 4.5113866954465145
+    },
+    "vegetated": {
+      "n_total": 1907,
+      "n_holdout": 572,
+      "raw_bias_m": 6.898742718004235,
+      "raw_mae_m": 7.226945701733316,
+      "raw_rmse_m": 8.729544350120676
+    }
+  },
+  "params": {
+    "holdout": 0.3,
+    "seed": 42,
+    "coastal_flat_max_m": 2.0
+  },
+  "note": "f fit on vegetated non-built CALIB points only; zone stats on HOLDOUT. Urban-core check-point count is the honesty metric (spec \u00a71.5)."
+}

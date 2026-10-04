@@ -1,28 +1,37 @@
-# Regenerable — never committed (per HANDOFF §5)
-outputs/
+# ── Heavy binary inputs — shipped via the Zenodo archive, NOT git ──────────────
+# DEMs, HANDs, raingrid, masks, ground-truth rasters. The working tree is
+# self-contained on disk; `git clone` alone is not — pair it with the Zenodo
+# data archive (see repro/DATA_MANIFEST.md).
+*.tif
+*.tiff
+
+# Downloadable flood-observation source archives (DFO / GFM / ARIA)
+*.zip
+
+# ── Regenerable outputs / scratch ─────────────────────────────────────────────
+outputs/*
+!outputs/.gitkeep
 cache/
 logs/
 *.log
 
-# Input raster data — large binary files sourced from public repositories:
-#   DEMs: Copernicus GLO-30 (https://spacedata.copernicus.eu/)
-#   Flood obs: DFO Dartmouth, GFM / Sentinel-1 products
-# These are not versioned here; see README for download instructions.
-data/**/*.tif
-data/**/*.tiff
-data/**/*.zip
-
-# Python
+# ── Python ────────────────────────────────────────────────────────────────────
 __pycache__/
 *.pyc
 .pytest_cache/
 .venv/
 venv/
 
-# Claude Code session-local (machine-specific tool permissions)
-.claude/settings.local.json
-
-# OS
+# ── Editor / OS / session-local ───────────────────────────────────────────────
 .DS_Store
 Thumbs.db
-outputs_live/
+.claude/settings.local.json
+zenodo/
+# LibreOffice/Office lock files, created whenever a doc in the tree is opened
+.~lock.*#
+~$*
+
+# ── Damage module raw inputs (re-fetchable; Zenodo, not git) ──
+damage/data/ghsl/
+damage/data/osm/
+damage/data/exposure/

@@ -1,0 +1,21 @@
+# SFINCS migration (flood-v3.0) conda environment.
+# Derived from the official Deltares hydromt_sfincs environment.yml (main branch),
+# renamed for this project. Installs the v2.0 component-API hydromt-sfincs.
+# Recreate with:  mamba env create -f repro/environment.yml
+name: hydromt-sfincs
+
+channels:
+  - conda-forge
+
+dependencies:
+  - cartopy>=0.20                 # plotting / examples
+  - descartes
+  - ffmpeg                        # animation export
+  - jupyterlab
+  - matplotlib
+  - python=3.11                   # pinned per upstream
+  - pip
+  - pip:
+    - hydromt-sfincs==2.0.0rc3    # v2.0 component API (sf.grid.create, sf.elevation.create, ...)
+    - earthaccess                 # NASA EarthData access for ICESat-2 ATL08 + GEDI L2A (Phase 1 ground truth)
+    - h5py                        # read ATL08/GEDI HDF5 granules (stream-and-subset)

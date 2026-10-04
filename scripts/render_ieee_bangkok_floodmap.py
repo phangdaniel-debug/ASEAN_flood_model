@@ -16,9 +16,9 @@ import matplotlib.pyplot as plt
 from matplotlib.colors import ListedColormap, BoundaryNorm
 
 ROOT = Path(__file__).resolve().parents[1]
-BASE = ROOT / "outputs" / "bangkok_ssp585_2020"
+BASE = ROOT / "outputs" / "_fixed_atlas" / "bangkok_ssp585_2020_rp100_polder"
 HAZ = ["coastal", "fluvial", "pluvial"]
-OUT = ROOT / "docs" / "paper" / "figures" / "ieee_fig2_bangkok_rp100.png"
+OUT = ROOT / "docs" / "paper" / "figures" / "fig5_bangkok_rp100.png"
 
 
 def load_depth(hz):

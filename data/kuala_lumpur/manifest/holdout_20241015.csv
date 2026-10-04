@@ -1,0 +1,11 @@
+name,lon,lat,kind,confidence,source,driver
+Jalan Pudu,101.7037705,3.1454253,positive,high,DBKL KLCCC bulletin 2024-10-15 (Malay Mail 153681 / NST 1119953); Nominatim geocode,pluvial
+Salak Selatan,101.7050224,3.0982815,positive,high,DBKL KLCCC bulletin 2024-10-15 (Malay Mail 153681 / NST 1119953); Nominatim geocode,pluvial
+Jalan Pantai Baru,101.6662016,3.1168667,positive,high,DBKL KLCCC bulletin 2024-10-15 (Malay Mail 153681 / NST 1119953); Nominatim geocode,pluvial
+Jalan Tuanku Abdul Halim,101.6727125,3.1711278,positive,high,DBKL KLCCC bulletin 2024-10-15 (Malay Mail 153681 / NST 1119953); Nominatim geocode,pluvial
+Jalan Gombak,101.7029174,3.2019835,positive,high,DBKL KLCCC bulletin 2024-10-15 (Malay Mail 153681 / NST 1119953); Nominatim geocode,pluvial
+Jalan Damansara,101.6298198,3.1365194,positive,high,DBKL KLCCC bulletin 2024-10-15 (Malay Mail 153681 / NST 1119953); Nominatim geocode,pluvial
+Jalan Manjalara (Bandar Menjalara),101.6322549,3.1938721,positive,high,DBKL KLCCC bulletin 2024-10-15 (Malay Mail 153681 / NST 1119953); Nominatim geocode,pluvial
+Jalan Maharajalela,101.6977866,3.139822,positive,high,DBKL KLCCC bulletin 2024-10-15 (Malay Mail 153681 / NST 1119953); Nominatim geocode,pluvial
+Jalan Wangsa Maju (Sri Rampai),101.7292337,3.1988864,positive,high,DBKL KLCCC bulletin 2024-10-15 (Malay Mail 153681 / NST 1119953); Nominatim geocode,pluvial
+Ukay Perdana,101.7773303,3.2066072,positive,high,DBKL KLCCC bulletin 2024-10-15 (Malay Mail 153681 / NST 1119953); Nominatim geocode,pluvial

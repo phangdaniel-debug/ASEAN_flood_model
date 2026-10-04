@@ -1,0 +1,76 @@
+{
+  "n_points": 11058,
+  "source_counts": {
+    "ATL08": 11058
+  },
+  "f_fit": {
+    "bias0_m": 0.5422478750203865,
+    "n_trueground_calib": 1637,
+    "f_raw": 0.29428946548410223,
+    "f_clipped": 0.29428946548410223,
+    "n_veg_calib": 3914,
+    "per_bin": {
+      "(3, 6]": {
+        "n": 301,
+        "mean_resid_minus_bias0_m": 0.6368245771736509,
+        "mean_canopy_m": 5.129568106312292
+      },
+      "(6, 10]": {
+        "n": 873,
+        "mean_resid_minus_bias0_m": 0.9617518563265003,
+        "mean_canopy_m": 8.718213058419243
+      },
+      "(10, 15]": {
+        "n": 1490,
+        "mean_resid_minus_bias0_m": 3.186695516760832,
+        "mean_canopy_m": 13.035570469798659
+      },
+      "(15, 25]": {
+        "n": 1216,
+        "mean_resid_minus_bias0_m": 6.482050970189004,
+        "mean_canopy_m": 18.357730263157894
+      },
+      "(25, 100]": {
+        "n": 34,
+        "mean_resid_minus_bias0_m": 10.242444101275051,
+        "mean_canopy_m": 28.941176470588236
+      }
+    }
+  },
+  "zones": {
+    "coastal_flat": {
+      "n_total": 210,
+      "n_holdout": 51,
+      "raw_bias_m": 2.742323005531422,
+      "raw_mae_m": 3.316853244781869,
+      "raw_rmse_m": 5.138992311804682
+    },
+    "other": {
+      "n_total": 3631,
+      "n_holdout": 1089,
+      "raw_bias_m": 1.4369611203449864,
+      "raw_mae_m": 3.7340964032142274,
+      "raw_rmse_m": 5.4621725258316705
+    },
+    "urban_core": {
+      "n_total": 1569,
+      "n_holdout": 467,
+      "raw_bias_m": 1.7197552072813431,
+      "raw_mae_m": 3.9971012791789637,
+      "raw_rmse_m": 5.53650949279458
+    },
+    "vegetated": {
+      "n_total": 5648,
+      "n_holdout": 1734,
+      "raw_bias_m": 4.061630157740539,
+      "raw_mae_m": 5.00804165292869,
+      "raw_rmse_m": 6.829406697803616
+    }
+  },
+  "params": {
+    "holdout": 0.3,
+    "seed": 42,
+    "coastal_flat_max_m": 2.0
+  },
+  "note": "f fit on vegetated non-built CALIB points only; zone stats on HOLDOUT. Urban-core check-point count is the honesty metric (spec \u00a71.5)."
+}

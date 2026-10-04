@@ -48,8 +48,12 @@ def _gev_cc_factor(
 
         precip_factor(T) = GEV.ppf(1 - 1/T, mu', sigma', xi) / GEV.ppf(1 - 1/T, mu, sigma, xi)
 
-    For xi > 0 (Frechet tail, typical of tropical convective rainfall) this ratio
-    grows with T, reproducing the observed super-CC intensification of rare events.
+    NOTE: because the GEV is a location-scale family, scaling BOTH mu and sigma by
+    the same alpha = (1 + cc_rate*delta_T) makes this ratio EXACTLY alpha for every
+    return period -- a uniform first-order CC intensification, constant across T.
+    It is NOT return-period-specific or super-CC: rare events do not scale faster
+    under this perturbation. To obtain genuine super-CC (ratio growing with T),
+    perturb the scale faster than the location (or use a quantile-dependent factor).
 
     A ``hydraulic_exponent`` is applied on top of the precipitation ratio to account
     for the nonlinear rainfall->stage transformation:

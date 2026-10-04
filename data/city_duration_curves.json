@@ -1,0 +1,319 @@
+{
+ "fluvial_recession": {
+  "kuala_lumpur": {
+   "lat": 3.074,
+   "lon": 101.578,
+   "q2": 174.185,
+   "recession": {
+    "0.0": {
+     "median_days": 2.0,
+     "q25": 1.0,
+     "q75": 2.75,
+     "n_events": 14
+    },
+    "0.1": {
+     "median_days": 2.0,
+     "q25": 1.0,
+     "q75": 2.75,
+     "n_events": 14
+    },
+    "0.25": {
+     "median_days": 2.0,
+     "q25": 1.0,
+     "q75": 2.75,
+     "n_events": 14
+    },
+    "0.5": {
+     "median_days": 2.0,
+     "q25": 1.0,
+     "q75": 2.75,
+     "n_events": 14
+    },
+    "0.7": {
+     "median_days": 1.0,
+     "q25": 1.0,
+     "q75": 2.0,
+     "n_events": 14
+    },
+    "0.9": {
+     "median_days": 1.0,
+     "q25": 1.0,
+     "q75": 2.0,
+     "n_events": 14
+    },
+    "0.95": {
+     "median_days": 1.0,
+     "q25": 1.0,
+     "q75": 1.0,
+     "n_events": 14
+    }
+   }
+  },
+  "bangkok": {
+   "lat": 14.45,
+   "lon": 100.45,
+   "q2": 4528.41,
+   "recession": {
+    "0.0": {
+     "median_days": 9.0,
+     "q25": 4.5,
+     "q75": 23.0,
+     "n_events": 14
+    },
+    "0.1": {
+     "median_days": 9.0,
+     "q25": 4.5,
+     "q75": 23.0,
+     "n_events": 14
+    },
+    "0.25": {
+     "median_days": 9.0,
+     "q25": 4.5,
+     "q75": 23.0,
+     "n_events": 14
+    },
+    "0.5": {
+     "median_days": 9.0,
+     "q25": 4.5,
+     "q75": 23.0,
+     "n_events": 14
+    },
+    "0.7": {
+     "median_days": 9.0,
+     "q25": 4.5,
+     "q75": 23.0,
+     "n_events": 14
+    },
+    "0.9": {
+     "median_days": 6.0,
+     "q25": 4.0,
+     "q75": 7.5,
+     "n_events": 14
+    },
+    "0.95": {
+     "median_days": 3.0,
+     "q25": 3.0,
+     "q75": 4.0,
+     "n_events": 14
+    }
+   }
+  },
+  "jakarta": {
+   "lat": -6.35,
+   "lon": 106.84,
+   "q2": 115.815,
+   "recession": {
+    "0.0": {
+     "median_days": 1.0,
+     "q25": 1.0,
+     "q75": 1.75,
+     "n_events": 14
+    },
+    "0.1": {
+     "median_days": 1.0,
+     "q25": 1.0,
+     "q75": 1.75,
+     "n_events": 14
+    },
+    "0.25": {
+     "median_days": 1.0,
+     "q25": 1.0,
+     "q75": 1.75,
+     "n_events": 14
+    },
+    "0.5": {
+     "median_days": 1.0,
+     "q25": 1.0,
+     "q75": 1.75,
+     "n_events": 14
+    },
+    "0.7": {
+     "median_days": 1.0,
+     "q25": 1.0,
+     "q75": 1.0,
+     "n_events": 14
+    },
+    "0.9": {
+     "median_days": 1.0,
+     "q25": 1.0,
+     "q75": 1.0,
+     "n_events": 14
+    },
+    "0.95": {
+     "median_days": 1.0,
+     "q25": 1.0,
+     "q75": 1.0,
+     "n_events": 14
+    }
+   }
+  }
+ },
+ "coastal_event_shapes": {
+  "singapore": {
+   "uhslc_id": 699,
+   "duration_below_peak_h": {
+    "0.05": {
+     "median_h": 2.0,
+     "n_events": 29
+    },
+    "0.1": {
+     "median_h": 3.0,
+     "n_events": 29
+    },
+    "0.2": {
+     "median_h": 6.0,
+     "n_events": 29
+    },
+    "0.3": {
+     "median_h": 9.0,
+     "n_events": 29
+    },
+    "0.5": {
+     "median_h": 16.0,
+     "n_events": 29
+    },
+    "0.75": {
+     "median_h": 23.0,
+     "n_events": 29
+    },
+    "1.0": {
+     "median_h": 29.0,
+     "n_events": 29
+    },
+    "1.5": {
+     "median_h": 39.0,
+     "n_events": 29
+    },
+    "2.0": {
+     "median_h": 54.0,
+     "n_events": 29
+    }
+   }
+  },
+  "bangkok": {
+   "uhslc_id": 328,
+   "duration_below_peak_h": {
+    "0.05": {
+     "median_h": 3.0,
+     "n_events": 24
+    },
+    "0.1": {
+     "median_h": 5.0,
+     "n_events": 24
+    },
+    "0.2": {
+     "median_h": 10.0,
+     "n_events": 24
+    },
+    "0.3": {
+     "median_h": 15.0,
+     "n_events": 24
+    },
+    "0.5": {
+     "median_h": 23.0,
+     "n_events": 24
+    },
+    "0.75": {
+     "median_h": 30.0,
+     "n_events": 24
+    },
+    "1.0": {
+     "median_h": 37.0,
+     "n_events": 24
+    },
+    "1.5": {
+     "median_h": 50.5,
+     "n_events": 24
+    },
+    "2.0": {
+     "median_h": 66.5,
+     "n_events": 24
+    }
+   }
+  },
+  "kuala_lumpur": {
+   "uhslc_id": 140,
+   "duration_below_peak_h": {
+    "0.05": {
+     "median_h": 1.0,
+     "n_events": 26
+    },
+    "0.1": {
+     "median_h": 2.0,
+     "n_events": 26
+    },
+    "0.2": {
+     "median_h": 3.0,
+     "n_events": 26
+    },
+    "0.3": {
+     "median_h": 5.0,
+     "n_events": 26
+    },
+    "0.5": {
+     "median_h": 7.0,
+     "n_events": 26
+    },
+    "0.75": {
+     "median_h": 13.0,
+     "n_events": 26
+    },
+    "1.0": {
+     "median_h": 18.0,
+     "n_events": 26
+    },
+    "1.5": {
+     "median_h": 27.0,
+     "n_events": 26
+    },
+    "2.0": {
+     "median_h": 31.0,
+     "n_events": 26
+    }
+   }
+  },
+  "jakarta": {
+   "uhslc_id": 699,
+   "duration_below_peak_h": {
+    "0.05": {
+     "median_h": 2.0,
+     "n_events": 29
+    },
+    "0.1": {
+     "median_h": 3.0,
+     "n_events": 29
+    },
+    "0.2": {
+     "median_h": 6.0,
+     "n_events": 29
+    },
+    "0.3": {
+     "median_h": 9.0,
+     "n_events": 29
+    },
+    "0.5": {
+     "median_h": 16.0,
+     "n_events": 29
+    },
+    "0.75": {
+     "median_h": 23.0,
+     "n_events": 29
+    },
+    "1.0": {
+     "median_h": 29.0,
+     "n_events": 29
+    },
+    "1.5": {
+     "median_h": 39.0,
+     "n_events": 29
+    },
+    "2.0": {
+     "median_h": 54.0,
+     "n_events": 29
+    }
+   },
+   "proxy": "Sunda-Shelf microtidal proxy from Singapore UHSLC-699 (Jakarta UHSLC-161 <10 clean events). Conservative: Jakarta subsidence bowls retain water longer than a clean tidal recession, so this UNDER-states coastal persistence.",
+   "uhslc_id_proxy_for": 161
+  }
+ }
+}

@@ -1,0 +1,68 @@
+{
+  "bareearth": "D:/GPTs/Projects/flood-v3.0/dem/jakarta/dem_bareearth_jakarta_composite.tif",
+  "n_holdout": 4432,
+  "overall": {
+    "n": 4432,
+    "bias_m": -0.22171063946162622,
+    "mae_m": 1.775838680525359,
+    "rmse_m": 2.603049984711332,
+    "p5_m": -3.4722993634178585,
+    "p95_m": 4.109231004914137
+  },
+  "zones": {
+    "coastal_flat": {
+      "n": 403,
+      "bias_m": -1.0947941077601473,
+      "mae_m": 1.5435312381774733,
+      "rmse_m": 1.9667229917805653,
+      "p5_m": -3.510396681146688,
+      "p95_m": 1.4040722746234329
+    },
+    "other": {
+      "n": 918,
+      "bias_m": 0.11964393761544993,
+      "mae_m": 1.8152565758829502,
+      "rmse_m": 2.5692951770431214,
+      "p5_m": -4.21648255779786,
+      "p95_m": 4.138600331982151
+    },
+    "urban_core": {
+      "n": 1128,
+      "bias_m": 0.25406613640084574,
+      "mae_m": 2.3789650369133426,
+      "rmse_m": 3.47903324974019,
+      "p5_m": -5.164517256926778,
+      "p95_m": 5.21481420262153
+    },
+    "vegetated": {
+      "n": 1983,
+      "bias_m": -0.47293961939370915,
+      "mae_m": 1.4617225641977158,
+      "rmse_m": 2.1016686834437808,
+      "p5_m": -2.8725443151239927,
+      "p95_m": 3.0741109233273423
+    }
+  },
+  "coastal_deltadtm_xcheck": {
+    "n_cells": 596717,
+    "mae_m": 1.0437584969666989,
+    "bias_m": 0.397892862619706
+  },
+  "tolerances": {
+    "coastal_mae": 0.6,
+    "bias": 0.5,
+    "inland_mae": 1.5,
+    "urban_min_points": 30
+  },
+  "gate": {
+    "verdict": "FIX (recalibrate f / revisit backfill \u2014 see reasons)",
+    "reasons": [
+      "coastal MAE 1.54 m / bias -1.09 m outside tolerance."
+    ],
+    "coastal_ok": false,
+    "veg_ok": true,
+    "inland_ok": false,
+    "urban_enough": true,
+    "urban_bias_ok": true
+  }
+}

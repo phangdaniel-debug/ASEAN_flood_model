@@ -1,0 +1,72 @@
+# Conda-FIRST SFINCS env (fixes the BLAS DLL conflict of the pip-first env).
+# All compiled + most pure-python deps from conda-forge → one consistent OpenBLAS.
+# hydromt / hydromt_sfincs / cht_tide added via pip --no-deps afterwards (their deps
+# are all satisfied here), so no conflicting numpy wheel is pulled.
+# Create:  mamba env create -f repro/environment_sfincs.yml
+name: sfincs
+
+channels:
+  - conda-forge
+
+dependencies:
+  - python=3.11
+  - pip
+  # --- compiled / BLAS-linked ---
+  - numpy
+  - scipy
+  - gdal
+  - rasterio
+  - geopandas>=1.1.3
+  - pyproj
+  - shapely>=2.1.2
+  - pyogrio
+  - xarray
+  - dask
+  - numba
+  - pyflwdir>=0.5.10
+  - h5py
+  - netcdf4
+  - pyarrow
+  - rioxarray
+  - xugrid>=0.15.1
+  - pandas<4
+  - bottleneck
+  - zarr>=3.1,<4
+  - mapbox_earcut
+  - pillow
+  # --- pure-python (conda-forge) ---
+  - affine
+  - click
+  - fsspec
+  - mercantile
+  - packaging
+  - pydantic>=2.4
+  - pydantic-settings>=2.2
+  - pooch
+  - pystac
+  - pyyaml
+  - requests
+  - tenacity
+  - tomli
+  - tomli-w
+  - universal_pathlib>=0.2
+  - xmltodict
+  - importlib_metadata
+  # --- tooling / Phase 2 ---
+  - matplotlib
+  - cartopy
+  - earthaccess
+  - fastparquet
+  - osmnx
+  - boto3          # cht_tide dep
+  - toml           # cht_tide dep
+  - pip:
+    - --no-deps
+    - hydromt==1.4.0
+    - hydromt-sfincs==2.0.0rc3
+    - cht_tide       # tide prediction for water_level forcing
+    - cht_utils      # cht_tide dep (Deltares, PyPI-only)
+
+# ACTIVATION REQUIRED: run via `mamba run -n sfincs python ...` (sets PATH +
+# GDAL_DATA + PROJ_DATA). Running envs\sfincs\python.exe DIRECTLY (unactivated)
+# loads the wrong BLAS DLL and crashes (Windows 0xC06D007F) — see ENV_NOTES.md.

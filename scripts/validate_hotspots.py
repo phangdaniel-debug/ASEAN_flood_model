@@ -66,15 +66,19 @@ def evaluate_gate(hit_rate: float, crr: float,
                    "Anchored to geocoding precision, NOT to the gate verdict (see dossier).")
 @click.option("--hr-floor", type=float, default=0.70, show_default=True)
 @click.option("--crr-floor", type=float, default=0.70, show_default=True)
+@click.option("--register", default="hotspots_expanded.csv", show_default=True,
+              help="Hotspot register filename under data/<city>/manifest/. Default is the "
+                   "expanded register scored in the paper; pass hotspots.csv for the small set.")
 def cli(city: str, out_dir: Path, rp: int, scenario: str, horizon: int,
-        depth_threshold: float, radius_m: float, hr_floor: float, crr_floor: float):
+        depth_threshold: float, radius_m: float, hr_floor: float, crr_floor: float,
+        register: str):
     rasters = _hazard_rasters(out_dir, scenario, horizon, rp)
     if not rasters:
         click.echo(f"[error] no hazard rasters found under {out_dir} for rp{rp}", err=True)
         sys.exit(2)
 
     combined = combine_depth_rasters(rasters, out_dir / "_validation" / f"combined_rp{rp}.tif")
-    hotspots = load_hotspots_from_manifest(city)
+    hotspots = load_hotspots_from_manifest(city, filename=register)
     flood_hits, dry_hits = hit_vectors(
         hotspots, combined, radius_m=radius_m, depth_threshold_m=depth_threshold)
     res = skill_scores(flood_hits, dry_hits)

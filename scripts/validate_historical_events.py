@@ -159,10 +159,13 @@ EVENTS: list[EventConfig] = [
         default_out_dir="outputs/kuala_lumpur_ssp585_2100",
         obs_note=(
             "Copernicus GFM Sentinel-1 ensemble (16-22 Dec 2021).  "
-            "Urban SAR exclusion masks ~69% of the KL bbox (SAR double-bounce "
-            "indistinguishable from open water in dense built-up areas).  "
-            "Composite captures only ~0.14 km^2 of peri-urban flood — useful as "
-            "a lower-bound spatial cross-check, not a representative obs set."
+            "Urban SAR exclusion masks 87.2% of the KL bbox in every peak pass "
+            "(measured from the GFM exclusion_mask asset, 2026-08-16; an earlier "
+            "note said ~69%).  Assessable area 455 km^2, within which only "
+            "~0.14 km^2 of flood was detected — a lower-bound spatial cross-check, "
+            "not a representative obs set.  Score with the validity mask "
+            "(gfm_kl_validmask_dec2021.tif) or excluded urban pixels count as "
+            "observed-dry and model water there becomes a false positive."
         ),
     ),
 ]

@@ -1,0 +1,56 @@
+name,lon,lat,kind,confidence,source,driver
+Jalan Sultan Azlan Shah,101.68871,3.17586,positive,high,DBKL flood-hotspot list (Scoop 2024),fluvial
+Lebuhraya Sultan Iskandar (Mahameru),101.68053,3.1516,positive,high,DBKL flood-hotspot list (Scoop 2024),fluvial
+"Jalan Tun Sambanthan, Brickfields",101.68881,3.13398,positive,high,DBKL flood-hotspot list (Scoop 2024),fluvial
+Segambut Dalam,101.6495,3.17125,positive,low,DBKL flood-hotspot list (Toba River),fluvial
+Pantai Dalam,101.67004,3.0956,positive,high,DBKL flood-hotspot list (Scoop 2024),fluvial
+Bukit Jalil,101.68029,3.05335,positive,high,DBKL flood-hotspot list (Scoop 2024; LRT station underpass),fluvial
+Jalan Rahmat (PWTC / Sg Gombak),101.69354,3.16992,positive,high,DBKL hotspot; +600 mm after ~2h rain (Brudirect/Star),fluvial
+Bulatan Datuk Onn,101.69295,3.15144,positive,high,DBKL flood-hotspot list (Scoop 2024),fluvial
+Jalan Tun Razak,101.70302,3.17319,positive,high,DID/Star Klang Valley hotspots (2019),fluvial
+Jalan Raja Chulan,101.69972,3.14864,positive,high,DID/Star Klang Valley hotspots (2019),fluvial
+Masjid Jamek (Gombak-Klang confluence),101.69693,3.15,positive,high,Historic Gombak/Klang confluence flood (SMART tunnel rationale),fluvial
+Kampung Baru,101.7066,3.16133,positive,high,Historic KL flood-prone (Klang riverbank),fluvial
+Jalan Chow Kit,101.69837,3.16741,positive,high,DID/DBKL flash-flood records,fluvial
+Old Klang Road,101.6592,3.08261,positive,high,Dec 2021 Klang Valley floods (Malay Mail),fluvial
+"Taman Sri Muda, Shah Alam",101.53448,3.03252,positive,high,"Dec 2021 floods, 14 deaths, ~4 m (Wikipedia; ISEAS 2022/26)",fluvial
+"Taman Sri Nanding, Hulu Langat",101.80467,3.10096,positive,high,Dec 2021 Hulu Langat (UTHM study),fluvial
+Klang town,101.44474,3.04484,positive,high,Dec 2021 worst-hit district (Wikipedia),fluvial
+Bukit Tunku (Kenny Hills),101.68067,3.16658,dry,high,Elevated residential control,control
+Damansara Heights,101.65845,3.1524,dry,high,Elevated residential control,control
+Bukit Antarabangsa,101.77083,3.18538,dry,high,Hillside control,control
+Bukit Gasing,101.65936,3.09155,dry,high,Forested ridge control,control
+Mont Kiara,101.65215,3.17,dry,high,Elevated residential control,control
+Bukit Persekutuan (Federal Hill),101.67906,3.13859,dry,high,Elevated control,control
+Bukit Kiara,101.6449,3.14044,dry,high,Forested hill control,control
+Bandar Puchong Jaya (sys),101.62044,3.05074,dry_diagnostic,medium,"Systematic model-blind hard negative (Plan 9): main-stem HAND 10.1m (>RP100 fluvial stage 6.06m), DEM 20.1m, 4.87km from nearest documented flood; no flood record within 1km",dry_diagnostic
+Kampung Baru Kuala Ampang (sys),101.74938,3.1659,dry_diagnostic,medium,"Systematic model-blind hard negative (Plan 9): main-stem HAND 9.9m (>RP100 fluvial stage 6.06m), DEM 47.0m, 4.79km from nearest documented flood; no flood record within 1km",dry_diagnostic
+Bandar Sunway (sys),101.61969,3.07351,dry_diagnostic,medium,"Systematic model-blind hard negative (Plan 9): main-stem HAND 9.2m (>RP100 fluvial stage 6.06m), DEM 21.2m, 4.51km from nearest documented flood; no flood record within 1km",dry_diagnostic
+Seksyen 19 (sys),101.63111,3.11334,dry_diagnostic,medium,"Systematic model-blind hard negative (Plan 9): main-stem HAND 18.5m (>RP100 fluvial stage 6.06m), DEM 30.5m, 4.25km from nearest documented flood; no flood record within 1km",dry_diagnostic
+Jinjang (sys),101.66372,3.20761,dry_diagnostic,medium,"Systematic model-blind hard negative (Plan 9): main-stem HAND 14.7m (>RP100 fluvial stage 6.06m), DEM 51.8m, 3.81km from nearest documented flood; no flood record within 1km",dry_diagnostic
+Taman Kosmo Jaya (sys),101.68555,3.20186,dry_diagnostic,medium,"Systematic model-blind hard negative (Plan 9): main-stem HAND 8.7m (>RP100 fluvial stage 6.06m), DEM 45.8m, 2.9km from nearest documented flood; no flood record within 1km",dry_diagnostic
+Semarak (sys),101.72918,3.17816,dry_diagnostic,medium,"Systematic model-blind hard negative (Plan 9): main-stem HAND 19.1m (>RP100 fluvial stage 6.06m), DEM 56.1m, 2.87km from nearest documented flood; no flood record within 1km",dry_diagnostic
+Zon Perindustrian Seksyen 51 (sys),101.6351,3.09056,dry_diagnostic,medium,"Systematic model-blind hard negative (Plan 9): main-stem HAND 11.2m (>RP100 fluvial stage 6.06m), DEM 23.2m, 2.82km from nearest documented flood; no flood record within 1km",dry_diagnostic
+Jinjang (sys),101.64189,3.2158,dry_diagnostic,medium,"Systematic model-blind hard negative (Plan 9): main-stem HAND 19.9m (>RP100 fluvial stage 6.06m), DEM 56.1m, 2.65km from nearest documented flood; no flood record within 1km",dry_diagnostic
+Bukit Tandang (sys),101.63989,3.06289,dry_diagnostic,medium,"Systematic model-blind hard negative (Plan 9): main-stem HAND 9.1m (>RP100 fluvial stage 6.06m), DEM 23.9m, 2.62km from nearest documented flood; no flood record within 1km",dry_diagnostic
+Seputeh (sys),101.70476,3.11966,dry_diagnostic,medium,"Systematic model-blind hard negative (Plan 9): main-stem HAND 18.3m (>RP100 fluvial stage 6.06m), DEM 35.5m, 2.33km from nearest documented flood; no flood record within 1km",dry_diagnostic
+Taman OUG (sys),101.67795,3.07906,dry_diagnostic,medium,"Systematic model-blind hard negative (Plan 9): main-stem HAND 19.9m (>RP100 fluvial stage 6.06m), DEM 37.1m, 2.03km from nearest documented flood; no flood record within 1km",dry_diagnostic
+Masjid Jamek,101.69700,3.14991,positive,high,"Klang-Gombak confluence, historic flash-flood site (SMART tunnel rationale; DBKL)",fluvial
+Kampung Baru KL,101.70680,3.16127,positive,high,"Klang river low-lying, recurrent flash floods (DBKL; Malay Mail)",fluvial
+Jalan Tun Perak,101.69640,3.14939,positive,high,city-centre Klang overflow flash flood (Malay Mail),fluvial
+Jalan TAR,101.69557,3.15166,positive,high,"low-lying city street, Klang overflow flash floods (DBKL)",pluvial
+Jalan Pahang,101.70105,3.18006,positive,high,DBKL flood-prone road (Bateriku; Malay Mail),pluvial
+Jalan Kuching,101.67265,3.17894,positive,high,"DBKL flood-prone road, Klang corridor",pluvial
+Kepong,101.64099,3.21444,positive,high,NW Klang-river flood-prone (DBKL),fluvial
+Setapak,101.71239,3.19785,positive,high,"DBKL flood-prone, Gombak corridor",pluvial
+Jalan Peel,101.72054,3.13183,positive,high,Pudu/Maluri DBKL flood-prone road,pluvial
+Jalan Syed Putra,101.69536,3.13853,positive,high,Klang river Brickfields/Mid Valley flood-prone (DBKL),fluvial
+Dutamas,101.67260,3.18191,positive,high,Segambut/Dutamas DBKL flood-prone,pluvial
+Sentul,101.68861,3.18187,positive,high,"Batu river corridor, flood-prone (DBKL)",fluvial
+Bangsar,101.67308,3.12975,positive,high,Klang-corridor flash floods 2021/22 (FMT),pluvial
+Taman Desa,101.68502,3.10306,positive,high,Klang Lama corridor flood-prone (DBKL),pluvial
+Bukit Tunku,101.68067,3.16658,dry,high,"Kenny Hills elevated residential, no flood record",control_elevated
+Damansara Heights,101.65845,3.15240,dry,high,"Bukit Damansara elevated, no flood record",control_elevated
+Mont Kiara,101.65215,3.17000,dry,high,"elevated NW residential, no flood record",control_elevated
+Bukit Gasing,101.66079,3.10331,dry,high,"forested ridge, elevated dry control",control_elevated
+TTDI,101.63074,3.13614,dry,high,"elevated west KL residential, no flood record",control_elevated
